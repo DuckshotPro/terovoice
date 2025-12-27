@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # AI Receptionist API (Flask)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-receptionist-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:cira@74.208.227.161:5432/ai_receptionist
+      - FLASK_PORT=8000
+      - JWT_SECRET=${JWT_SECRET:-your_jwt_secret_key_change_in_production}
+      - CORS_ORIGINS=http://localhost:3000,https://yourdomain.com
+      - DEBUG=False
+    volumes:
+      - ./:/app
+    depends_on:
+      - ollama
+    networks:
+      - ai-receptionist
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Ollama LLM Service (Local Inference)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    networks:
+      - ai-receptionist
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Optional: Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: ai-receptionist-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ai-receptionist
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  ollama_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  ai-receptionist:
+    driver: bridge
