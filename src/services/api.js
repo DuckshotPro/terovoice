@@ -9,10 +9,11 @@
  */
 
 import axios from 'axios';
+import env from '../config/env';
 
 // API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-const API_TIMEOUT = 10000; // 10 seconds
+const API_BASE_URL = env.api.baseUrl;
+const API_TIMEOUT = env.api.timeout;
 
 // Create Axios instance
 const apiClient = axios.create({
@@ -49,7 +50,7 @@ apiClient.interceptors.request.use(
     }
     
     // Log request in development
-    if (import.meta.env.DEV) {
+    if (env.debug) {
       console.log(`🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`, {
         data: config.data,
         params: config.params,
@@ -68,7 +69,7 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => {
     // Log response in development
-    if (import.meta.env.DEV) {
+    if (env.debug) {
       console.log(`✅ API Response: ${response.config.method?.toUpperCase()} ${response.config.url}`, {
         status: response.status,
         data: response.data,

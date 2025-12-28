@@ -19,7 +19,7 @@ export const ProtectedLayout = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login');
+      navigate('/auth/login');
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -47,31 +47,31 @@ export const ProtectedLayout = () => {
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-2">
           <NavLink
-            to="/dashboard"
+            to="/app/dashboard"
             icon="📊"
             label="Dashboard"
             sidebarOpen={sidebarOpen}
           />
           <NavLink
-            to="/clients"
+            to="/app/clients"
             icon="👥"
             label="Clients"
             sidebarOpen={sidebarOpen}
           />
           <NavLink
-            to="/calls"
+            to="/app/calls"
             icon="📞"
             label="Calls"
             sidebarOpen={sidebarOpen}
           />
           <NavLink
-            to="/analytics"
+            to="/app/analytics"
             icon="📈"
             label="Analytics"
             sidebarOpen={sidebarOpen}
           />
           <NavLink
-            to="/billing"
+            to="/app/billing"
             icon="💳"
             label="Billing"
             sidebarOpen={sidebarOpen}
@@ -101,7 +101,7 @@ export const ProtectedLayout = () => {
               <div className="absolute bottom-full left-0 right-0 mb-2 bg-slate-800 rounded shadow-lg z-10">
                 <button
                   onClick={() => {
-                    navigate('/settings');
+                    navigate('/app/settings');
                     setUserMenuOpen(false);
                   }}
                   className="w-full flex items-center space-x-2 px-4 py-2 hover:bg-slate-700 text-sm"

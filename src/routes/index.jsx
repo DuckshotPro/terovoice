@@ -1,4 +1,3 @@
-import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ProtectedRoute from '../components/ProtectedRoute';
 import PublicLayout from '../components/layouts/PublicLayout';
@@ -10,17 +9,16 @@ import About from '../pages/About';
 import Products from '../pages/Products';
 import NotFound from '../pages/NotFound';
 
-// Auth Pages (to be created)
-// import Login from '../pages/auth/Login';
-// import Signup from '../pages/auth/Signup';
+// Auth Pages
+import Login from '../pages/auth/Login';
+import Signup from '../pages/auth/Signup';
 
-// Protected Pages (to be created)
-// import Dashboard from '../pages/dashboard/Dashboard';
-// import Clients from '../pages/clients/Clients';
-// import Calls from '../pages/calls/Calls';
-// import Analytics from '../pages/analytics/Analytics';
-// import Billing from '../pages/billing/Billing';
-// import Settings from '../pages/settings/Settings';
+// Protected Pages
+import Dashboard from '../pages/dashboard/Dashboard';
+import Clients from '../pages/clients/Clients';
+import Billing from '../pages/billing/Billing';
+import Calls from '../pages/calls/Calls';
+import Analytics from '../pages/analytics/Analytics';
 
 /**
  * Application Routes
@@ -48,15 +46,14 @@ export const router = createBrowserRouter([
         path: 'products',
         element: <Products />,
       },
-      // Auth routes will be added here
-      // {
-      //   path: 'login',
-      //   element: <Login />,
-      // },
-      // {
-      //   path: 'signup',
-      //   element: <Signup />,
-      // },
+      {
+        path: 'auth/login',
+        element: <Login />,
+      },
+      {
+        path: 'auth/signup',
+        element: <Signup />,
+      },
     ],
   },
   {
@@ -67,27 +64,30 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      // Protected routes will be added here
-      // {
-      //   path: 'dashboard',
-      //   element: <Dashboard />,
-      // },
-      // {
-      //   path: 'clients',
-      //   element: <Clients />,
-      // },
-      // {
-      //   path: 'calls',
-      //   element: <Calls />,
-      // },
-      // {
-      //   path: 'analytics',
-      //   element: <Analytics />,
-      // },
-      // {
-      //   path: 'billing',
-      //   element: <Billing />,
-      // },
+      {
+        index: true,
+        element: <Navigate to="dashboard" replace />,
+      },
+      {
+        path: 'dashboard',
+        element: <Dashboard />,
+      },
+      {
+        path: 'clients',
+        element: <Clients />,
+      },
+      {
+        path: 'billing',
+        element: <Billing />,
+      },
+      {
+        path: 'calls',
+        element: <Calls />,
+      },
+      {
+        path: 'analytics',
+        element: <Analytics />,
+      },
       // {
       //   path: 'settings',
       //   element: <Settings />,
