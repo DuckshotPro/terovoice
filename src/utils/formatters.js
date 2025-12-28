@@ -1,6 +1,6 @@
 /**
  * Formatting Utilities
- * 
+ *
  * Common formatting functions for dates, currency, phone numbers, etc.
  */
 
@@ -137,7 +137,7 @@ export const camelCaseToTitleCase = (text) => {
   if (!text) return '';
   return text
     .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, str => str.toUpperCase())
+    .replace(/^./, (str) => str.toUpperCase())
     .trim();
 };
 

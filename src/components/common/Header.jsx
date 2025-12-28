@@ -5,17 +5,25 @@ function Header() {
   return (
     <header className="bg-white shadow">
       <div className="container mx-auto py-4 px-6 flex items-center justify-between">
-        <NavLink to="/" className="text-2xl font-bold text-gray-800">TERO</NavLink>
+        <NavLink to="/" className="text-2xl font-bold text-gray-800">
+          TERO
+        </NavLink>
         <nav>
           <ul className="flex space-x-6">
             <li>
-              <NavLink to="/" className="hover:text-gray-500">Home</NavLink>
+              <NavLink to="/" className="hover:text-gray-500">
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/about" className="hover:text-gray-500">About</NavLink>
+              <NavLink to="/about" className="hover:text-gray-500">
+                About
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/products" className="hover:text-gray-500">Products</NavLink>
+              <NavLink to="/products" className="hover:text-gray-500">
+                Products
+              </NavLink>
             </li>
           </ul>
         </nav>

@@ -6,7 +6,7 @@ import './styles/global.css';
 
 /**
  * Main App Component
- * 
+ *
  * Provides:
  * - Context providers (Auth, User, Clients)
  * - Router configuration

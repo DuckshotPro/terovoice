@@ -69,16 +69,12 @@ export const AnalyticsChart = ({ title, data, dataKey, color, format = 'number' 
         <div>
           <p className="text-xs text-gray-600 mb-1">Average</p>
           <p className="text-lg font-semibold text-gray-900">
-            {formatValue(
-              data.reduce((sum, d) => sum + d[dataKey], 0) / data.length
-            )}
+            {formatValue(data.reduce((sum, d) => sum + d[dataKey], 0) / data.length)}
           </p>
         </div>
         <div>
           <p className="text-xs text-gray-600 mb-1">Peak</p>
-          <p className="text-lg font-semibold text-gray-900">
-            {formatValue(maxValue)}
-          </p>
+          <p className="text-lg font-semibold text-gray-900">{formatValue(maxValue)}</p>
         </div>
       </div>
     </div>

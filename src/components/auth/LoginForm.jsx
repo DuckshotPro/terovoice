@@ -18,11 +18,14 @@ export const LoginForm = () => {
     }
   };
 
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit: onSubmit } = useForm(
-    { email: '', password: '' },
-    handleSubmit,
-    validateLoginForm
-  );
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit: onSubmit,
+  } = useForm({ email: '', password: '' }, handleSubmit, validateLoginForm);
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">

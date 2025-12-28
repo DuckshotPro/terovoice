@@ -8,8 +8,8 @@ function ChatInterface() {
       id: 1,
       text: "Hello! I'm your AI assistant. Ask me anything and I'll help you find the answer.",
       sender: 'ai',
-      timestamp: new Date()
-    }
+      timestamp: new Date(),
+    },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ function ChatInterface() {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    
+
     if (!input.trim()) return;
 
     // Add user message
@@ -33,10 +33,10 @@ function ChatInterface() {
       id: messages.length + 1,
       text: input,
       sender: 'user',
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setLoading(true);
 
@@ -47,7 +47,7 @@ function ChatInterface() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ question: input })
+        body: JSON.stringify({ question: input }),
       });
 
       if (response.ok) {
@@ -56,29 +56,29 @@ function ChatInterface() {
           id: messages.length + 2,
           text: data.answer || data.response || "I couldn't process that request.",
           sender: 'ai',
-          timestamp: new Date()
+          timestamp: new Date(),
         };
-        setMessages(prev => [...prev, aiMessage]);
+        setMessages((prev) => [...prev, aiMessage]);
       } else {
         // Fallback response if API fails
         const aiMessage = {
           id: messages.length + 2,
           text: "I'm having trouble connecting to the AI service. Please try again later.",
           sender: 'ai',
-          timestamp: new Date()
+          timestamp: new Date(),
         };
-        setMessages(prev => [...prev, aiMessage]);
+        setMessages((prev) => [...prev, aiMessage]);
       }
     } catch (error) {
       console.error('Error:', error);
       // Demo response while backend is not ready
       const aiMessage = {
         id: messages.length + 2,
-        text: "Demo response: This is a placeholder. Connect your backend API to get real AI responses!",
+        text: 'Demo response: This is a placeholder. Connect your backend API to get real AI responses!',
         sender: 'ai',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      setMessages(prev => [...prev, aiMessage]);
+      setMessages((prev) => [...prev, aiMessage]);
     } finally {
       setLoading(false);
     }
@@ -88,7 +88,7 @@ function ChatInterface() {
     <div className="flex flex-col h-96 bg-white rounded-lg shadow-lg border border-gray-200">
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
-        {messages.map(message => (
+        {messages.map((message) => (
           <Message key={message.id} message={message} />
         ))}
         {loading && (

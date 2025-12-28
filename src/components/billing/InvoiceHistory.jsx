@@ -45,9 +45,7 @@ export const InvoiceHistory = ({ invoices }) => {
         <table className="w-full">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                Invoice
-              </th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Invoice</th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Date</th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Amount</th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
@@ -63,9 +61,7 @@ export const InvoiceHistory = ({ invoices }) => {
                     <span className="font-mono text-sm text-gray-900">{invoice.number}</span>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-600">
-                  {formatDate(invoice.date)}
-                </td>
+                <td className="px-6 py-4 text-sm text-gray-600">{formatDate(invoice.date)}</td>
                 <td className="px-6 py-4 text-sm font-semibold text-gray-900">
                   {formatCurrency(invoice.amount)}
                 </td>

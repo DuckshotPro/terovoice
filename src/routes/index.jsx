@@ -22,7 +22,7 @@ import Analytics from '../pages/analytics/Analytics';
 
 /**
  * Application Routes
- * 
+ *
  * Structure:
  * - Public routes (no auth required)
  * - Auth routes (login, signup)

@@ -15,9 +15,7 @@ export const AppContextProvider = ({ children }) => {
     <AuthProvider>
       <UserProvider>
         <ClientsProvider>
-          <BillingProvider>
-            {children}
-          </BillingProvider>
+          <BillingProvider>{children}</BillingProvider>
         </ClientsProvider>
       </UserProvider>
     </AuthProvider>

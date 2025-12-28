@@ -5,7 +5,7 @@ import LoginForm from '../../components/auth/LoginForm';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -24,7 +24,7 @@ export const Login = () => {
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link to="/auth/signup" className="text-blue-600 hover:text-blue-700 font-medium">
                 Sign up
               </Link>

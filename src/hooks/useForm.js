@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 
 /**
  * useForm Hook
- * 
+ *
  * Manages form state and validation
  * Usage: const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useForm(initialValues, onSubmit, validate)
  */
@@ -15,25 +15,28 @@ export const useForm = (initialValues, onSubmit, validate) => {
 
   const handleChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
-    setValues(prev => ({
+    setValues((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
   }, []);
 
-  const handleBlur = useCallback((e) => {
-    const { name } = e.target;
-    setTouched(prev => ({
-      ...prev,
-      [name]: true,
-    }));
+  const handleBlur = useCallback(
+    (e) => {
+      const { name } = e.target;
+      setTouched((prev) => ({
+        ...prev,
+        [name]: true,
+      }));
 
-    // Validate on blur if validate function provided
-    if (validate) {
-      const fieldErrors = validate(values);
-      setErrors(fieldErrors);
-    }
-  }, [values, validate]);
+      // Validate on blur if validate function provided
+      if (validate) {
+        const fieldErrors = validate(values);
+        setErrors(fieldErrors);
+      }
+    },
+    [values, validate]
+  );
 
   const handleSubmit = useCallback(
     async (e) => {
@@ -78,14 +81,14 @@ export const useForm = (initialValues, onSubmit, validate) => {
   }, [initialValues]);
 
   const setFieldValue = useCallback((name, value) => {
-    setValues(prev => ({
+    setValues((prev) => ({
       ...prev,
       [name]: value,
     }));
   }, []);
 
   const setFieldError = useCallback((name, error) => {
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
       [name]: error,
     }));

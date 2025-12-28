@@ -5,7 +5,7 @@ import { Menu, X, LogOut, Settings, User } from 'lucide-react';
 
 /**
  * ProtectedLayout Component
- * 
+ *
  * Layout for authenticated pages
  * Includes navigation, sidebar, and user menu
  */
@@ -46,36 +46,11 @@ export const ProtectedLayout = () => {
 
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-2">
-          <NavLink
-            to="/app/dashboard"
-            icon="📊"
-            label="Dashboard"
-            sidebarOpen={sidebarOpen}
-          />
-          <NavLink
-            to="/app/clients"
-            icon="👥"
-            label="Clients"
-            sidebarOpen={sidebarOpen}
-          />
-          <NavLink
-            to="/app/calls"
-            icon="📞"
-            label="Calls"
-            sidebarOpen={sidebarOpen}
-          />
-          <NavLink
-            to="/app/analytics"
-            icon="📈"
-            label="Analytics"
-            sidebarOpen={sidebarOpen}
-          />
-          <NavLink
-            to="/app/billing"
-            icon="💳"
-            label="Billing"
-            sidebarOpen={sidebarOpen}
-          />
+          <NavLink to="/app/dashboard" icon="📊" label="Dashboard" sidebarOpen={sidebarOpen} />
+          <NavLink to="/app/clients" icon="👥" label="Clients" sidebarOpen={sidebarOpen} />
+          <NavLink to="/app/calls" icon="📞" label="Calls" sidebarOpen={sidebarOpen} />
+          <NavLink to="/app/analytics" icon="📈" label="Analytics" sidebarOpen={sidebarOpen} />
+          <NavLink to="/app/billing" icon="💳" label="Billing" sidebarOpen={sidebarOpen} />
         </nav>
 
         {/* User Menu */}

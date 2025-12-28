@@ -89,7 +89,10 @@ export const Clients = () => {
       ) : (
         <div className="grid gap-4">
           {clients.map((client) => (
-            <div key={client.id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
+            <div
+              key={client.id}
+              className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900">{client.name}</h3>
@@ -107,9 +110,7 @@ export const Clients = () => {
                       </div>
                     )}
                   </div>
-                  {client.description && (
-                    <p className="text-gray-600 mt-2">{client.description}</p>
-                  )}
+                  {client.description && <p className="text-gray-600 mt-2">{client.description}</p>}
                 </div>
                 <div className="flex gap-2">
                   <button

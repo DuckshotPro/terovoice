@@ -1,6 +1,6 @@
 /**
  * Validation Utilities
- * 
+ *
  * Common validation functions for forms and data
  */
 
@@ -109,7 +109,8 @@ export const validateSignupForm = (values) => {
   if (!validateRequired(values.password)) {
     errors.password = 'Password is required';
   } else if (!validatePassword(values.password)) {
-    errors.password = 'Password must be at least 8 characters with uppercase, lowercase, and numbers';
+    errors.password =
+      'Password must be at least 8 characters with uppercase, lowercase, and numbers';
   }
 
   if (!validateRequired(values.confirmPassword)) {

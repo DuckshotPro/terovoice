@@ -36,9 +36,7 @@ export const SubscriptionDetails = ({ subscription }) => {
       <div className="bg-white rounded-lg shadow p-6 border-l-4 border-blue-600">
         <div className="flex items-start justify-between mb-6">
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              {subscription.plan_name}
-            </h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">{subscription.plan_name}</h3>
             <p className="text-gray-600">Active subscription</p>
           </div>
           <CheckCircle className="w-8 h-8 text-green-600" />
@@ -65,9 +63,7 @@ export const SubscriptionDetails = ({ subscription }) => {
               <DollarSign className="w-4 h-4 text-gray-600" />
               <p className="text-sm text-gray-600">Status</p>
             </div>
-            <p className="text-lg font-semibold text-green-600 capitalize">
-              {subscription.status}
-            </p>
+            <p className="text-lg font-semibold text-green-600 capitalize">{subscription.status}</p>
           </div>
         </div>
 

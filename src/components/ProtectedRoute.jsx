@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 /**
  * ProtectedRoute Component
- * 
+ *
  * Wraps routes that require authentication
  * Redirects to login if user is not authenticated
  */

@@ -18,7 +18,14 @@ export const SignupForm = () => {
     }
   };
 
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit: onSubmit } = useForm(
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit: onSubmit,
+  } = useForm(
     { name: '', email: '', password: '', confirmPassword: '' },
     handleSubmit,
     validateSignupForm
@@ -53,9 +60,7 @@ export const SignupForm = () => {
             disabled={isLoading}
           />
         </div>
-        {touched.name && errors.name && (
-          <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-        )}
+        {touched.name && errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
       </div>
 
       <div>
@@ -126,7 +131,9 @@ export const SignupForm = () => {
             onBlur={handleBlur}
             placeholder="••••••••"
             className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+              touched.confirmPassword && errors.confirmPassword
+                ? 'border-red-500'
+                : 'border-gray-300'
             }`}
             disabled={isLoading}
           />

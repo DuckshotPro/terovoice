@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 /**
  * PublicLayout Component
- * 
+ *
  * Layout for public pages (login, signup, landing page)
  * No authentication required
  */

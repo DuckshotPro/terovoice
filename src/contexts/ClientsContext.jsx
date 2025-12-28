@@ -3,7 +3,7 @@ import { api } from '../services/api';
 
 /**
  * ClientsContext - Manages client data and operations
- * 
+ *
  * Provides:
  * - List of clients
  * - Client CRUD operations
@@ -63,59 +63,68 @@ export const ClientsProvider = ({ children }) => {
     }
   }, []);
 
-  const createClient = useCallback(async (clientData) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await api.clients.create(clientData);
-      setClients([response.data, ...clients]);
-      return response.data;
-    } catch (err) {
-      const errorMessage = err.message || 'Failed to create client';
-      setError(errorMessage);
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  }, [clients]);
-
-  const updateClient = useCallback(async (id, clientData) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await api.clients.update(id, clientData);
-      setClients(clients.map(c => c.id === id ? response.data : c));
-      if (selectedClient?.id === id) {
-        setSelectedClient(response.data);
+  const createClient = useCallback(
+    async (clientData) => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await api.clients.create(clientData);
+        setClients([response.data, ...clients]);
+        return response.data;
+      } catch (err) {
+        const errorMessage = err.message || 'Failed to create client';
+        setError(errorMessage);
+        throw err;
+      } finally {
+        setIsLoading(false);
       }
-      return response.data;
-    } catch (err) {
-      const errorMessage = err.message || 'Failed to update client';
-      setError(errorMessage);
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  }, [clients, selectedClient]);
+    },
+    [clients]
+  );
 
-  const deleteClient = useCallback(async (id) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      await api.clients.delete(id);
-      setClients(clients.filter(c => c.id !== id));
-      if (selectedClient?.id === id) {
-        setSelectedClient(null);
+  const updateClient = useCallback(
+    async (id, clientData) => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await api.clients.update(id, clientData);
+        setClients(clients.map((c) => (c.id === id ? response.data : c)));
+        if (selectedClient?.id === id) {
+          setSelectedClient(response.data);
+        }
+        return response.data;
+      } catch (err) {
+        const errorMessage = err.message || 'Failed to update client';
+        setError(errorMessage);
+        throw err;
+      } finally {
+        setIsLoading(false);
       }
-      return true;
-    } catch (err) {
-      const errorMessage = err.message || 'Failed to delete client';
-      setError(errorMessage);
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  }, [clients, selectedClient]);
+    },
+    [clients, selectedClient]
+  );
+
+  const deleteClient = useCallback(
+    async (id) => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        await api.clients.delete(id);
+        setClients(clients.filter((c) => c.id !== id));
+        if (selectedClient?.id === id) {
+          setSelectedClient(null);
+        }
+        return true;
+      } catch (err) {
+        const errorMessage = err.message || 'Failed to delete client';
+        setError(errorMessage);
+        throw err;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [clients, selectedClient]
+  );
 
   const getClientStats = useCallback(async (id) => {
     setIsLoading(true);

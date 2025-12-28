@@ -1,6 +1,6 @@
 /**
  * Environment Configuration
- * 
+ *
  * Centralized configuration for all environment variables
  * Provides type-safe access to env vars with defaults
  */

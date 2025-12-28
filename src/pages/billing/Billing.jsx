@@ -117,7 +117,9 @@ export const Billing = () => {
         </div>
       ) : (
         <>
-          {activeTab === 'plans' && <PricingPlans plans={PLANS} currentPlan={subscription?.plan_id} />}
+          {activeTab === 'plans' && (
+            <PricingPlans plans={PLANS} currentPlan={subscription?.plan_id} />
+          )}
           {activeTab === 'subscription' && subscription && (
             <SubscriptionDetails subscription={subscription} />
           )}

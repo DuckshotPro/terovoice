@@ -1,6 +1,6 @@
 /**
  * Utility Functions
- * 
+ *
  * Centralized export of all utility functions
  */
 

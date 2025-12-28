@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 
 /**
  * useApi Hook
- * 
+ *
  * Simplifies API calls with loading, error, and data states
  * Usage: const { data, loading, error, execute } = useApi(apiFunction)
  */

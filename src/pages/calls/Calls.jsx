@@ -44,7 +44,8 @@ export const Calls = () => {
           phone_number: '+1 (555) 234-5678',
           duration: 180,
           status: 'completed',
-          transcript: 'Customer: What are your hours? Agent: We are open 9am to 5pm, Monday through Friday.',
+          transcript:
+            'Customer: What are your hours? Agent: We are open 9am to 5pm, Monday through Friday.',
           created_at: new Date(Date.now() - 7200000).toISOString(),
           sentiment: 'neutral',
           booked: false,
@@ -52,11 +53,12 @@ export const Calls = () => {
         {
           id: '3',
           client_id: '2',
-          client_name: 'Mike\'s Plumbing',
+          client_name: "Mike's Plumbing",
           phone_number: '+1 (555) 345-6789',
           duration: 420,
           status: 'completed',
-          transcript: 'Customer: Emergency! Water leak in basement. Agent: I can dispatch someone within 30 minutes.',
+          transcript:
+            'Customer: Emergency! Water leak in basement. Agent: I can dispatch someone within 30 minutes.',
           created_at: new Date(Date.now() - 10800000).toISOString(),
           sentiment: 'positive',
           booked: true,
@@ -224,9 +226,7 @@ export const Calls = () => {
       )}
 
       {/* Call Detail Modal */}
-      {selectedCall && (
-        <CallDetail call={selectedCall} onClose={() => setSelectedCall(null)} />
-      )}
+      {selectedCall && <CallDetail call={selectedCall} onClose={() => setSelectedCall(null)} />}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { api, tokenManager } from '../services/api';
 
 /**
  * AuthContext - Manages authentication state and operations
- * 
+ *
  * Provides:
  * - User authentication state
  * - Login/signup/logout functions
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     const initializeAuth = async () => {
       try {
         const token = tokenManager.getToken();
-        
+
         if (token && !tokenManager.isTokenExpired(token)) {
           // Token exists and is valid, fetch user profile
           const response = await api.auth.me();
@@ -74,12 +74,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.auth.login({ email, password });
       const { access_token, refresh_token, user: userData } = response.data;
-      
+
       tokenManager.setToken(access_token);
       localStorage.setItem('refresh_token', refresh_token);
       setUser(userData);
       setIsAuthenticated(true);
-      
+
       return userData;
     } catch (err) {
       const errorMessage = err.message || 'Login failed';
@@ -96,12 +96,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.auth.register({ email, password, name });
       const { access_token, refresh_token, user: userData } = response.data;
-      
+
       tokenManager.setToken(access_token);
       localStorage.setItem('refresh_token', refresh_token);
       setUser(userData);
       setIsAuthenticated(true);
-      
+
       return userData;
     } catch (err) {
       const errorMessage = err.message || 'Signup failed';

@@ -9,17 +9,16 @@ const validateClientForm = (values) => {
 };
 
 export const ClientForm = ({ client, onSubmit, onCancel }) => {
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting } =
-    useForm(
-      client || {
-        name: '',
-        profession: '',
-        phone: '',
-        description: '',
-      },
-      onSubmit,
-      validateClientForm
-    );
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting } = useForm(
+    client || {
+      name: '',
+      profession: '',
+      phone: '',
+      description: '',
+    },
+    onSubmit,
+    validateClientForm
+  );
 
   return (
     <div className="bg-white rounded-lg shadow p-6 mb-6">
@@ -35,9 +34,7 @@ export const ClientForm = ({ client, onSubmit, onCancel }) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Business Name *
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Business Name *</label>
             <input
               name="name"
               value={values.name}
@@ -55,9 +52,7 @@ export const ClientForm = ({ client, onSubmit, onCancel }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Profession *
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Profession *</label>
             <select
               name="profession"
               value={values.profession}

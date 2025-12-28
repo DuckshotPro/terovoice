@@ -1,6 +1,6 @@
 /**
  * Error Handler Utilities
- * 
+ *
  * Centralized error handling and formatting
  */
 
@@ -119,7 +119,7 @@ export const retryWithBackoff = async (fn, maxRetries = 3, delay = 1000) => {
     } catch (error) {
       lastError = error;
       if (i < maxRetries - 1) {
-        await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
+        await new Promise((resolve) => setTimeout(resolve, delay * Math.pow(2, i)));
       }
     }
   }

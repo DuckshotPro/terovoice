@@ -1,6 +1,6 @@
 /**
  * Custom Hooks
- * 
+ *
  * Centralized export of all custom React hooks
  */
 
