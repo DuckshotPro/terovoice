@@ -16,7 +16,7 @@
 **Commands:**
 ```bash
 # SSH to IONOS
-ssh root@your-ionos-ip
+ root@your-ionos-ip
 
 # Connect to PostgreSQL
 psql -U postgres -h localhost -d ai_receptionist
