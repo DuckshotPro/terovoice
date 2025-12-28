@@ -1,28 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import About from './pages/About';
-import Products from './pages/Products';
-import NotFound from './pages/NotFound';
-import Header from './components/common/Header';
-import Footer from './components/common/Footer';
+import { RouterProvider } from 'react-router-dom';
+import { AppContextProvider } from './contexts';
+import { router } from './routes';
+import './styles/global.css';
+
+/**
+ * Main App Component
+ * 
+ * Provides:
+ * - Context providers (Auth, User, Clients)
+ * - Router configuration
+ * - Global styles
+ */
 
 function App() {
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <AppContextProvider>
+      <RouterProvider router={router} />
+    </AppContextProvider>
   );
 }
 
