@@ -1,0 +1,343 @@
+# Docker Compose for Tero Voice - Complete Stack
+# Services: Backend API, Frontend, Ollama LLM, Redis Cache
+# Usage: docker-compose up -d
+# Rollback: docker-compose down && git checkout previous-version && docker-compose up -d
+
+version: '3.8'
+
+services:
+  # ============================================================================
+  # Backend API Service
+  # ============================================================================
+  backend:
+    # Build from Dockerfile.backend
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    
+    # Container name for easy reference
+    container_name: terovoice-backend
+    
+    # Port mapping: internal:external
+    ports:
+      - "8000:8000"
+    
+    # Environment variables
+    environment:
+      # Database connection
+      DATABASE_URL: postgresql://user:cira@postgres:5432/ai_receptionist
+      
+      # Flask configuration
+      FLASK_ENV: production
+      FLASK_APP: backend-setup/api/app.py
+      FLASK_PORT: 8000
+      
+      # Security
+      JWT_SECRET: ${JWT_SECRET:-change-this-in-production}
+      
+      # CORS settings
+      CORS_ORIGINS: http://localhost:3000,https://app.dev.terovoice.com,https://app.terovoice.com
+      
+      # Debug mode (set to False in production)
+      DEBUG: "False"
+      
+      # Ollama LLM service
+      OLLAMA_HOST: http://ollama:11434
+      
+      # Redis cache
+      REDIS_URL: redis://redis:6379/0
+    
+    # Volume mounts
+    volumes:
+      # Mount backend code for development (remove in production)
+      - ./backend-setup:/app
+      # Persistent logs
+      - ./logs/backend:/app/logs
+    
+    # Depends on other services
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    
+    # Network
+    networks:
+      - terovoice-network
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Resource limits (optional)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+
+  # ============================================================================
+  # Frontend Service
+  # ============================================================================
+  frontend:
+    # Build from Dockerfile.frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    
+    # Container name
+    container_name: terovoice-frontend
+    
+    # Port mapping
+    ports:
+      - "3000:3000"
+    
+    # Depends on backend
+    depends_on:
+      - backend
+    
+    # Network
+    networks:
+      - terovoice-network
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+  # ============================================================================
+  # Ollama LLM Service (Local Inference)
+  # ============================================================================
+  ollama:
+    # Official Ollama image
+    image: ollama/ollama:latest
+    
+    # Container name
+    container_name: terovoice-ollama
+    
+    # Port mapping (internal only, not exposed)
+    ports:
+      - "11434:11434"
+    
+    # Environment
+    environment:
+      # Ollama host configuration
+      OLLAMA_HOST: 0.0.0.0:11434
+    
+    # Volumes for model persistence
+    volumes:
+      # Persistent model storage
+      - ollama_data:/root/.ollama
+    
+    # Network
+    networks:
+      - terovoice-network
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    
+    # Resource limits (GPU support if available)
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+
+  # ============================================================================
+  # Redis Cache Service
+  # ============================================================================
+  redis:
+    # Official Redis image
+    image: redis:7-alpine
+    
+    # Container name
+    container_name: terovoice-redis
+    
+    # Port mapping (internal only)
+    ports:
+      - "6379:6379"
+    
+    # Volumes for persistence
+    volumes:
+      # Persistent data storage
+      - redis_data:/data
+    
+    # Network
+    networks:
+      - terovoice-network
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+  # ============================================================================
+  # PostgreSQL Database Service
+  # ============================================================================
+  postgres:
+    # Official PostgreSQL image
+    image: postgres:15-alpine
+    
+    # Container name
+    container_name: terovoice-postgres
+    
+    # Port mapping (internal only)
+    ports:
+      - "5432:5432"
+    
+    # Environment variables
+    environment:
+      # Database credentials
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: cira
+      POSTGRES_DB: ai_receptionist
+      
+      # PostgreSQL configuration
+      POSTGRES_INITDB_ARGS: "-c shared_preload_libraries=pgvector"
+    
+    # Volumes for data persistence
+    volumes:
+      # Persistent database storage
+      - postgres_data:/var/lib/postgresql/data
+      # Initialization scripts
+      - ./backend-setup/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    
+    # Network
+    networks:
+      - terovoice-network
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Health check
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d ai_receptionist"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+
+# ============================================================================
+# Volumes - Persistent Data Storage
+# ============================================================================
+volumes:
+  # Ollama models storage
+  ollama_data:
+    driver: local
+  
+  # Redis data storage
+  redis_data:
+    driver: local
+  
+  # PostgreSQL data storage
+  postgres_data:
+    driver: local
+
+# ============================================================================
+# Networks - Service Communication
+# ============================================================================
+networks:
+  # Custom bridge network for service-to-service communication
+  terovoice-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# ============================================================================
+# Deployment Notes
+# ============================================================================
+# 
+# Start all services:
+#   docker-compose up -d
+#
+# View logs:
+#   docker-compose logs -f backend
+#   docker-compose logs -f frontend
+#
+# Stop all services:
+#   docker-compose down
+#
+# Rebuild images:
+#   docker-compose build --no-cache
+#
+# Scale services (if needed):
+#   docker-compose up -d --scale backend=2
+#
+# Rollback to previous version:
+#   git checkout previous-commit
+#   docker-compose down
+#   docker-compose up -d --build
+#
+# Health check status:
+#   docker-compose ps
+#
+# Access services:
+#   Backend API: http://localhost:8000
+#   Frontend: http://localhost:3000
+#   Ollama: http://localhost:11434
+#   Redis: localhost:6379
+#   PostgreSQL: localhost:5432
+#

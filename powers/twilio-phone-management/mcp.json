@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "twilio": {
+      "command": "python",
+      "args": ["-m", "twilio_mcp_server"],
+      "env": {
+        "TWILIO_ACCOUNT_SID": "YOUR_ACCOUNT_SID_HERE",
+        "TWILIO_AUTH_TOKEN": "YOUR_AUTH_TOKEN_HERE",
+        "LIVEKIT_SERVER_URL": "YOUR_LIVEKIT_SERVER_URL"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "purchase_phone_number",
+        "configure_sip_trunk",
+        "route_number_to_trunk",
+        "get_call_metrics",
+        "list_phone_numbers"
+      ]
+    }
+  }
+}
