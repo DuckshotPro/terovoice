@@ -215,54 +215,63 @@ Deliverable: Landing page live and tracking conversions
 
 ---
 
-## Pricing Strategy (Local, Hands-On)
+## Pricing Strategy (Market-Aligned, Hands-On)
 
-### Tier 1: Starter ($500/month)
-- 500 minutes/month
-- Basic voice cloning
+Based on market research, here's what actually converts:
+
+### Tier 1: Startup/SMB ($79/month)
+- 300 calls/month (unlimited minutes)
+- Voice cloning included
 - Email support
-- **Target:** Solo practitioners (1 location)
+- Basic analytics
+- **Target:** Solo practitioners, micro-businesses
+- **Positioning:** "Get started with AI receptionist"
 
-### Tier 2: Professional ($1000/month)
-- 2000 minutes/month
+### Tier 2: Growth Stage ($199/month)
+- 1,000 calls/month (unlimited minutes)
 - Premium voice cloning
-- Phone support
+- Phone support (you)
+- Advanced analytics
 - Custom prompts
+- CRM integration
 - **Target:** Small businesses (2-3 locations)
+- **Positioning:** "Scale your business with AI"
 
-### Tier 3: Enterprise ($2000/month)
-- Unlimited minutes
+### Tier 3: Enterprise ($499/month)
+- Unlimited calls/month
 - White-label option
-- Dedicated support
+- Dedicated support (you)
 - Custom integrations
-- **Target:** Multi-location businesses
+- Advanced reporting
+- **Target:** Multi-location businesses, franchises
+- **Positioning:** "Enterprise AI receptionist"
 
-**Your Advantage:** You personally handle setup, so you can charge premium prices
+**Your Advantage:** You personally handle setup + support, so you can charge at the HIGH END of each tier ($79 vs $50, $199 vs $150, $499 vs $300)
 
 ---
 
 ## Facebook Ad Strategy (Targeted, Local)
 
 ### Ad 1: Dentist
-**Headline:** "Stop Losing $1,000+ Patients Because You're Drilling"
-**Copy:** "While you're in someone's mouth, your phone is silent. My AI receptionist answers in your voice, books appointments, and texts you summaries. Local setup, hands-on support."
+**Headline:** "Stop Losing Patients Because You're Drilling"
+**Copy:** "While you're in someone's mouth, your phone is silent. My AI receptionist answers in your voice, books appointments, and texts you summaries. Just $79/month. Local setup, hands-on support."
 **Target:** Dentists in your area, 25-65, business owners
 **Budget:** $20/day
 
 ### Ad 2: Plumber
 **Headline:** "Your Phone Stops Ringing When You're Elbow-Deep"
-**Copy:** "Let an AI that sounds exactly like you take emergency calls, quote jobs, and schedule the crew. Plumbers using this are adding 6-10 jobs/month."
+**Copy:** "Let an AI that sounds exactly like you take emergency calls, quote jobs, and schedule the crew. Plumbers using this are adding 6-10 jobs/month. Starting at $79/month."
 **Target:** Plumbers in your area, 25-65, business owners
 **Budget:** $20/day
 
 ### Ad 3: Contractor
-**Headline:** "Never Miss Another $5k Job Because You Were On-Site"
-**Copy:** "Your AI receptionist qualifies leads, schedules estimates, and collects deposits while you work. Local support, no contracts."
+**Headline:** "Never Miss Another Job Because You Were On-Site"
+**Copy:** "Your AI receptionist qualifies leads, schedules estimates, and collects deposits while you work. Local support, no contracts. $79/month to start."
 **Target:** Contractors in your area, 25-65, business owners
 **Budget:** $20/day
 
 **Total Ad Spend:** $60/day = $1,800/month
-**Expected:** 5-10 leads/week → 1-2 customers/week
+**Expected:** 5-10 leads/week → 1-2 customers/week at $79-199/month
 
 ---
 
@@ -343,13 +352,13 @@ Deliverable: Landing page live and tracking conversions
 
 ### Week 2
 - ✅ First paying customer
-- ✅ $500-1000 MRR
+- ✅ $79-199 MRR
 - ✅ Customer happy with service
 - ✅ 5-10 leads from ads
 
 ### Week 3
 - ✅ 3-5 paying customers
-- ✅ $1500-5000 MRR
+- ✅ $500-1500 MRR
 - ✅ Referrals starting
 - ✅ Process documented
 
@@ -371,17 +380,23 @@ Deliverable: Landing page live and tracking conversions
 - PayPal fees: 2.9% + $0.30 per transaction
 - **Total: ~$150-200**
 
-### At $2k MRR (2 customers)
-- Revenue: $2,000
+### At $500 MRR (2-3 customers at $79-199)
+- Revenue: $500
 - Costs: $200
-- Gross profit: $1,800
-- Gross margin: 90%
+- Gross profit: $300
+- Gross margin: 60%
 
-### At $5k MRR (5 customers)
-- Revenue: $5,000
+### At $1,500 MRR (5-8 customers mixed tiers)
+- Revenue: $1,500
 - Costs: $200
-- Gross profit: $4,800
-- Gross margin: 96%
+- Gross profit: $1,300
+- Gross margin: 87%
+
+### At $3,000 MRR (10-15 customers mixed tiers)
+- Revenue: $3,000
+- Costs: $200
+- Gross profit: $2,800
+- Gross margin: 93%
 
 ---
 
@@ -448,11 +463,11 @@ Deliverable: Landing page live and tracking conversions
 
 ## Questions to Answer
 
-1. **Pricing:** Confirm $500-1000/month price point?
-2. **Target Market:** Confirm local service businesses (dentist, plumber, contractor)?
-3. **Voice Cloning:** Cartesia or ElevenLabs?
-4. **LLM:** Ollama local or OpenAI API?
-5. **SIP Server:** Asterisk or FreePBX?
+1. **Pricing:** Confirm $79/$199/$499 per month tiers?
+2. **Voice Cloning:** Cartesia or ElevenLabs?
+3. **LLM:** Ollama local or OpenAI API?
+4. **SIP Server:** Asterisk or FreePBX?
+5. **Target Market:** Confirm local service businesses (dentist, plumber, contractor)?
 
 ---
 
