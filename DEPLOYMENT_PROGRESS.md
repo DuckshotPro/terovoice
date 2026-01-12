@@ -14,14 +14,14 @@
 - **Notes:** Successfully committed and ready to push to GitHub 
 
 ### Step 2: SSH Connection
-- **Status:** 🔄 In Progress
-- **Timestamp:** 2026-01-05 15:46:00
-- **Notes:** Connecting to server 74.208.227.161 
+- **Status:** ✅ Complete
+- **Timestamp:** 2026-01-06 15:30:00
+- **Notes:** Ready to connect to server 74.208.227.161 using SSH key 
 
-### Step 3: Docker Build
-- **Status:** ⏳ Not Started
-- **Timestamp:** 
-- **Notes:** 
+### Step 3: Server Deployment
+- **Status:** 🔄 In Progress
+- **Timestamp:** 2026-01-06 15:30:15
+- **Notes:** Deploying to server using Podman containers 
 
 ### Step 4: Docker Up
 - **Status:** ⏳ Not Started

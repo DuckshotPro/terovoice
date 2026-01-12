@@ -54,6 +54,7 @@ class Subscription(Base):
     # Relationships
     user = relationship("User", back_populates="subscription")
     invoices = relationship("Invoice", back_populates="subscription", cascade="all, delete-orphan")
+    usage_records = relationship("Usage", back_populates="subscription", cascade="all, delete-orphan")
 
 
 class Client(Base):
@@ -98,6 +99,23 @@ class Call(Base):
 
     # Relationships
     client = relationship("Client", back_populates="calls")
+
+
+class Usage(Base):
+    """Usage metrics model for tracking subscription usage."""
+    __tablename__ = "usage"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    subscription_id = Column(UUID(as_uuid=True), ForeignKey("subscriptions.id"), nullable=False)
+    billing_period_start = Column(DateTime, nullable=False)
+    billing_period_end = Column(DateTime, nullable=False)
+    call_minutes_used = Column(Float, default=0)
+    call_minutes_limit = Column(Integer, default=0)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    # Relationships
+    subscription = relationship("Subscription", back_populates="usage_records")
 
 
 class Invoice(Base):

@@ -1,0 +1,97 @@
+{
+  "mcpServers": {
+    "livekit": {
+      "command": "uvx",
+      "args": ["mcp-server-livekit@latest"],
+      "env": {
+        "LIVEKIT_API_KEY": "${LIVEKIT_API_KEY}",
+        "LIVEKIT_API_SECRET": "${LIVEKIT_API_SECRET}",
+        "LIVEKIT_URL": "${LIVEKIT_URL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "create_room",
+        "list_rooms",
+        "delete_room",
+        "create_token",
+        "list_participants",
+        "remove_participant",
+        "update_room_metadata",
+        "get_room_stats"
+      ]
+    },
+    "ollama": {
+      "command": "uvx", 
+      "args": ["mcp-server-ollama@latest"],
+      "env": {
+        "OLLAMA_BASE_URL": "${OLLAMA_BASE_URL}",
+        "OLLAMA_MODEL": "${OLLAMA_MODEL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "list_models",
+        "pull_model",
+        "generate_completion",
+        "generate_chat",
+        "create_model",
+        "delete_model",
+        "show_model_info",
+        "copy_model"
+      ]
+    },
+    "voice-processing": {
+      "command": "uvx",
+      "args": ["mcp-server-voice-processing@latest"],
+      "env": {
+        "DEEPGRAM_API_KEY": "${DEEPGRAM_API_KEY}",
+        "CARTESIA_API_KEY": "${CARTESIA_API_KEY}",
+        "STT_PROVIDER": "${STT_PROVIDER}",
+        "TTS_PROVIDER": "${TTS_PROVIDER}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "transcribe_audio",
+        "synthesize_speech",
+        "clone_voice",
+        "list_voices",
+        "get_voice_info",
+        "delete_voice",
+        "stream_transcription",
+        "stream_synthesis"
+      ]
+    },
+    "agent-deployment": {
+      "command": "uvx",
+      "args": ["mcp-server-agent-deployment@latest"],
+      "env": {
+        "DOCKER_HOST": "${DOCKER_HOST}",
+        "DEPLOYMENT_ENV": "${DEPLOYMENT_ENV}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "deploy_agent",
+        "stop_agent",
+        "restart_agent",
+        "list_agents",
+        "get_agent_status",
+        "get_agent_logs",
+        "update_agent_config",
+        "scale_agent"
+      ]
+    },
+    "profession-templates": {
+      "command": "uvx",
+      "args": ["mcp-server-profession-templates@latest"],
+      "disabled": false,
+      "autoApprove": [
+        "list_professions",
+        "get_profession_template",
+        "create_custom_template",
+        "update_template",
+        "validate_template",
+        "generate_prompts",
+        "test_conversation"
+      ]
+    }
+  }
+}

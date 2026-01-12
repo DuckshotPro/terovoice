@@ -1,0 +1,299 @@
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "fetch_url",
+        "get_content"
+      ]
+    },
+    "postgres": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-postgres@latest"
+      ],
+      "env": {
+        "DATABASE_URL": "${DATABASE_URL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "query_database",
+        "execute_query",
+        "get_schema"
+      ]
+    },
+    "ssh": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-ssh@latest"
+      ],
+      "env": {
+        "SSH_HOST": "${SSH_HOST}",
+        "SSH_USER": "${SSH_USER}",
+        "SSH_KEY_PATH": "${SSH_KEY_PATH}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "execute_command",
+        "read_file",
+        "write_file",
+        "list_directory"
+      ]
+    },
+    "github": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-github@latest"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "create_issue",
+        "create_pull_request",
+        "read_repository",
+        "list_issues"
+      ]
+    },
+    "notion": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-notion@latest"
+      ],
+      "env": {
+        "NOTION_API_KEY": "${NOTION_API_KEY}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "create_page",
+        "update_page",
+        "query_database"
+      ]
+    },
+    "pgvector": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-pgvector@latest"
+      ],
+      "env": {
+        "DATABASE_URL": "${DATABASE_URL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "query_database",
+        "search_vectors",
+        "insert_vectors",
+        "update_vectors"
+      ]
+    },
+    "npm": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-npm@latest"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "search_packages",
+        "get_package_info",
+        "get_package_versions"
+      ]
+    },
+    "docker": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-docker@latest"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "list_containers",
+        "list_images",
+        "get_container_logs"
+      ]
+    },
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git@latest"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "get_repository_status",
+        "list_commits",
+        "get_diff",
+        "git_status",
+        "git_add",
+        "git_commit",
+        "git_log",
+        "git_branch"
+      ]
+    },
+    "paypal": {
+      "command": "uvx",
+      "args": ["mcp-server-paypal@latest"],
+      "env": {
+        "PAYPAL_CLIENT_ID": "${PAYPAL_CLIENT_ID}",
+        "PAYPAL_CLIENT_SECRET": "${PAYPAL_CLIENT_SECRET}",
+        "PAYPAL_ENVIRONMENT": "${PAYPAL_ENVIRONMENT}",
+        "PAYPAL_WEBHOOK_ID": "${PAYPAL_WEBHOOK_ID}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "create_product",
+        "create_subscription_plan",
+        "create_subscription",
+        "get_subscription",
+        "cancel_subscription",
+        "create_invoice",
+        "send_invoice",
+        "verify_webhook"
+      ]
+    },
+    "twilio": {
+      "command": "uvx",
+      "args": ["mcp-server-twilio@latest"],
+      "env": {
+        "TWILIO_ACCOUNT_SID": "${TWILIO_ACCOUNT_SID}",
+        "TWILIO_AUTH_TOKEN": "${TWILIO_AUTH_TOKEN}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "send_sms",
+        "make_call",
+        "list_phone_numbers",
+        "purchase_phone_number",
+        "configure_webhook",
+        "get_call_logs"
+      ]
+    },
+    "aws-knowledge-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "fastmcp",
+        "run",
+        "https://knowledge-mcp.global.api.aws"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "aws___search_documentation",
+        "aws___read_documentation",
+        "aws___get_regional_availability"
+      ]
+    },
+    "livekit": {
+      "command": "uvx",
+      "args": ["mcp-server-livekit@latest"],
+      "env": {
+        "LIVEKIT_API_KEY": "${LIVEKIT_API_KEY}",
+        "LIVEKIT_API_SECRET": "${LIVEKIT_API_SECRET}",
+        "LIVEKIT_URL": "${LIVEKIT_URL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "create_room",
+        "list_rooms",
+        "delete_room",
+        "create_token",
+        "list_participants",
+        "remove_participant",
+        "update_room_metadata",
+        "get_room_stats"
+      ]
+    },
+    "ollama": {
+      "command": "uvx", 
+      "args": ["mcp-server-ollama@latest"],
+      "env": {
+        "OLLAMA_BASE_URL": "${OLLAMA_BASE_URL}",
+        "OLLAMA_MODEL": "${OLLAMA_MODEL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "list_models",
+        "pull_model",
+        "generate_completion",
+        "generate_chat",
+        "create_model",
+        "delete_model",
+        "show_model_info",
+        "copy_model"
+      ]
+    },
+    "voice-processing": {
+      "command": "uvx",
+      "args": ["mcp-server-voice-processing@latest"],
+      "env": {
+        "DEEPGRAM_API_KEY": "${DEEPGRAM_API_KEY}",
+        "CARTESIA_API_KEY": "${CARTESIA_API_KEY}",
+        "STT_PROVIDER": "${STT_PROVIDER}",
+        "TTS_PROVIDER": "${TTS_PROVIDER}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "transcribe_audio",
+        "synthesize_speech",
+        "clone_voice",
+        "list_voices",
+        "get_voice_info",
+        "delete_voice",
+        "stream_transcription",
+        "stream_synthesis"
+      ]
+    },
+    "client-onboarding": {
+      "command": "uvx",
+      "args": ["mcp-server-client-onboarding@latest"],
+      "env": {
+        "VOICE_CLONING_API_KEY": "${VOICE_CLONING_API_KEY}",
+        "CONTAINER_REGISTRY_URL": "${CONTAINER_REGISTRY_URL}",
+        "EMAIL_SMTP_HOST": "${EMAIL_SMTP_HOST}",
+        "EMAIL_SMTP_USER": "${EMAIL_SMTP_USER}",
+        "EMAIL_SMTP_PASS": "${EMAIL_SMTP_PASS}",
+        "DOMAIN_BASE": "${DOMAIN_BASE}",
+        "SSL_CERT_EMAIL": "${SSL_CERT_EMAIL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "start_onboarding",
+        "clone_voice",
+        "provision_infrastructure",
+        "create_dashboard",
+        "send_welcome_email",
+        "validate_onboarding",
+        "get_onboarding_status",
+        "rollback_onboarding",
+        "generate_credentials",
+        "setup_monitoring"
+      ]
+    },
+    "analytics": {
+      "command": "uvx",
+      "args": ["mcp-server-analytics@latest"],
+      "env": {
+        "ANALYTICS_DATABASE_URL": "${ANALYTICS_DATABASE_URL}",
+        "TIMESERIES_DATABASE_URL": "${TIMESERIES_DATABASE_URL}",
+        "DASHBOARD_URL": "${DASHBOARD_URL}",
+        "ALERT_EMAIL": "${ALERT_EMAIL}",
+        "SLACK_WEBHOOK_URL": "${SLACK_WEBHOOK_URL}",
+        "RETENTION_DAYS": "${RETENTION_DAYS}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "collect_metrics",
+        "query_analytics",
+        "create_dashboard",
+        "send_alert",
+        "generate_report",
+        "calculate_roi",
+        "track_revenue",
+        "monitor_performance",
+        "analyze_sentiment",
+        "export_data"
+      ]
+    }
+  }
+}
