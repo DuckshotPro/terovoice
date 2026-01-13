@@ -39,6 +39,14 @@ from .payment_service import (
     PaymentMethodData,
     PaymentUpdateResult,
 )
+from .plan_service import (
+    PlanService,
+    PlanTier as PlanTierEnum,
+    PlanChangeType,
+    PlanConfig,
+    PricingCalculation,
+    PlanChangeResult,
+)
 
 __all__ = [
     "hash_password",
@@ -68,4 +76,10 @@ __all__ = [
     "PaymentMethodType",
     "PaymentMethodData",
     "PaymentUpdateResult",
+    "PlanService",
+    "PlanTierEnum",
+    "PlanChangeType",
+    "PlanConfig",
+    "PricingCalculation",
+    "PlanChangeResult",
 ]
