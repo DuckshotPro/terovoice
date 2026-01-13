@@ -16,6 +16,12 @@ from backend_setup.services.auth_service import (
 )
 from backend_setup.services.billing_service import BillingService
 from backend_setup.services.usage_service import UsageService
+from backend_setup.services.subscription_service import (
+    SubscriptionService,
+    SubscriptionStatus,
+    SubscriptionData,
+)
+from backend_setup.services.cache import get_cache, SubscriptionCache
 
 __all__ = [
     "hash_password",
@@ -29,4 +35,9 @@ __all__ = [
     "create_oauth_user",
     "BillingService",
     "UsageService",
+    "SubscriptionService",
+    "SubscriptionStatus",
+    "SubscriptionData",
+    "get_cache",
+    "SubscriptionCache",
 ]

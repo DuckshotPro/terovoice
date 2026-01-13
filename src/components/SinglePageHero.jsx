@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import {
@@ -10,11 +10,9 @@ import {
   BarChart3,
   Users,
   AlertCircle,
-  Calculator,
-  TrendingUp,
+  Calendar,
   Menu,
   X,
-  Calendar,
 } from 'lucide-react';
 
 // Import components
@@ -26,8 +24,7 @@ import backgroundImage from '../assets/backgroundImage.jpg';
 import { 
   scrollAnimations, 
   buttonAnimations, 
-  performanceUtils,
-  animationConfig 
+  performanceUtils
 } from '../utils/animationUtils';
 
 /**
@@ -318,7 +315,7 @@ const SinglePageHero = () => {
                 className={`text-sm font-medium transition-colors duration-200 ${
                   activeSection === section.id
                     ? 'text-blue-400'
-                    : 'text-white/70 hover:text-white'
+                    : 'text-gray-300 hover:text-white'
                 }`}
                 aria-current={activeSection === section.id ? 'page' : undefined}
                 aria-label={`Navigate to ${section.label} section`}
@@ -358,7 +355,7 @@ const SinglePageHero = () => {
                   className={`block w-full text-left py-2 text-sm font-medium transition-colors duration-200 ${
                     activeSection === section.id
                       ? 'text-blue-400'
-                      : 'text-white/70 hover:text-white'
+                      : 'text-gray-300 hover:text-white'
                   }`}
                   role="menuitem"
                   aria-current={activeSection === section.id ? 'page' : undefined}
@@ -457,7 +454,8 @@ const SinglePageHero = () => {
               >
                 <PayPalButton 
                   plan="Professional"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300"
+                  variant="primary"
+                  className="w-full md:w-auto"
                 >
                   Get Your AI Clone (Free Trial)
                 </PayPalButton>
@@ -555,17 +553,17 @@ const SinglePageHero = () => {
                     <select
                       value={selectedProfession}
                       onChange={(e) => setSelectedProfession(e.target.value)}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white"
+                      className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-blue-400 focus:outline-none"
                     >
-                      <option value="dentist">Dentist</option>
-                      <option value="plumber">Plumber</option>
-                      <option value="mechanic">Mobile Mechanic</option>
-                      <option value="locksmith">Locksmith</option>
-                      <option value="contractor">Contractor</option>
-                      <option value="photographer">Photographer</option>
-                      <option value="realtor">Real Estate Agent</option>
-                      <option value="tattoo">Tattoo Artist</option>
-                      <option value="inspector">Home Inspector</option>
+                      <option value="dentist" className="bg-gray-800 text-white">Dentist</option>
+                      <option value="plumber" className="bg-gray-800 text-white">Plumber</option>
+                      <option value="mechanic" className="bg-gray-800 text-white">Mobile Mechanic</option>
+                      <option value="locksmith" className="bg-gray-800 text-white">Locksmith</option>
+                      <option value="contractor" className="bg-gray-800 text-white">Contractor</option>
+                      <option value="photographer" className="bg-gray-800 text-white">Photographer</option>
+                      <option value="realtor" className="bg-gray-800 text-white">Real Estate Agent</option>
+                      <option value="tattoo" className="bg-gray-800 text-white">Tattoo Artist</option>
+                      <option value="inspector" className="bg-gray-800 text-white">Home Inspector</option>
                     </select>
                   </div>
 
@@ -656,7 +654,8 @@ const SinglePageHero = () => {
               >
                 <PayPalButton 
                   plan="Professional"
-                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300"
+                  variant="success"
+                  className="w-full"
                 >
                   Start Capturing This Revenue Today
                 </PayPalButton>
@@ -870,7 +869,7 @@ const SinglePageHero = () => {
                   className={`px-6 py-2 rounded-md font-medium transition-all duration-300 ${
                     billingCycle === 'monthly'
                       ? 'bg-blue-600 text-white'
-                      : 'text-white/70 hover:text-white'
+                      : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   Monthly
@@ -880,7 +879,7 @@ const SinglePageHero = () => {
                   className={`px-6 py-2 rounded-md font-medium transition-all duration-300 ${
                     billingCycle === 'yearly'
                       ? 'bg-blue-600 text-white'
-                      : 'text-white/70 hover:text-white'
+                      : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   Yearly <span className="text-green-400 text-sm ml-1">(Save 17%)</span>
@@ -936,11 +935,8 @@ const SinglePageHero = () => {
 
                   <PayPalButton
                     plan={plan.name}
-                    className={`w-full py-4 rounded-lg font-bold text-lg transition-all duration-300 ${
-                      plan.highlighted
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                        : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
-                    }`}
+                    variant={plan.highlighted ? "premium" : "primary"}
+                    className="w-full"
                   >
                     {plan.cta}
                   </PayPalButton>
@@ -1055,7 +1051,8 @@ const SinglePageHero = () => {
             >
               <PayPalButton 
                 plan="Professional"
-                className="bg-green-600 hover:bg-green-700 text-white px-12 py-6 rounded-lg font-bold text-xl transition-all duration-300"
+                variant="success"
+                className="w-full md:w-auto"
               >
                 Start Your Free Trial Now
               </PayPalButton>

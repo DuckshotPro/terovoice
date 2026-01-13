@@ -20,7 +20,7 @@ The plan follows a layered approach: backend services first, then frontend compo
   - **Property 4: Billing History Completeness** - Verify invoice ordering and completeness
   - **Validates: Requirements 2.1, 3.1**
 
-- [ ] 2. Implement subscription status retrieval and caching
+- [-] 2. Implement subscription status retrieval and caching
   - Implement BillingService.getSubscriptionStatus()
   - Add PayPal API integration for subscription fetch
   - Implement caching layer with TTL

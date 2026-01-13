@@ -8,6 +8,7 @@ import Home from '../pages/Home';
 import About from '../pages/About';
 import Products from '../pages/Products';
 import NotFound from '../pages/NotFound';
+import MemberPortal from '../pages/MemberPortal';
 
 // Auth Pages
 import Login from '../pages/auth/Login';
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
         path: 'auth/signup',
         element: <Signup />,
       },
+      {
+        path: 'member-portal',
+        element: <MemberPortal />,
+      },
     ],
   },
   {
@@ -87,6 +92,10 @@ export const router = createBrowserRouter([
       {
         path: 'analytics',
         element: <Analytics />,
+      },
+      {
+        path: 'portal',
+        element: <MemberPortal />,
       },
       // {
       //   path: 'settings',

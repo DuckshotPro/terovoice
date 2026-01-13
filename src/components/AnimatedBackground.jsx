@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 /**
@@ -131,12 +131,11 @@ const AnimatedBackground = ({
     <div className="fixed inset-0 -z-10">
       {/* Background Image Layer */}
       {backgroundImage && (
-        <motion.img
-          src={backgroundImage}
-          alt="Background"
-          className="absolute inset-0 w-full h-full object-cover"
+        <motion.div
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
           initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.7 }}
+          animate={{ scale: 1, opacity: 0.3 }}
           transition={{ duration: 2, ease: "easeOut" }}
         />
       )}

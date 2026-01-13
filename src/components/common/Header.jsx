@@ -25,6 +25,11 @@ function Header() {
                 Products
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/member-portal" className="hover:text-gray-500">
+                Member Portal
+              </NavLink>
+            </li>
           </ul>
         </nav>
         <div>

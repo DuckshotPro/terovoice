@@ -56,3 +56,9 @@ backend-setup/logs/
 package.
 tsconfig.
 tsconfig.node.
+
+# Kiro MCP Manager - Sensitive configuration files
+.kiro/settings/
+
+# Sensitive files with API keys and secrets
+PAYPAL_INTEGRATION_OPTIONS.md
