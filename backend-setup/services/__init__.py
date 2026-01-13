@@ -15,7 +15,13 @@ from .auth_service import (
     create_oauth_user,
 )
 from .billing_service import BillingService
-from .usage_service import UsageService
+from .usage_service import (
+    UsageService,
+    UsageMetrics,
+    PlanTier,
+    UsageThreshold,
+    PlanLimits,
+)
 from .subscription_service import (
     SubscriptionService,
     SubscriptionStatus,

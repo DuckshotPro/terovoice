@@ -8,8 +8,8 @@ import bcrypt
 from datetime import datetime, timedelta
 from typing import Optional, Tuple
 from sqlalchemy.orm import Session
-from backend_setup.db.models import User
-from backend_setup.db.connection import get_db_context
+from ..db.models import User
+from ..db.connection import get_db_context
 import logging
 
 logger = logging.getLogger(__name__)

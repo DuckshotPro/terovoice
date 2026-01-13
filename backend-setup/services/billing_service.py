@@ -7,8 +7,8 @@ import logging
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from backend_setup.db.models import Subscription, Usage, Invoice, User
-from backend_setup.db.connection import get_db_context
+from ..db.models import Subscription, Usage, Invoice, User
+from ..db.connection import get_db_context
 
 logger = logging.getLogger(__name__)
 
