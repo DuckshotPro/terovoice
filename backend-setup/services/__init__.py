@@ -33,6 +33,12 @@ from .subscription_service import (
     SubscriptionData,
 )
 from .cache import get_cache, SubscriptionCache
+from .payment_service import (
+    PaymentService,
+    PaymentMethodType,
+    PaymentMethodData,
+    PaymentUpdateResult,
+)
 
 __all__ = [
     "hash_password",
@@ -58,4 +64,8 @@ __all__ = [
     "SubscriptionData",
     "get_cache",
     "SubscriptionCache",
+    "PaymentService",
+    "PaymentMethodType",
+    "PaymentMethodData",
+    "PaymentUpdateResult",
 ]
