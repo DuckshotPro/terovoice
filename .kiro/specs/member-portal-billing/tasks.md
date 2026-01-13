@@ -31,17 +31,24 @@ The plan follows a layered approach: backend services first, then frontend compo
   - **Property 1: Subscription Status Consistency** - Verify status matches PayPal within 30 seconds
   - **Validates: Requirements 1.1, 1.2, 1.3, 1.4, 1.5, 8.1, 8.2, 8.3**
 
-- [-] 3. Implement usage metrics tracking and retrieval
+- [x] 3. Implement usage metrics tracking and retrieval
   - Implement UsageService.recordUsage() for call tracking
   - Implement UsageService.getUsageMetrics() with calculations
   - Implement threshold checking (80%, 100%)
   - Add real-time or 5-minute update mechanism
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7_
 
-- [ ] 3.1 Write property tests for usage metrics and thresholds
+- [x] 3.1 Write property tests for usage metrics and thresholds
   - **Property 2: Usage Metrics Accuracy** - Verify calculations are accurate
   - **Property 3: Usage Threshold Alerts** - Verify alerts at 80% and 100%
-  - **Validates: Requirements 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7**
+  - **Property 4: Usage Accumulation** - Verify total equals sum of recordings
+  - **Property 5: Cache TTL Behavior** - Verify cache expiration
+  - **Property 6: Plan Limits Consistency** - Verify limits are positive and increase with tier
+  - **Property 7: Feature List Completeness** - Verify all features present
+  - **Property 8: Threshold Check Consistency** - Verify threshold checks match metrics
+  - **Property 9: Cache Invalidation** - Verify cache clearing works
+  - **Property 10: Billing Period Consistency** - Verify billing period is current month
+  - **Validates: Requirements 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 7.1, 7.2, 7.3, 7.4, 8.2, 8.4**
 
 - [ ] 4. Implement billing history retrieval and filtering
   - Implement BillingService.getBillingHistory()
