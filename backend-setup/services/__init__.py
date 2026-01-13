@@ -3,7 +3,7 @@ Services module for the AI Receptionist SaaS.
 Exports all service classes for easy importing.
 """
 
-from backend_setup.services.auth_service import (
+from .auth_service import (
     hash_password,
     verify_password,
     create_jwt_token,
@@ -14,14 +14,14 @@ from backend_setup.services.auth_service import (
     get_user_by_email,
     create_oauth_user,
 )
-from backend_setup.services.billing_service import BillingService
-from backend_setup.services.usage_service import UsageService
-from backend_setup.services.subscription_service import (
+from .billing_service import BillingService
+from .usage_service import UsageService
+from .subscription_service import (
     SubscriptionService,
     SubscriptionStatus,
     SubscriptionData,
 )
-from backend_setup.services.cache import get_cache, SubscriptionCache
+from .cache import get_cache, SubscriptionCache
 
 __all__ = [
     "hash_password",

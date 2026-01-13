@@ -2,18 +2,45 @@
 Property-based tests for subscription service.
 Tests subscription status retrieval, caching, and consistency.
 """
+import sys
+import os
+
+# Add backend-setup to path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
 import pytest
 import asyncio
 from datetime import datetime, timedelta
 from hypothesis import given, strategies as st, settings, HealthCheck
 from hypothesis.strategies import composite
 
-from backend_setup.services.subscription_service import (
-    SubscriptionService,
-    SubscriptionStatus,
-    SubscriptionData,
+# Import directly from modules
+import importlib.util
+
+# Load subscription_service module
+spec = importlib.util.spec_from_file_location(
+    "subscription_service",
+    os.path.join(os.path.dirname(__file__), '..', 'services', 'subscription_service.py')
 )
-from backend_setup.services.cache import SubscriptionCache
+subscription_module = importlib.util.module_from_spec(spec)
+
+# Load cache module first
+cache_spec = importlib.util.spec_from_file_location(
+    "cache",
+    os.path.join(os.path.dirname(__file__), '..', 'services', 'cache.py')
+)
+cache_module = importlib.util.module_from_spec(cache_spec)
+sys.modules['cache'] = cache_module
+cache_spec.loader.exec_module(cache_module)
+
+# Now load subscription_service
+sys.modules['subscription_service'] = subscription_module
+spec.loader.exec_module(subscription_module)
+
+SubscriptionService = subscription_module.SubscriptionService
+SubscriptionStatus = subscription_module.SubscriptionStatus
+SubscriptionData = subscription_module.SubscriptionData
+SubscriptionCache = cache_module.SubscriptionCache
 
 
 # ============================================================================

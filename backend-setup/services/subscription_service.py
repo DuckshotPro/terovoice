@@ -7,7 +7,10 @@ from typing import Optional, Dict, Any
 from datetime import datetime, timedelta
 from enum import Enum
 
-from .cache import get_cache, SubscriptionCache
+try:
+    from .cache import get_cache, SubscriptionCache
+except ImportError:
+    from cache import get_cache, SubscriptionCache
 
 logger = logging.getLogger(__name__)
 
