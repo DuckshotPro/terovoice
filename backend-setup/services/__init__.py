@@ -14,7 +14,12 @@ from .auth_service import (
     get_user_by_email,
     create_oauth_user,
 )
-from .billing_service import BillingService
+from .billing_service import (
+    BillingService,
+    InvoiceStatus,
+    InvoiceData,
+    BillingHistoryFilters,
+)
 from .usage_service import (
     UsageService,
     UsageMetrics,
@@ -40,6 +45,9 @@ __all__ = [
     "get_user_by_email",
     "create_oauth_user",
     "BillingService",
+    "InvoiceStatus",
+    "InvoiceData",
+    "BillingHistoryFilters",
     "UsageService",
     "UsageMetrics",
     "PlanTier",

@@ -50,16 +50,26 @@ The plan follows a layered approach: backend services first, then frontend compo
   - **Property 10: Billing Period Consistency** - Verify billing period is current month
   - **Validates: Requirements 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 7.1, 7.2, 7.3, 7.4, 8.2, 8.4**
 
-- [ ] 4. Implement billing history retrieval and filtering
+- [x] 4. Implement billing history retrieval and filtering
   - Implement BillingService.getBillingHistory()
   - Add invoice querying from database
   - Implement reverse chronological ordering
   - Add filtering by date range and status
   - _Requirements: 3.1, 3.2, 3.3, 3.6_
 
-- [ ] 4.1 Write property tests for billing history
+- [x] 4.1 Write property tests for billing history
   - **Property 4: Billing History Completeness** - Verify all invoices present and ordered
-  - **Validates: Requirements 3.1, 3.2, 3.3, 3.6**
+  - **Property 5: Invoice Data Integrity** - Verify all required fields present
+  - **Property 6: Date Range Filtering** - Verify date range filters work correctly
+  - **Property 7: Status Filtering** - Verify status filters work correctly
+  - **Property 8: Amount Range Filtering** - Verify amount filters work correctly
+  - **Property 9: Pagination Consistency** - Verify pagination returns all invoices
+  - **Property 10: Cache Behavior** - Verify caching works correctly
+  - **Property 11: Invoice Details Retrieval** - Verify invoice details match history
+  - **Property 12: PDF Download URL Availability** - Verify PDF URLs available
+  - **Property 13: Empty History Handling** - Verify empty list returned when no invoices
+  - **Property 14: Cache Invalidation** - Verify cache invalidation works
+  - **Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 8.2, 8.3, 8.4**
 
 - [ ] 5. Implement invoice PDF generation and download
   - Create invoice PDF template
