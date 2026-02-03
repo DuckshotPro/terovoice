@@ -4,7 +4,7 @@ Defines all database tables and relationships.
 """
 
 from sqlalchemy import Column, String, Integer, Float, DateTime, Boolean, ForeignKey, Text, JSON, Enum
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.sql import func
 import uuid
@@ -189,7 +189,7 @@ class OnboardingState(Base):
     sms_phone_number = Column(String)
     
     # Caller Responses (Step 3)
-    caller_responses = Column(JSONB, default=dict)  # Custom response templates
+    caller_responses = Column(JSON, default=dict)  # Custom response templates
     
     # Calendar Integration (Step 4)
     calendar_provider = Column(String)  # google, outlook, apple
@@ -252,9 +252,9 @@ class AnalyticsEvent(Base):
     timestamp = Column(DateTime, server_default=func.now(), index=True)
     
     # Event data
-    event_data = Column(JSONB, default=dict)  # Flexible event properties
+    event_data = Column(JSON, default=dict)  # Flexible event properties
     session_id = Column(String, index=True)
-    metadata = Column(JSONB, default=dict)
+    meta_data = Column(JSON, default=dict)
     
     created_at = Column(DateTime, server_default=func.now())
 
@@ -279,7 +279,7 @@ class PayPalOrder(Base):
     # PayPal data
     paypal_payer_id = Column(String)
     paypal_capture_id = Column(String)
-    paypal_data = Column(JSONB, default=dict)  # Full PayPal response
+    paypal_data = Column(JSON, default=dict)  # Full PayPal response
     
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())

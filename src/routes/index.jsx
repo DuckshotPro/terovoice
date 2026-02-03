@@ -20,6 +20,7 @@ import Clients from '../pages/clients/Clients';
 import Billing from '../pages/billing/Billing';
 import Calls from '../pages/calls/Calls';
 import Analytics from '../pages/analytics/Analytics';
+import Account from '../pages/account/Account';
 
 /**
  * Application Routes
@@ -96,6 +97,10 @@ export const router = createBrowserRouter([
       {
         path: 'portal',
         element: <MemberPortal />,
+      },
+      {
+        path: 'account',
+        element: <Account />,
       },
       // {
       //   path: 'settings',

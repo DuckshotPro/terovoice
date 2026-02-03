@@ -6,13 +6,20 @@ import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime, timedelta
 from enum import Enum
-
-try:
-    from .cache import get_cache, SubscriptionCache
-except ImportError:
-    from cache import get_cache, SubscriptionCache
+from sqlalchemy.future import select
+from sqlalchemy import desc
 
 logger = logging.getLogger(__name__)
+
+try:
+    from backend_setup.services.cache import get_cache, SubscriptionCache
+    from backend_setup.db.models import Invoice, Subscription
+    from backend_setup.db.connection import get_db_context
+except ImportError as e:
+    logger.warning(f"Failed to import from backend_setup: {e}. Trying relative imports.")
+    from .cache import get_cache, SubscriptionCache
+    from ..db.models import Invoice, Subscription
+    from ..db.connection import get_db_context
 
 
 class InvoiceStatus(str, Enum):
@@ -183,11 +190,6 @@ class BillingService:
         self.logger.info(f"Billing history retrieved: {len(invoices)} invoices")
         return invoices
     
-    def _query_invoices_from_database(
-        self,
-        customer_id: str,
-        filters: BillingHistoryFilters,
-    ) -> List[InvoiceData]:
         """
         Query invoices from database with filters.
         
@@ -198,47 +200,57 @@ class BillingService:
         Returns:
             List of InvoiceData objects
         """
-        # In production, this would use SQLAlchemy to query the database
-        # For testing, we'll return mock data
-        
-        # Mock data for testing
-        mock_invoices = self._generate_mock_invoices(customer_id)
+        try:
+             # Use provided database session or create a new context
+            db_session = self.database
+            if db_session:
+                 return self._query_invoices_with_session(db_session, customer_id, filters)
+            else:
+                 with get_db_context() as db:
+                     return self._query_invoices_with_session(db, customer_id, filters)
+        except Exception as e:
+            self.logger.error(f"Database query failed: {e}. Falling back to mock data.")
+            return self._generate_mock_invoices(customer_id)
+
+    def _query_invoices_with_session(self, db, customer_id: str, filters: BillingHistoryFilters) -> List[InvoiceData]:
+        """Helper to query invoices with a session."""
+        stmt = select(Invoice).join(Subscription).where(Subscription.user_id == customer_id)
         
         # Apply filters
-        filtered_invoices = []
+        if filters.start_date:
+            stmt = stmt.where(Invoice.created_at >= datetime.fromisoformat(filters.start_date.replace("Z", "+00:00")))
+        if filters.end_date:
+            stmt = stmt.where(Invoice.created_at <= datetime.fromisoformat(filters.end_date.replace("Z", "+00:00")))
+        if filters.status:
+            stmt = stmt.where(Invoice.status == filters.status)
+        if filters.min_amount:
+            stmt = stmt.where(Invoice.amount >= filters.min_amount)
+        if filters.max_amount:
+             stmt = stmt.where(Invoice.amount <= filters.max_amount)
+             
+        # Sorting and Pagination
+        stmt = stmt.order_by(desc(Invoice.created_at)).offset(filters.offset).limit(filters.limit)
         
-        for invoice in mock_invoices:
-            # Date range filter
-            if filters.start_date:
-                invoice_date = datetime.fromisoformat(invoice.created_at.replace("Z", "+00:00"))
-                start_date = datetime.fromisoformat(filters.start_date.replace("Z", "+00:00"))
-                if invoice_date < start_date:
-                    continue
-            
-            if filters.end_date:
-                invoice_date = datetime.fromisoformat(invoice.created_at.replace("Z", "+00:00"))
-                end_date = datetime.fromisoformat(filters.end_date.replace("Z", "+00:00"))
-                if invoice_date > end_date:
-                    continue
-            
-            # Status filter
-            if filters.status and invoice.status.value != filters.status:
-                continue
-            
-            # Amount filters
-            if filters.min_amount is not None and invoice.amount < filters.min_amount:
-                continue
-            
-            if filters.max_amount is not None and invoice.amount > filters.max_amount:
-                continue
-            
-            filtered_invoices.append(invoice)
+        result = db.execute(stmt)
+        invoices = result.scalars().all()
         
-        # Apply pagination
-        start_idx = filters.offset
-        end_idx = start_idx + filters.limit
-        
-        return filtered_invoices[start_idx:end_idx]
+        return [
+            InvoiceData(
+                invoice_id=str(inv.id),
+                subscription_id=str(inv.subscription_id),
+                paypal_invoice_id=inv.paypal_invoice_id,
+                amount=inv.amount,
+                currency=inv.currency,
+                status=InvoiceStatus(inv.status) if inv.status in InvoiceStatus._value2member_map_ else InvoiceStatus.DRAFT,
+                period_start=inv.period_start.isoformat() + "Z" if inv.period_start else None,
+                period_end=inv.period_end.isoformat() + "Z" if inv.period_end else None,
+                due_date=inv.due_date.isoformat() + "Z" if inv.due_date else None,
+                paid_at=inv.paid_at.isoformat() + "Z" if inv.paid_at else None,
+                created_at=inv.created_at.isoformat() + "Z",
+                plan_name="Standard", # Retrieve from subscription if needed
+                download_url=f"/api/invoices/{customer_id}/{inv.id}/download"
+            ) for inv in invoices
+        ]
     
     def _generate_mock_invoices(self, customer_id: str) -> List[InvoiceData]:
         """

@@ -9,8 +9,14 @@ from enum import Enum
 
 try:
     from .cache import get_cache, SubscriptionCache
+    from ..db.models import Usage, Subscription, User, PlanTier as DbPlanTier
+    from ..db.connection import get_db_context
 except ImportError:
     from cache import get_cache, SubscriptionCache
+    from backend_setup.db.models import Usage, Subscription, User, PlanTier as DbPlanTier
+    from backend_setup.db.connection import get_db_context
+from sqlalchemy.future import select
+from sqlalchemy import func
 
 logger = logging.getLogger(__name__)
 
@@ -131,7 +137,7 @@ class UsageService:
         Record call usage for a customer.
         
         Args:
-            customer_id: Customer ID
+            customer_id: Customer ID (User ID)
             call_duration_minutes: Duration of call in minutes
             metadata: Optional metadata (phone number, location, etc.)
         """
@@ -139,9 +145,24 @@ class UsageService:
             f"Recording usage: customer={customer_id}, "
             f"duration={call_duration_minutes} minutes"
         )
+
+        try:
+            # Use provided database session or create a new context
+            db_session = self.database
+            if db_session:
+                # Use existing session (no context manager needed if managed externally)
+                 self._record_usage_in_db(db_session, customer_id, call_duration_minutes)
+            else:
+                 # Use new context
+                 with get_db_context() as db:
+                     self._record_usage_in_db(db, customer_id, call_duration_minutes)
+
+        except Exception as e:
+             self.logger.error(f"Failed to record usage in DB: {e}")
+             # Fallback to cache if DB fails? Or just raise? 
+             # For now, we log and proceed to cache to ensure we at least have ephemeral record.
         
-        # In production, this would insert into database
-        # For now, we'll use cache for testing
+        # Update Cache (Read-through cache pattern)
         usage_key = self._get_usage_key(customer_id)
         
         # Get current usage from cache or initialize
@@ -157,7 +178,7 @@ class UsageService:
         current_usage["call_count"] += 1
         current_usage["last_updated"] = datetime.utcnow().isoformat() + "Z"
         
-        # Cache with 5-minute TTL (matches real-time update requirement)
+        # Cache with 5-minute TTL
         self.cache.set(
             usage_key,
             current_usage,
@@ -168,6 +189,48 @@ class UsageService:
             f"Usage recorded: total={current_usage['call_minutes_used']} minutes, "
             f"calls={current_usage['call_count']}"
         )
+
+    def _record_usage_in_db(self, db, customer_id: str, minutes: float):
+        """Helper to record usage in database."""
+        # Find subscription for user
+        # Assuming customer_id is a UUID string for User.id
+        stmt = select(Subscription).where(Subscription.user_id == customer_id)
+        result = db.execute(stmt)
+        subscription = result.scalar_one_or_none()
+        
+        if not subscription:
+            self.logger.warning(f"No subscription found for user {customer_id}, skipping DB usage record.")
+            return
+
+        # Determine billing period
+        now = datetime.utcnow()
+        period_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        
+        # Find or create usage record for this period
+        stmt = select(Usage).where(
+            Usage.subscription_id == subscription.id,
+            Usage.billing_period_start == period_start
+        )
+        result = db.execute(stmt)
+        usage_record = result.scalar_one_or_none()
+
+        if not usage_record:
+            if now.month == 12:
+                period_end = period_start.replace(year=now.year + 1, month=1)
+            else:
+                period_end = period_start.replace(month=now.month + 1)
+                
+            usage_record = Usage(
+                subscription_id=subscription.id,
+                billing_period_start=period_start,
+                billing_period_end=period_end,
+                call_minutes_used=0,
+                call_minutes_limit=subscription.max_minutes_per_month
+            )
+            db.add(usage_record)
+        
+        usage_record.call_minutes_used += minutes
+        # Commit handled by context manager or caller
     
     async def get_usage_metrics(
         self,

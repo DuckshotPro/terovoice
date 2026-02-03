@@ -64,19 +64,31 @@ class ClientRouter:
         Returns:
             System prompt string
         """
+        config = self.get_profession_config(profession)
+        return config.get("system_prompt", "You are a helpful AI assistant.")
+
+    def get_profession_config(self, profession: str) -> Dict[str, Any]:
+        """
+        Load full profession configuration.
+
+        Args:
+            profession: Profession name (dentist, plumber, etc)
+
+        Returns:
+            Dict containing system_prompt, emergency_keywords, etc.
+        """
         prompt_path = Path(__file__).parent / "professions" / f"{profession}.json"
 
         if not prompt_path.exists():
-            logger.warning(f"Profession prompt not found: {profession}")
-            return "You are a helpful AI assistant."
+            logger.warning(f"Profession config not found: {profession}")
+            return {}
 
         try:
             with open(prompt_path, "r") as f:
-                data = json.load(f)
-                return data.get("system_prompt", "You are a helpful AI assistant.")
+                return json.load(f)
         except Exception as e:
-            logger.error(f"Error loading profession prompt: {e}")
-            return "You are a helpful AI assistant."
+            logger.error(f"Error loading profession config: {e}")
+            return {}
 
     def add_client(
         self,

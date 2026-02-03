@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { useClients } from '../../contexts/ClientsContext';
 import { Plus, Edit2, Trash2, Phone, MapPin } from 'lucide-react';
 import ClientForm from '../../components/clients/ClientForm';

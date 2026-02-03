@@ -62,3 +62,6 @@ tsconfig.node.
 
 # Sensitive files with API keys and secrets
 PAYPAL_INTEGRATION_OPTIONS.md
+
+.venv/
+__pycache__/

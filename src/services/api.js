@@ -88,26 +88,21 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      // Try to refresh token
+      // Backend Refresh Token logic is currently not standard
+      // (It expects a valid token to refresh it, so expired tokens cannot be refreshed)
+      // So we skip the refresh attempt and just logout.
+
+      /* 
+      // Refresh Logic to be enabled when backend supports refresh tokens
       try {
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken) {
-          const response = await axios.post(`${API_BASE_URL}/api/auth/refresh`, {
-            refresh_token: refreshToken,
-          });
-
-          const { access_token } = response.data;
-          tokenManager.setToken(access_token);
-
-          // Retry original request with new token
-          originalRequest.headers.Authorization = `Bearer ${access_token}`;
-          return apiClient(originalRequest);
+           // ... logic ...
         }
-      } catch (refreshError) {
-        console.error('❌ Token refresh failed:', refreshError);
-      }
+      } catch (refreshError) { ... }
+      */
 
-      // If refresh fails, clear tokens and redirect to login
+      // If refresh fails (or is disabled), clear tokens and redirect to login
       tokenManager.removeToken();
       localStorage.removeItem('refresh_token');
 

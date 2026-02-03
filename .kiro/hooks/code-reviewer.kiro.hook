@@ -1,4 +1,4 @@
-    {
+{
   "enabled": true,
   "name": "Code Reviewer Local - Revisor de Calidad de Código",
   "description": "Analiza archivos de código y sugiere mejoras de calidad, estilo y mejores prácticas (Hook Local)",

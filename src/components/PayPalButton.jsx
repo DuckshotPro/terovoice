@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  CreditCard, 
-  Shield, 
-  CheckCircle, 
-  ArrowRight, 
+import {
+  CreditCard,
+  Shield,
+  CheckCircle,
+  ArrowRight,
   Lock,
   Zap
 } from 'lucide-react';
@@ -22,40 +22,48 @@ const PayPalButton = ({ plan, className, children, variant = 'primary' }) => {
 
   const handlePayPalSubscription = async () => {
     setIsProcessing(true);
-    
-    // Real PayPal Plan IDs from environment variables
-    const planIds = {
-      'Solo Pro': import.meta.env.VITE_PAYPAL_SOLO_PRO_PLAN_ID,
-      'Professional': import.meta.env.VITE_PAYPAL_PROFESSIONAL_PLAN_ID,
-      'Enterprise': import.meta.env.VITE_PAYPAL_ENTERPRISE_PLAN_ID
+
+    // Map frontend plan names to backend Plan IDs
+    const backendPlanIds = {
+      'Solo Pro': 'monthly_299',
+      'Professional': 'monthly_499',
+      'Enterprise': 'monthly_799' // Assuming this exists or handled
     };
 
-    const planId = planIds[plan];
-    const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
-    const environment = import.meta.env.VITE_PAYPAL_ENVIRONMENT || 'sandbox';
-    
-    // Simulate processing delay for premium feel
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    if (planId && clientId) {
-      // Real PayPal subscription URL with return URL to member portal
-      const returnUrl = encodeURIComponent(`${window.location.origin}/member-portal?plan=${encodeURIComponent(plan)}&status=success`);
-      const cancelUrl = encodeURIComponent(`${window.location.origin}/?status=cancelled`);
-      
-      const paypalUrl = environment === 'production' 
-        ? `https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=${planId}&return_url=${returnUrl}&cancel_url=${cancelUrl}`
-        : `https://www.sandbox.paypal.com/webapps/billing/plans/subscribe?plan_id=${planId}&return_url=${returnUrl}&cancel_url=${cancelUrl}`;
-      
-      window.open(paypalUrl, '_blank');
-    } else if (plan === 'Enterprise') {
-      // Enterprise plans go to sales contact
+    const planId = backendPlanIds[plan];
+
+    if (plan === 'Enterprise') {
       window.location.href = 'mailto:sales@tero-ai.com?subject=Enterprise Plan Inquiry';
-    } else {
-      // Fallback - show setup instructions
-      alert(`⚙️ PayPal Setup Required\n\nTo enable ${plan} subscriptions:\n1. Add your PayPal Client ID to .env file\n2. Create subscription plans in PayPal dashboard\n3. Add Plan IDs to .env file\n\nSee PAYPAL_INTEGRATION_OPTIONS.md for detailed setup instructions.`);
+      setIsProcessing(false);
+      return;
     }
-    
-    setIsProcessing(false);
+
+    try {
+      const response = await fetch('/api/paypal/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          planId: planId,
+          returnUrl: `${window.location.origin}/member-portal?status=success`,
+          cancelUrl: `${window.location.origin}/?status=cancelled`
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.approvalUrl) {
+        window.location.href = data.approvalUrl;
+      } else {
+        throw new Error(data.error || 'Failed to initiate PayPal checkout');
+      }
+    } catch (error) {
+      console.error('PayPal Error:', error);
+      alert(`Payment Error: ${error.message}. Please try again or contact support.`);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   // Premium button variants
@@ -67,7 +75,7 @@ const PayPalButton = ({ plan, className, children, variant = 'primary' }) => {
     },
     success: {
       base: "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-xl hover:shadow-2xl",
-      icon: "text-green-100", 
+      icon: "text-green-100",
       processing: "from-green-500 to-green-600"
     },
     premium: {
@@ -181,7 +189,7 @@ const PayPalButton = ({ plan, className, children, variant = 'primary' }) => {
       </AnimatePresence>
 
       {/* Trust indicators */}
-      <motion.div 
+      <motion.div
         className="flex items-center justify-center space-x-4 mt-3 text-xs opacity-75"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.75 }}

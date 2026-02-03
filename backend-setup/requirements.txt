@@ -1,9 +1,9 @@
 # LiveKit (using latest stable versions)
 livekit-agents>=0.15.0
 livekit-api>=0.8.0
-livekit-plugins-deepgram>=1.4.0
-livekit-plugins-cartesia>=1.4.0
-livekit-plugins-silero>=1.4.0
+livekit-plugins-deepgram
+livekit-plugins-cartesia
+livekit-plugins-silero
 
 # HTTP client for HF inference
 httpx>=0.24.1
@@ -34,3 +34,8 @@ requests>=2.31.0
 # Testing
 pytest>=7.4.3
 hypothesis>=6.92.1
+
+# AI / ML for Semantic Scoring
+sentence-transformers>=2.2.2
+numpy>=1.26.0
+scikit-learn>=1.3.0

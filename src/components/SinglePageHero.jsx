@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import {
@@ -21,9 +22,9 @@ import PayPalButton from './PayPalButton';
 import backgroundImage from '../assets/backgroundImage.jpg';
 
 // Import animation utilities
-import { 
-  scrollAnimations, 
-  buttonAnimations, 
+import {
+  scrollAnimations,
+  buttonAnimations,
   performanceUtils
 } from '../utils/animationUtils';
 
@@ -35,6 +36,7 @@ import {
  */
 
 const SinglePageHero = () => {
+  const navigate = useNavigate();
   const [billingCycle, setBillingCycle] = useState('monthly');
   const [selectedProfession, setSelectedProfession] = useState('dentist');
   const [missedCalls, setMissedCalls] = useState(10);
@@ -44,7 +46,7 @@ const SinglePageHero = () => {
   // Performance optimization
   const optimizedConfig = performanceUtils.getOptimizedConfig();
   const isMobile = window.innerWidth < 768;
-  
+
   // Mobile-optimized animation config
   const mobileConfig = {
     ...optimizedConfig,
@@ -85,7 +87,7 @@ const SinglePageHero = () => {
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    
+
     // Check initial hash
     if (window.location.hash) {
       handleHashChange();
@@ -98,9 +100,9 @@ const SinglePageHero = () => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.ctrlKey || e.metaKey) return; // Don't interfere with browser shortcuts
-      
+
       const currentIndex = navigationSections.findIndex(section => section.id === activeSection);
-      
+
       switch (e.key) {
         case 'ArrowUp':
         case 'ArrowLeft':
@@ -151,7 +153,7 @@ const SinglePageHero = () => {
     const potentialRevenue = yearlyMissedCalls * data.avgJobValue * 0.3; // 30% conversion
     const serviceCost = 499 * 12; // Professional plan yearly
     const roi = ((potentialRevenue - serviceCost) / serviceCost) * 100;
-    
+
     return {
       potentialRevenue: Math.round(potentialRevenue),
       serviceCost,
@@ -263,11 +265,11 @@ const SinglePageHero = () => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ 
+      element.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
-      
+
       // Update URL hash without triggering hashchange event
       if (window.location.hash !== `#${sectionId}`) {
         window.history.pushState(null, null, `#${sectionId}`);
@@ -277,25 +279,26 @@ const SinglePageHero = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen bg-black text-white overflow-x-hidden"
+    <div
+      className="min-h-screen bg-transparent text-white overflow-x-hidden"
       role="main"
       aria-label="AI Receptionist Service Landing Page"
     >
       {/* Skip to content link for screen readers */}
-      <a 
-        href="#hero" 
+      <a
+        href="#hero"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50"
       >
         Skip to main content
       </a>
-      {/* Animated Background */}
+      {/* Animated Background - DISABLED to use Global Wave Background
       <AnimatedBackground
         variant="particles"
         intensity={mobileConfig.enableParticles ? "medium" : "subtle"}
         colorScheme="gradient"
         backgroundImage={backgroundImage}
       />
+      */}
 
       {/* Floating Navigation */}
       <motion.nav
@@ -312,19 +315,24 @@ const SinglePageHero = () => {
               <button
                 key={section.id}
                 onClick={() => scrollToSection(section.id)}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  activeSection === section.id
-                    ? 'text-blue-400'
-                    : 'text-gray-300 hover:text-white'
-                }`}
+                className={`text-sm font-medium transition-colors duration-200 ${activeSection === section.id
+                  ? 'text-blue-400'
+                  : 'text-gray-300 hover:text-white'
+                  }`}
                 aria-current={activeSection === section.id ? 'page' : undefined}
                 aria-label={`Navigate to ${section.label} section`}
               >
                 {section.label}
               </button>
             ))}
+            <button
+              onClick={() => navigate('/auth/login')}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ml-4"
+            >
+              Member Login
+            </button>
           </div>
-          
+
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
@@ -352,11 +360,10 @@ const SinglePageHero = () => {
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
-                  className={`block w-full text-left py-2 text-sm font-medium transition-colors duration-200 ${
-                    activeSection === section.id
-                      ? 'text-blue-400'
-                      : 'text-gray-300 hover:text-white'
-                  }`}
+                  className={`block w-full text-left py-2 text-sm font-medium transition-colors duration-200 ${activeSection === section.id
+                    ? 'text-blue-400'
+                    : 'text-gray-300 hover:text-white'
+                    }`}
                   role="menuitem"
                   aria-current={activeSection === section.id ? 'page' : undefined}
                 >
@@ -369,9 +376,9 @@ const SinglePageHero = () => {
       </motion.nav>
 
       {/* Hero Section */}
-      <section 
-        id="hero" 
-        ref={heroRef} 
+      <section
+        id="hero"
+        ref={heroRef}
         className="min-h-screen flex items-center justify-center relative"
         aria-labelledby="hero-heading"
       >
@@ -382,7 +389,7 @@ const SinglePageHero = () => {
             variants={scrollAnimations.staggerContainer}
           >
             {/* Animated Headline */}
-            <motion.h1 
+            <motion.h1
               id="hero-heading"
               className="text-6xl md:text-8xl font-bold mb-6"
               variants={scrollAnimations.staggerChild}
@@ -390,11 +397,11 @@ const SinglePageHero = () => {
               Your AI Receptionist{' '}
               <motion.span
                 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400"
-                animate={{ 
+                animate={{
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                 }}
-                transition={{ 
-                  duration: 3, 
+                transition={{
+                  duration: 3,
                   repeat: Infinity,
                   ease: "linear"
                 }}
@@ -404,15 +411,15 @@ const SinglePageHero = () => {
               </motion.span>
             </motion.h1>
 
-            <motion.p 
+            <motion.p
               className="text-2xl mb-8 opacity-95 max-w-3xl mx-auto"
               variants={scrollAnimations.staggerChild}
             >
-              Stop losing $10k-$50k/month to missed calls. Your AI answers instantly, books appointments, 
+              Stop losing $10k-$50k/month to missed calls. Your AI answers instantly, books appointments,
               and qualifies leads while you work—24/7, sounds exactly like you.
             </motion.p>
 
-            <motion.p 
+            <motion.p
               className="text-xl mb-8 opacity-90 max-w-2xl mx-auto"
               variants={scrollAnimations.staggerChild}
             >
@@ -421,7 +428,7 @@ const SinglePageHero = () => {
             </motion.p>
 
             {/* ROI Badge */}
-            <motion.div 
+            <motion.div
               className="bg-yellow-400 text-black px-6 py-3 rounded-lg font-bold text-lg mb-8 inline-block"
               variants={scrollAnimations.scaleIn}
               animate={{
@@ -442,7 +449,7 @@ const SinglePageHero = () => {
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div 
+            <motion.div
               className="flex flex-col md:flex-row gap-4 justify-center"
               variants={scrollAnimations.staggerChild}
             >
@@ -452,7 +459,7 @@ const SinglePageHero = () => {
                 whileHover="hover"
                 whileTap="tap"
               >
-                <PayPalButton 
+                <PayPalButton
                   plan="Professional"
                   variant="primary"
                   className="w-full md:w-auto"
@@ -460,8 +467,8 @@ const SinglePageHero = () => {
                   Get Your AI Clone (Free Trial)
                 </PayPalButton>
               </motion.div>
-              
-              <motion.button 
+
+              <motion.button
                 onClick={() => scrollToSection('calculator')}
                 className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300"
                 variants={buttonAnimations.secondary}
@@ -473,7 +480,7 @@ const SinglePageHero = () => {
               </motion.button>
             </motion.div>
 
-            <motion.p 
+            <motion.p
               className="text-sm opacity-75 mt-6"
               variants={scrollAnimations.staggerChild}
             >
@@ -528,20 +535,20 @@ const SinglePageHero = () => {
             variants={scrollAnimations.staggerContainer}
             className="max-w-4xl mx-auto"
           >
-            <motion.h2 
+            <motion.h2
               className="text-5xl font-bold text-center mb-4"
               variants={scrollAnimations.staggerChild}
             >
               Calculate Your ROI
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-xl text-center mb-12 opacity-90"
               variants={scrollAnimations.staggerChild}
             >
               See exactly how much money you're losing to missed calls
             </motion.p>
 
-            <motion.div 
+            <motion.div
               className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20"
               variants={scrollAnimations.scaleIn}
             >
@@ -590,11 +597,11 @@ const SinglePageHero = () => {
                 {/* Results */}
                 <div className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-xl p-6">
                   <h3 className="text-xl font-bold mb-4 text-center">Your Potential ROI</h3>
-                  
+
                   <div className="space-y-4">
                     <div className="flex justify-between">
                       <span>Lost Revenue/Year:</span>
-                      <motion.span 
+                      <motion.span
                         className="font-bold text-red-400"
                         key={roiData.potentialRevenue}
                         initial={{ scale: 1.2, color: '#ef4444' }}
@@ -604,16 +611,16 @@ const SinglePageHero = () => {
                         ${roiData.potentialRevenue.toLocaleString()}
                       </motion.span>
                     </div>
-                    
+
                     <div className="flex justify-between">
                       <span>Service Cost/Year:</span>
                       <span className="font-bold">${roiData.serviceCost.toLocaleString()}</span>
                     </div>
-                    
+
                     <div className="border-t border-white/20 pt-4">
                       <div className="flex justify-between text-lg">
                         <span>Net Profit:</span>
-                        <motion.span 
+                        <motion.span
                           className="font-bold text-green-400"
                           key={roiData.potentialRevenue - roiData.serviceCost}
                           initial={{ scale: 1.2 }}
@@ -623,10 +630,10 @@ const SinglePageHero = () => {
                           ${(roiData.potentialRevenue - roiData.serviceCost).toLocaleString()}
                         </motion.span>
                       </div>
-                      
+
                       <div className="flex justify-between text-lg mt-2">
                         <span>ROI:</span>
-                        <motion.span 
+                        <motion.span
                           className="font-bold text-yellow-400"
                           key={roiData.roi}
                           initial={{ scale: 1.2 }}
@@ -636,7 +643,7 @@ const SinglePageHero = () => {
                           {roiData.roi}%
                         </motion.span>
                       </div>
-                      
+
                       <div className="text-center mt-4 p-3 bg-green-500/20 rounded-lg">
                         <div className="text-sm opacity-90">Payback Period</div>
                         <div className="text-2xl font-bold text-green-400">
@@ -648,11 +655,11 @@ const SinglePageHero = () => {
                 </div>
               </div>
 
-              <motion.div 
+              <motion.div
                 className="text-center mt-8"
                 variants={scrollAnimations.staggerChild}
               >
-                <PayPalButton 
+                <PayPalButton
                   plan="Professional"
                   variant="success"
                   className="w-full"
@@ -673,17 +680,17 @@ const SinglePageHero = () => {
             animate={professionsInView ? "visible" : "hidden"}
             variants={scrollAnimations.staggerContainer}
           >
-            <motion.h2 
+            <motion.h2
               className="text-5xl font-bold text-center mb-4"
               variants={scrollAnimations.staggerChild}
             >
               Built for Service Professionals
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-xl text-center mb-12 opacity-90 max-w-3xl mx-auto"
               variants={scrollAnimations.staggerChild}
             >
-              When your hands are busy, your phone shouldn't be silent. 
+              When your hands are busy, your phone shouldn't be silent.
               Perfect for any profession where you can't answer calls while working.
             </motion.p>
 
@@ -741,12 +748,12 @@ const SinglePageHero = () => {
                   <div className="text-4xl mb-4 text-center">{profession.icon}</div>
                   <h3 className="text-xl font-bold mb-3 text-center">{profession.title}</h3>
                   <p className="text-sm opacity-90 mb-4">{profession.description}</p>
-                  
+
                   <div className="bg-red-500/20 rounded-lg p-3 mb-4">
                     <div className="text-xs font-medium text-red-300 mb-1">The Problem:</div>
                     <div className="text-sm">{profession.painPoint}</div>
                   </div>
-                  
+
                   <div className="bg-green-500/20 rounded-lg p-3">
                     <div className="text-xs font-medium text-green-300 mb-1">The Result:</div>
                     <div className="text-sm font-bold">{profession.result}</div>
@@ -766,13 +773,13 @@ const SinglePageHero = () => {
             animate={featuresInView ? "visible" : "hidden"}
             variants={scrollAnimations.staggerContainer}
           >
-            <motion.h2 
+            <motion.h2
               className="text-5xl font-bold text-center mb-4"
               variants={scrollAnimations.staggerChild}
             >
               Everything You Need to Never Miss a Call
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-xl text-center mb-12 opacity-90"
               variants={scrollAnimations.staggerChild}
             >
@@ -845,13 +852,13 @@ const SinglePageHero = () => {
             animate={pricingInView ? "visible" : "hidden"}
             variants={scrollAnimations.staggerContainer}
           >
-            <motion.h2 
+            <motion.h2
               className="text-5xl font-bold text-center mb-4"
               variants={scrollAnimations.staggerChild}
             >
               Simple, Transparent Pricing
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-xl text-center mb-8 opacity-90"
               variants={scrollAnimations.staggerChild}
             >
@@ -859,28 +866,26 @@ const SinglePageHero = () => {
             </motion.p>
 
             {/* Billing Toggle */}
-            <motion.div 
+            <motion.div
               className="flex justify-center mb-12"
               variants={scrollAnimations.staggerChild}
             >
               <div className="bg-white/10 rounded-lg p-1 flex">
                 <button
                   onClick={() => setBillingCycle('monthly')}
-                  className={`px-6 py-2 rounded-md font-medium transition-all duration-300 ${
-                    billingCycle === 'monthly'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-300 hover:text-white'
-                  }`}
+                  className={`px-6 py-2 rounded-md font-medium transition-all duration-300 ${billingCycle === 'monthly'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-300 hover:text-white'
+                    }`}
                 >
                   Monthly
                 </button>
                 <button
                   onClick={() => setBillingCycle('yearly')}
-                  className={`px-6 py-2 rounded-md font-medium transition-all duration-300 ${
-                    billingCycle === 'yearly'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-300 hover:text-white'
-                  }`}
+                  className={`px-6 py-2 rounded-md font-medium transition-all duration-300 ${billingCycle === 'yearly'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-300 hover:text-white'
+                    }`}
                 >
                   Yearly <span className="text-green-400 text-sm ml-1">(Save 17%)</span>
                 </button>
@@ -892,11 +897,10 @@ const SinglePageHero = () => {
                 <motion.div
                   key={index}
                   variants={scrollAnimations.staggerChild}
-                  className={`relative bg-white/5 backdrop-blur-sm rounded-2xl p-8 border transition-all duration-300 ${
-                    plan.highlighted
-                      ? 'border-blue-400 bg-white/10 scale-105'
-                      : 'border-white/10 hover:border-white/20'
-                  }`}
+                  className={`relative bg-white/5 backdrop-blur-sm rounded-2xl p-8 border transition-all duration-300 ${plan.highlighted
+                    ? 'border-blue-400 bg-white/10 scale-105'
+                    : 'border-white/10 hover:border-white/20'
+                    }`}
                   whileHover={{ scale: plan.highlighted ? 1.05 : 1.02 }}
                 >
                   {plan.highlighted && (
@@ -910,7 +914,7 @@ const SinglePageHero = () => {
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
                     <p className="text-sm opacity-75 mb-4">{plan.description}</p>
-                    
+
                     <div className="mb-4">
                       <span className="text-5xl font-bold">${plan.price}</span>
                       <span className="text-lg opacity-75">
@@ -944,7 +948,7 @@ const SinglePageHero = () => {
               ))}
             </div>
 
-            <motion.p 
+            <motion.p
               className="text-center text-sm opacity-75 mt-8"
               variants={scrollAnimations.staggerChild}
             >
@@ -962,13 +966,13 @@ const SinglePageHero = () => {
             animate={testimonialsInView ? "visible" : "hidden"}
             variants={scrollAnimations.staggerContainer}
           >
-            <motion.h2 
+            <motion.h2
               className="text-5xl font-bold text-center mb-4"
               variants={scrollAnimations.staggerChild}
             >
               Real Results from Real Businesses
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-xl text-center mb-12 opacity-90"
               variants={scrollAnimations.staggerChild}
             >
@@ -1018,21 +1022,21 @@ const SinglePageHero = () => {
             animate={ctaInView ? "visible" : "hidden"}
             variants={scrollAnimations.staggerContainer}
           >
-            <motion.h2 
+            <motion.h2
               className="text-6xl font-bold mb-6"
               variants={scrollAnimations.staggerChild}
             >
               Stop Losing Money to Missed Calls
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-2xl mb-8 opacity-95 max-w-3xl mx-auto"
               variants={scrollAnimations.staggerChild}
             >
-              Your AI receptionist is ready to start booking appointments and capturing revenue 
+              Your AI receptionist is ready to start booking appointments and capturing revenue
               while you focus on what you do best.
             </motion.p>
 
-            <motion.div 
+            <motion.div
               className="bg-red-500/20 rounded-xl p-6 mb-8 max-w-2xl mx-auto"
               variants={scrollAnimations.scaleIn}
             >
@@ -1045,19 +1049,19 @@ const SinglePageHero = () => {
               </div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="flex flex-col md:flex-row gap-4 justify-center mb-8"
               variants={scrollAnimations.staggerChild}
             >
-              <PayPalButton 
+              <PayPalButton
                 plan="Professional"
                 variant="success"
                 className="w-full md:w-auto"
               >
                 Start Your Free Trial Now
               </PayPalButton>
-              
-              <motion.button 
+
+              <motion.button
                 onClick={() => scrollToSection('calculator')}
                 className="border-2 border-white text-white px-12 py-6 rounded-lg font-bold text-xl transition-all duration-300"
                 whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
@@ -1067,7 +1071,7 @@ const SinglePageHero = () => {
               </motion.button>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="text-sm opacity-75"
               variants={scrollAnimations.staggerChild}
             >

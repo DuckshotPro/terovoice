@@ -18,6 +18,7 @@ from livekit.agents.voice_assistant import VoiceAssistant
 from livekit.plugins import deepgram, silero
 
 from services.llm.huggingface_provider import HuggingFaceLLMProvider
+from services.logic.semantic_scorer import SemanticIntentScorer
 from agent.router import ClientRouter
 from analytics.db import log_call_to_db
 from config.settings import settings
@@ -32,6 +33,7 @@ class AIReceptionistAgent:
         """Initialize agent with providers and router."""
         self.llm_provider = HuggingFaceLLMProvider()
         self.router = ClientRouter(settings.clients_db_path)
+        self.semantic_scorer = SemanticIntentScorer()
         self.conversation_history = []
         self.call_start_time = None
         self.latencies = {
@@ -63,9 +65,20 @@ class AIReceptionistAgent:
                 logger.warning(f"No client found for {incoming_number}")
                 return
 
-            # Get profession-specific prompt
+            # Get profession-specific config
             profession = client_config.get("profession", "dentist")
-            system_prompt = self.router.get_profession_prompt(profession)
+            prof_config = self.router.get_profession_config(profession)
+            system_prompt = prof_config.get("system_prompt", "You are a helpful AI assistant.")
+            
+            # Register specific intents for this profession
+            # Assuming prof_config can have "intents": {"EMERGENCY": [...], "BOOKING": [...]}
+            # For backward compat, map emergency_keywords to "EMERGENCY"
+            intents = prof_config.get("intents", {})
+            legacy_keywords = prof_config.get("emergency_keywords", [])
+            if legacy_keywords:
+                intents["EMERGENCY"] = intents.get("EMERGENCY", []) + legacy_keywords
+            
+            self.semantic_scorer.register_intents(intents)
 
             # Get participant (caller)
             participant = await ctx.wait_for_participant()
@@ -90,7 +103,7 @@ class AIReceptionistAgent:
             assistant.start(ctx.room, participant)
 
             # Send greeting
-            greeting = f"Hello! Thank you for calling. How can I help you today?"
+            greeting = prof_config.get("greeting", "Hello! Thank you for calling. How can I help you today?")
             await assistant.say(greeting, allow_interruptions=True)
 
             # Track conversation
@@ -114,39 +127,61 @@ class AIReceptionistAgent:
     def _create_llm_wrapper(self, system_prompt: str):
         """
         Create LLM wrapper compatible with LiveKit.
-
-        Args:
-            system_prompt: System instructions for this profession
-
-        Returns:
-            LLM instance
+        Uses parent agent's semantic scorer.
         """
 
         class HFLLMWrapper(llm.LLM):
-            def __init__(self, provider, sys_prompt):
+            def __init__(self, provider, sys_prompt, scorer):
                 super().__init__()
                 self.provider = provider
                 self.system_prompt = sys_prompt
+                self.scorer = scorer
 
             async def chat(self, chat_ctx: llm.ChatContext) -> llm.ChatResponse:
                 # Get last user message
                 messages = chat_ctx.messages
                 user_msg = messages[-1].content if messages else ""
 
-                # Get response from HF
-                response_text = await self.provider.generate_response(
+                # 🧠 Micro-Model Semantic Check (Sub-second)
+                intent_label, score = self.scorer.score(user_msg)
+                
+                if intent_label == "EMERGENCY" and score > 0.75:
+                    logger.info(f"🚨 SEMANTIC TRIGGER: {intent_label} ({score:.2f})")
+                    
+                    async def emergency_stream():
+                        # Immediate response
+                        response_text = "I understand this is urgent. Let me check our emergency schedule immediately."
+                        yield llm.ChatChunk(
+                            choices=[
+                                llm.Choice(
+                                    delta=llm.ChoiceDelta(role="assistant", content=response_text),
+                                    index=0,
+                                )
+                            ]
+                        )
+                    return llm.ChatResponse(stream=emergency_stream())
+
+                # Get stream from HF
+                hf_stream = self.provider.stream_response(
                     prompt=user_msg,
                     system_prompt=self.system_prompt,
                 )
 
-                return llm.ChatResponse(
-                    message=llm.ChatMessage(
-                        role="assistant",
-                        content=response_text,
-                    )
-                )
+                # Convert text stream to LiveKit ChatChunks
+                async def stream_adapter():
+                    async for chunk in hf_stream:
+                        yield llm.ChatChunk(
+                            choices=[
+                                llm.Choice(
+                                    delta=llm.ChoiceDelta(role="assistant", content=chunk),
+                                    index=0,
+                                )
+                            ]
+                        )
 
-        return HFLLMWrapper(self.llm_provider, system_prompt)
+                return llm.ChatResponse(stream=stream_adapter())
+
+        return HFLLMWrapper(self.llm_provider, system_prompt, self.semantic_scorer)
 
     def _create_tts_wrapper(self):
         """Create TTS wrapper (Cartesia for ultra-low latency)."""

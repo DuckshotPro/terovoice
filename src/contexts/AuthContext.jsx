@@ -28,25 +28,12 @@ export const AuthProvider = ({ children }) => {
         if (token && !tokenManager.isTokenExpired(token)) {
           // Token exists and is valid, fetch user profile
           const response = await api.auth.me();
-          setUser(response.data);
+          setUser(response.data.user); // Backend returns { user: ... }
           setIsAuthenticated(true);
-        } else if (token) {
-          // Token expired, try to refresh
-          const refreshToken = localStorage.getItem('refresh_token');
-          if (refreshToken) {
-            try {
-              const response = await api.auth.refresh(refreshToken);
-              tokenManager.setToken(response.data.access_token);
-              const userResponse = await api.auth.me();
-              setUser(userResponse.data);
-              setIsAuthenticated(true);
-            } catch (err) {
-              // Refresh failed, clear auth
-              tokenManager.removeToken();
-              localStorage.removeItem('refresh_token');
-              setIsAuthenticated(false);
-            }
-          }
+        } else {
+          // Token invalid or missing
+          tokenManager.removeToken();
+          setIsAuthenticated(false);
         }
       } catch (err) {
         console.error('Auth initialization error:', err);
@@ -73,10 +60,13 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const response = await api.auth.login({ email, password });
-      const { access_token, refresh_token, user: userData } = response.data;
+      // Backend returns { token, user }
+      const { token, user: userData } = response.data;
 
-      tokenManager.setToken(access_token);
-      localStorage.setItem('refresh_token', refresh_token);
+      tokenManager.setToken(token);
+      // Backend does not currently return a refresh token
+      // localStorage.setItem('refresh_token', refresh_token);
+
       setUser(userData);
       setIsAuthenticated(true);
 
@@ -95,10 +85,13 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const response = await api.auth.register({ email, password, name });
-      const { access_token, refresh_token, user: userData } = response.data;
+      // Backend returns { token, user }
+      const { token, user: userData } = response.data;
 
-      tokenManager.setToken(access_token);
-      localStorage.setItem('refresh_token', refresh_token);
+      tokenManager.setToken(token);
+      // Backend does not currently return a refresh token
+      // localStorage.setItem('refresh_token', refresh_token);
+
       setUser(userData);
       setIsAuthenticated(true);
 
