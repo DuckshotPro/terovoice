@@ -65,3 +65,5 @@ PAYPAL_INTEGRATION_OPTIONS.md
 
 .venv/
 __pycache__/
+
+*.n8n
