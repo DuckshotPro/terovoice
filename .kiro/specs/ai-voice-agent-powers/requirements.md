@@ -4,8 +4,8 @@
 
 This specification defines the requirements for setting up and optimizing Kiro Powers and MCP (Model Context Protocol) servers to support the AI Voice Agent SaaS platform. The system needs to integrate multiple services including voice processing, billing, telephony, and client management through a unified power ecosystem.
 
-## Glossary
-
+**## Glossary
+**
 - **Power**: A Kiro Power that packages documentation and MCP server configurations
 - **MCP Server**: Model Context Protocol server that provides tools and capabilities
 - **AI_Voice_Agent**: The core voice agent system using LiveKit + Ollama + local/cloud STT/TTS

@@ -92,9 +92,23 @@ try:
     app.register_blueprint(calls.calls_bp)
     app.register_blueprint(analytics.analytics_bp)
     
-    logger.info("✅ API routes registered")
+    logger.info("✅ Core API routes registered")
 except ImportError as e:
-    logger.warning(f"⚠️  Some routes not available yet: {e}")
+    logger.warning(f"⚠️  Some core routes not available yet: {e}")
+
+# Import and register new onboarding and PayPal blueprints
+try:
+    from backend_setup.api.onboarding import onboarding_bp
+    from backend_setup.api.paypal_integration import paypal_bp
+    
+    app.register_blueprint(onboarding_bp)
+    app.register_blueprint(paypal_bp)
+    
+    logger.info("✅ Onboarding and PayPal API routes registered")
+except ImportError as e:
+    logger.warning(f"⚠️  Onboarding/PayPal routes not available: {e}")
+except Exception as e:
+    logger.error(f"❌ Error registering onboarding/PayPal routes: {e}")
 
 
 if __name__ == '__main__':

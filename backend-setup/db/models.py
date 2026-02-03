@@ -164,3 +164,125 @@ class VectorEmbedding(Base):
     call_id = Column(UUID(as_uuid=True), ForeignKey("calls.id"), nullable=False)
     embedding = Column(String)  # pgvector type (stored as string for compatibility)
     created_at = Column(DateTime, server_default=func.now())
+
+
+class OnboardingState(Base):
+    """Onboarding state tracking for new customers."""
+    __tablename__ = "onboarding_states"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, unique=True)
+    current_step = Column(Integer, default=1)  # 1-7
+    progress = Column(Integer, default=0)  # 0-100
+    completed_steps = Column(JSON, default=list)  # [1, 2, 3]
+    
+    # Business Information (Step 1)
+    business_name = Column(String)
+    industry = Column(String)
+    business_phone = Column(String)
+    service_description = Column(Text)
+    business_documents = Column(JSON, default=list)  # URLs to uploaded docs
+    
+    # Phone Configuration (Step 2)
+    forwarding_number = Column(String)
+    sms_enabled = Column(Boolean, default=False)
+    sms_phone_number = Column(String)
+    
+    # Caller Responses (Step 3)
+    caller_responses = Column(JSONB, default=dict)  # Custom response templates
+    
+    # Calendar Integration (Step 4)
+    calendar_provider = Column(String)  # google, outlook, apple
+    calendar_connected = Column(Boolean, default=False)
+    calendar_access_token = Column(String)
+    calendar_refresh_token = Column(String)
+    
+    # Demo Status (Step 5)
+    demo_completed = Column(Boolean, default=False)
+    demo_transcripts = Column(JSON, default=list)
+    
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    # Relationships
+    user = relationship("User", backref="onboarding_state")
+
+
+class ConversationLog(Base):
+    """Detailed conversation logging for fine-tuning and RAG."""
+    __tablename__ = "conversation_logs"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    call_id = Column(UUID(as_uuid=True), ForeignKey("calls.id"), nullable=False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    timestamp = Column(DateTime, server_default=func.now())
+    
+    # Conversation data
+    user_utterance = Column(Text)
+    user_audio_url = Column(String)  # Raw audio bytes stored in S3/local
+    ai_response = Column(Text)
+    ai_audio_url = Column(String)  # Generated audio stored in S3/local
+    
+    # Technical metadata
+    stt_provider = Column(String)  # on-site, ibm-cloud
+    tts_provider = Column(String)  # on-site, ibm-cloud
+    confidence = Column(Float)
+    sentiment = Column(String)
+    intent = Column(String)
+    
+    # Business metadata
+    industry = Column(String)
+    profession = Column(String)
+    call_type = Column(String)  # demo, live, test
+    
+    created_at = Column(DateTime, server_default=func.now())
+
+    # Relationships
+    call = relationship("Call", backref="conversation_logs")
+    user = relationship("User", backref="conversation_logs")
+
+
+class AnalyticsEvent(Base):
+    """Analytics event tracking for product optimization."""
+    __tablename__ = "analytics_events"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+    event_type = Column(String, nullable=False, index=True)  # onboarding_step, demo_start, etc
+    timestamp = Column(DateTime, server_default=func.now(), index=True)
+    
+    # Event data
+    event_data = Column(JSONB, default=dict)  # Flexible event properties
+    session_id = Column(String, index=True)
+    metadata = Column(JSONB, default=dict)
+    
+    created_at = Column(DateTime, server_default=func.now())
+
+    # Relationships
+    user = relationship("User", backref="analytics_events")
+
+
+class PayPalOrder(Base):
+    """PayPal order tracking for payment processing."""
+    __tablename__ = "paypal_orders"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    paypal_order_id = Column(String, unique=True, nullable=False, index=True)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)  # Null until captured
+    
+    # Order details
+    plan_id = Column(String, nullable=False)  # monthly_299, monthly_499, monthly_799
+    amount = Column(Float, nullable=False)
+    currency = Column(String, default="USD")
+    status = Column(String, default="created")  # created, approved, captured, failed
+    
+    # PayPal data
+    paypal_payer_id = Column(String)
+    paypal_capture_id = Column(String)
+    paypal_data = Column(JSONB, default=dict)  # Full PayPal response
+    
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    # Relationships
+    user = relationship("User", backref="paypal_orders")
