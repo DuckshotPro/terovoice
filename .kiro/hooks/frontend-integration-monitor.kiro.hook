@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Frontend Integration Task Monitor",
+  "description": "Monitors frontend integration tasks, API client updates, and environment configuration changes. Provides real-time feedback on task progress, API endpoint consistency, and environment variable requirements.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      ".kiro/specs/frontend-integration/tasks.md",
+      "src/services/api.js",
+      ".env.local"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review the changes made to the frontend integration files. Analyze: 1) Which tasks from tasks.md are being addressed, 2) Whether the API endpoints in api.js match the task requirements, 3) If all required environment variables in .env.local are properly configured. Provide a summary of progress and flag any mismatches or missing configurations."
+  }
+}
