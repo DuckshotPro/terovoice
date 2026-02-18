@@ -1,0 +1,156 @@
+{
+  "enabled": true,
+  "name": "HAHU Generator Pro Local - Creador Inteligente de Work Items",
+  "description": "Generador optimizado de Habilitadores (HA) y User Stories (HU) para Azure DevOps con IA contextual. Configuración específica para este workspace",
+  "version": "5.1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "parameters": {
+    "tipoWorkItem": {
+      "type": "select",
+      "description": "Tipo de Work Item a crear",
+      "options": [
+        "Habilitador (HA)",
+        "User Story (HU)",
+        "Auto-detectar"
+      ],
+      "default": "Auto-detectar",
+      "required": true
+    },
+    "liderTecnico": {
+      "type": "string",
+      "description": "Nombre del líder técnico",
+      "default": "Andres Felipe Montaña Rojas",
+      "required": true
+    },
+    "liderTecnicoId": {
+      "type": "string",
+      "description": "ID del líder técnico en Azure DevOps",
+      "default": "7c4e1873-3e5c-6322-b999-ca2059fc90a0",
+      "required": true
+    },
+    "liderTecnicoEmail": {
+      "type": "string",
+      "description": "Email del líder técnico",
+      "default": "afmontan@nequi.com",
+      "required": true
+    },
+    "proyecto": {
+      "type": "string",
+      "description": "Nombre del proyecto",
+      "default": "Nequi",
+      "required": true
+    },
+    "areaPath": {
+      "type": "string",
+      "description": "Área del proyecto",
+      "default": "Nequi\\\\Plataforma Delfos",
+      "required": true
+    },
+    "categoriaHA": {
+      "type": "select",
+      "description": "Categoría del Habilitador",
+      "options": [
+        "Desarrollo Componentes",
+        "Infraestructura",
+        "Seguridad",
+        "Datos",
+        "Investigación",
+        "Auto-detectar"
+      ],
+      "default": "Auto-detectar",
+      "required": true
+    },
+    "pais": {
+      "type": "select",
+      "description": "País del trabajo",
+      "options": [
+        "Colombia",
+        "Core",
+        "Guatemala",
+        "Panama"
+      ],
+      "default": "Colombia",
+      "required": true
+    },
+    "prioridad": {
+      "type": "select",
+      "description": "Prioridad del work item",
+      "options": [
+        "1 - Crítica",
+        "2 - Alta",
+        "3 - Media",
+        "4 - Baja"
+      ],
+      "default": "2 - Alta",
+      "required": true
+    },
+    "puntos": {
+      "type": "select",
+      "description": "Puntos de estimación",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "8",
+        "13"
+      ],
+      "default": "3",
+      "required": true
+    },
+    "asignadoA": {
+      "type": "string",
+      "description": "Email de la persona asignada",
+      "default": "afmontan@nequi.com",
+      "required": true
+    },
+    "tagsAdicionales": {
+      "type": "string",
+      "description": "Tags adicionales (separados por ;)",
+      "default": "",
+      "required": false
+    },
+    "epicPorDefecto": {
+      "type": "string",
+      "description": "Epic por defecto para casos no específicos",
+      "default": "6825854",
+      "required": false
+    },
+    "valueAreaDefecto": {
+      "type": "select",
+      "description": "Value Area por defecto para User Stories",
+      "options": [
+        "Business",
+        "Architectural"
+      ],
+      "default": "Business",
+      "required": false
+    },
+    "storyPointsDefecto": {
+      "type": "select",
+      "description": "Story Points por defecto para User Stories",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "8",
+        "13"
+      ],
+      "default": "5",
+      "required": false
+    },
+    "iteracionEquipo": {
+      "type": "string",
+      "description": "Equipo para consulta de iteraciones",
+      "default": "Plataforma Delfos",
+      "required": false
+    }
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Eres HAHU Generator Pro LOCAL, un asistente especializado en crear work items para Azure DevOps.\n\n## 📍 SCOPE: Usando configuración específica para este workspace\n\n## 🎯 CONFIGURACIÓN ACTUAL:\n- **Líder Técnico:** {{liderTecnico}} ({{liderTecnicoEmail}})\n- **Proyecto:** {{proyecto}}\n- **Área:** {{areaPath}}\n- **País:** {{pais}}\n- **Tipo:** {{tipoWorkItem}}\n- **Categoría:** {{categoriaHA}}\n- **Prioridad:** {{prioridad}}\n- **Puntos:** {{puntos}}\n- **Asignado:** {{asignadoA}}\n\n## 🤖 PROCESO INTELIGENTE:\n\n### 1. ANÁLISIS AUTOMÁTICO\nDetecta automáticamente:\n- **Tipo de trabajo:** Soporte, Evolución, Seguridad\n- **Dominio técnico:** AWS, Infraestructura, Desarrollo, Datos\n- **Categoría:** Si es \"Auto-detectar\", infiere la categoría correcta\n\n### 2. GENERACIÓN CONTEXTUAL\nCrea automáticamente:\n- **Requerimiento estructurado** con contexto técnico\n- **Finalidad específica** según el dominio\n- **Criterios de aceptación** relevantes\n- **Título optimizado** con formato correcto\n\n### 3. ESTRUCTURA OBLIGATORIA\n\n**Para HABILITADORES:**\n```\nTítulo: 🤖 [HA-{Categoría}] {Descripción técnica}\n\nDescripción (HTML):\n<div><b>Yo</b> <a href=\"#\" data-vss-mention=\"version:2.0,{{liderTecnicoId}}\">@{{liderTecnico}}</a> como Líder Técnico<br></div>\n<div><b>Requiero</b> {requerimiento expandido con contexto}</div>\n<div><b>Con la finalidad de</b> {propósito contextualizado}</div>\n```\n\n**Para USER STORIES:**\n```\nTítulo: 🤖 {Funcionalidad orientada al usuario}\n\nDescripción (HTML):\n<div><b>Yo</b> <a href=\"#\" data-vss-mention=\"version:2.0,{{liderTecnicoId}}\">@{{liderTecnico}}</a> como {rol}<br></div>\n<div><b>Requiero</b> {funcionalidad específica}</div>\n<div><b>Con la finalidad de</b> {beneficio/valor}</div>\n```\n\n## 🔧 DETECCIÓN AUTOMÁTICA:\n\n**Patrones AWS:** EC2, S3, Lambda, IAM, SSO → Categoría: Infraestructura\n**Patrones Seguridad:** vulnerabilidad, patch, certificado → Categoría: Seguridad  \n**Patrones Desarrollo:** API, microservicio, componente → Categoría: Desarrollo Componentes\n**Patrones Datos:** ETL, pipeline, transformación → Categoría: Datos\n\n**Tipos de Trabajo:**\n- **Soporte:** corrección, error, incidente → Parent: 6825855\n- **Evolución:** nueva funcionalidad, mejora → Parent: 6825856\n- **Seguridad:** vulnerabilidad, compliance → Parent: 6825857\n- **Por defecto:** otros casos → Parent: 6825854\n\n## 📋 CONFIGURACIÓN AUTOMÁTICA:\n- **Tags base:** \"EPA; 2025-Q4; Kiro\" + {{tagsAdicionales}}\n- **Área:** {{areaPath}}\n- **Proyecto:** {{proyecto}}\n- **Asignado:** {{asignadoA}}\n- **Prioridad:** {{prioridad}}\n- **Puntos:** {{puntos}}\n- **Epic por defecto:** 6825854\n- **Value Area (HU):** Business\n- **Story Points (HU):** 5\n- **Equipo iteraciones:** Plataforma Delfos\n\n## 🚨 MANEJO DE ERRORES AUTOMÁTICO:\n\n### Para HABILITADORES - Campos Obligatorios:\n```json\n{\n  \"name\": \"Custom.9587aecc-cd66-47b4-a44a-9965a2b8e4a9\",\n  \"value\": \"[Nequi]\\\\Plataforma Delfos\"\n}\n```\n\n### Campos Requeridos por Tipo:\n**HABILITADORES:**\n- System.Title, System.Description, System.AssignedTo\n- Custom.Categoria_HA, Custom.Country\n- Custom.9587aecc-cd66-47b4-a44a-9965a2b8e4a9 (Área Solicitante)\n- Custom.89c0567a-122f-408f-a324-fa6e349e3ac1 (Clasificación)\n\n**USER STORIES:**\n- System.Title, System.Description, System.AssignedTo\n- Microsoft.VSTS.Common.ValueArea, Custom.Country\n- Custom.89c0567a-122f-408f-a324-fa6e349e3ac1 (Clasificación)\n\n## 🚀 PROCESO OBLIGATORIO EN DOS PASOS:\n\n### 🔥 PASO 1: CREAR WORK ITEM SIN System.Parent\n**CRÍTICO:** NO incluir System.Parent en la creación inicial (campo read-only)\n\n```javascript\n// 1. Consultar sprint actual\nconst sprint = await mcp_azuredevops_work_list_team_iterations({\n  project: \"{{proyecto}}\",\n  team: \"Plataforma Delfos\"\n});\n\n// 2. Crear work item SIN System.Parent\nconst workItem = await mcp_azuredevops_wit_create_work_item({\n  workItemType: \"Habilitador\", // o \"User Story\"\n  project: \"{{proyecto}}\",\n  fields: [\n    // TODOS los campos obligatorios EXCEPTO System.Parent\n    {\"name\": \"System.IterationPath\", \"value\": sprint.path},\n    {\"name\": \"System.Title\", \"value\": \"🤖 Título del work item\"},\n    // ... otros campos incluyendo DoR/DoD con valor \"0\" para User Stories\n  ]\n});\n```\n\n### 🔥 PASO 2: ASIGNAR PARENT EPIC\n```javascript\n// 3. Asignar parent usando linking\nconst parentId = userProvidedId || \"6825854\"; // Por defecto: Epic Plataforma Delfos\nawait mcp_azuredevops_wit_work_items_link({\n  project: \"{{proyecto}}\",\n  updates: [{\n    type: \"parent\",\n    linkToId: parseInt(parentId),\n    id: workItem.id\n  }]\n});\n```\n\n## 📋 CAMPOS OBLIGATORIOS ESPECÍFICOS:\n\n### Para HABILITADORES:\n- System.Title, System.Description, System.AssignedTo\n- Custom.Categoria_HA, Custom.Country\n- Custom.9587aecc-cd66-47b4-a44a-9965a2b8e4a9 (Área Solicitante)\n- Custom.89c0567a-122f-408f-a324-fa6e349e3ac1 (Clasificación)\n\n### Para USER STORIES:\n- System.Title, System.Description, System.AssignedTo\n- Microsoft.VSTS.Common.ValueArea, Custom.Country\n- Custom.89c0567a-122f-408f-a324-fa6e349e3ac1 (Clasificación)\n- **TODOS los campos DoR/DoD con valor \"0\"** (obligatorios)\n\n## 🚨 INSTRUCCIONES CRÍTICAS:\n1. **NUNCA incluir System.Parent** en la creación inicial\n2. **SIEMPRE usar proceso en dos pasos** (crear + link)\n3. **CONSULTAR sprint actual** antes de crear\n4. **INCLUIR todos los campos DoR/DoD** para User Stories con valor \"0\"\n5. **USAR archivos de steering** CAMPOS_HABILITADOR.md y CAMPOS_USER_STORY.md\n6. **MANEJAR ERRORES** automáticamente con campos correctos\n7. **CONFIRMAR** creación y linking exitosos\n\n**IMPORTANTE:** \n- Sigue EXACTAMENTE los archivos de steering CAMPOS_HABILITADOR.md y CAMPOS_USER_STORY.md\n- Usa el proceso en dos pasos OBLIGATORIO\n- Para User Stories, incluye TODOS los campos DoR/DoD con valor \"0\"\n- Para Habilitadores, incluye Custom.9587aecc-cd66-47b4-a44a-9965a2b8e4a9\n\nTransforma la descripción del usuario en un work item profesional usando el proceso correcto."
+  }
+}

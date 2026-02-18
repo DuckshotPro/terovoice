@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # LiveKit server (handles SIP + WebRTC)
+  livekit:
+    image: livekit/livekit-server:latest
+    container_name: livekit-server
+    ports:
+      - "7880:7880"      # WebSocket
+      - "5060:5060/udp"  # SIP
+      - "50000-50100:50000-50100/udp"  # RTP
+    volumes:
+      - ./livekit.yaml:/etc/livekit.yaml
+    environment:
+      - LIVEKIT_CONFIG=/etc/livekit.yaml
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Python agent worker
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-agent-worker
+    depends_on:
+      - livekit
+    environment:
+      - LIVEKIT_URL=ws://livekit:7880
+      - LIVEKIT_API_KEY=${LIVEKIT_API_KEY}
+      - LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET}
+      - HUGGINGFACE_API_URL=${HUGGINGFACE_API_URL}
+      - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+      - CARTESIA_API_KEY=${CARTESIA_API_KEY}
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - ai-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Flask dashboard
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-dashboard
+    command: python -m ui.app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - agent
+    environment:
+      - FLASK_PORT=5000
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - DASHBOARD_API_KEY=${DASHBOARD_API_KEY}
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+networks:
+  ai-network:
+    driver: bridge
+
+volumes:
+  data:
