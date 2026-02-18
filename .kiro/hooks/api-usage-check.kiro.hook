@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Check API Usage Patterns",
+  "description": "Verifies that saved JavaScript service files follow centralized API client patterns, implement proper error handling, manage loading states, and avoid hardcoded URLs or credentials",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*.js"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A service file was just saved. Please verify:\n1. All API calls use the centralized api.js client\n2. Error handling is implemented\n3. Loading states are managed\n4. No hardcoded URLs or credentials"
+  }
+}
