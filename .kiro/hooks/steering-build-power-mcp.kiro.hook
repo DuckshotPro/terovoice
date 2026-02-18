@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Build a Power - Add MCP Integration",
+  "description": "Automatically enhance the build-a-power steering file with MCP (Model Context Protocol) integration guidelines, including MCP server setup, tool definitions, and best practices for creating custom powers that leverage MCP capabilities.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review the build-a-power.md steering file and enhance it with comprehensive MCP (Model Context Protocol) integration guidelines. Add sections for: 1) MCP server setup and configuration for custom powers, 2) Tool definitions and schemas for MCP-compatible powers, 3) Best practices for creating PayPal, Twilio, and client onboarding powers using MCP, 4) Examples of MCP tool implementations for the AI Receptionist SaaS use cases, 5) Integration patterns between Kiro Powers and MCP servers. Ensure the updated guidance maintains the existing structure while adding MCP as a core capability."
+  }
+}
