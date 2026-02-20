@@ -1,0 +1,75 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0
+rootdir: /app
+collected 0 items / 6 errors
+
+==================================== ERRORS ====================================
+___ ERROR collecting backend-setup/tests/test_billing_service_properties.py ____
+ImportError while importing test module '/app/backend-setup/tests/test_billing_service_properties.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-setup/tests/test_billing_service_properties.py:14: in <module>
+    from hypothesis import given, strategies as st, settings, HealthCheck
+E   ModuleNotFoundError: No module named 'hypothesis'
+_ ERROR collecting backend-setup/tests/test_cancellation_service_properties.py _
+ImportError while importing test module '/app/backend-setup/tests/test_cancellation_service_properties.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-setup/tests/test_cancellation_service_properties.py:15: in <module>
+    from hypothesis import given, strategies as st, settings, assume, HealthCheck
+E   ModuleNotFoundError: No module named 'hypothesis'
+___ ERROR collecting backend-setup/tests/test_payment_service_properties.py ____
+ImportError while importing test module '/app/backend-setup/tests/test_payment_service_properties.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-setup/tests/test_payment_service_properties.py:9: in <module>
+    from hypothesis import given, strategies as st, settings, assume
+E   ModuleNotFoundError: No module named 'hypothesis'
+_____ ERROR collecting backend-setup/tests/test_plan_service_properties.py _____
+ImportError while importing test module '/app/backend-setup/tests/test_plan_service_properties.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-setup/tests/test_plan_service_properties.py:15: in <module>
+    from hypothesis import given, strategies as st, settings, assume, HealthCheck
+E   ModuleNotFoundError: No module named 'hypothesis'
+_ ERROR collecting backend-setup/tests/test_subscription_service_properties.py _
+ImportError while importing test module '/app/backend-setup/tests/test_subscription_service_properties.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-setup/tests/test_subscription_service_properties.py:14: in <module>
+    from hypothesis import given, strategies as st, settings, HealthCheck
+E   ModuleNotFoundError: No module named 'hypothesis'
+____ ERROR collecting backend-setup/tests/test_usage_service_properties.py _____
+ImportError while importing test module '/app/backend-setup/tests/test_usage_service_properties.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-setup/tests/test_usage_service_properties.py:14: in <module>
+    from hypothesis import given, strategies as st, settings, HealthCheck
+E   ModuleNotFoundError: No module named 'hypothesis'
+=========================== short test summary info ============================
+ERROR backend-setup/tests/test_billing_service_properties.py
+ERROR backend-setup/tests/test_cancellation_service_properties.py
+ERROR backend-setup/tests/test_payment_service_properties.py
+ERROR backend-setup/tests/test_plan_service_properties.py
+ERROR backend-setup/tests/test_subscription_service_properties.py
+ERROR backend-setup/tests/test_usage_service_properties.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 6 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 6 errors in 0.23s ===============================
