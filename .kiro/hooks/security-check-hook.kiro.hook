@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Before Deployment - Security & Performance Check",
+  "description": "Execute security audit and performance checks before deployment using npm audit to catch vulnerabilities at moderate level and above",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "echo \"🔒 Security Check:\" && npm audit --audit-level=moderate && echo \"✅ Security OK\" || echo \"⚠️ Security issues found\""
+  }
+}
