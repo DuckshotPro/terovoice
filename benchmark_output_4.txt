@@ -1,9 +1,0 @@
-Current working directory: /app
-Creating large profession file (benchmark_test)...
-Created file at /app/backend-setup/agent/professions/benchmark_test.json
---- Starting Benchmark ---
-Measuring loop blocking during profession config load...
-Total time for 50 ops: 1.5613s
-Max event loop blocking: 0.091621s
-RESULT: Significant blocking detected! ⚠️
-Cleaned up temporary file.
