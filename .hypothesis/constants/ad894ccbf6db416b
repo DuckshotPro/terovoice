@@ -1,4 +1,0 @@
-# file: /app/backend_setup/db/models.py
-# hypothesis_version: 6.151.9
-
-[100, 'APIKey', 'Call', 'Client', 'Invoice', 'Subscription', 'USD', 'Usage', 'User', 'active', 'all, delete-orphan', 'analytics_events', 'api_keys', 'calls', 'calls.id', 'client', 'clients', 'clients.id', 'conversation_logs', 'created', 'draft', 'free', 'invoices', 'onboarding_state', 'onboarding_states', 'paypal_orders', 'subscription', 'subscriptions', 'subscriptions.id', 'usage', 'usage_records', 'user', 'users', 'users.id', 'vector_embeddings']

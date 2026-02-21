@@ -1,4 +1,0 @@
-# file: /app/backend_setup/db/connection.py
-# hypothesis_version: 6.151.9
-
-[3600, 'DATABASE_URL', 'SELECT 1', 'ai_receptionist_api', 'application_name', 'connect', 'connect_timeout']

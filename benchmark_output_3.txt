@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/app/backend-setup/benchmark_router.py", line 14, in <module>
-    from agent.router import ClientRouter
-  File "/app/backend-setup/agent/router.py", line 7, in <module>
-    import aiofiles
-ModuleNotFoundError: No module named 'aiofiles'
