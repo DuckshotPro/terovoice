@@ -1,0 +1,4 @@
+# file: /app/backend_setup/services/cache.py
+# hypothesis_version: 6.151.9
+
+[300, 600, 'active_entries', 'expired_entries', 'total_entries']

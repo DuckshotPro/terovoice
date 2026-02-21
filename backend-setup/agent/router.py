@@ -4,7 +4,6 @@ Routes incoming calls to the correct client's agent + profession.
 """
 import json
 import logging
-import aiofiles
 from pathlib import Path
 from typing import Optional, Dict, Any
 
@@ -55,7 +54,7 @@ class ClientRouter:
         logger.warning(f"No client found for number: {incoming_number}")
         return None
 
-    async def get_profession_prompt(self, profession: str) -> str:
+    def get_profession_prompt(self, profession: str) -> str:
         """
         Load profession-specific system prompt.
 
@@ -65,10 +64,10 @@ class ClientRouter:
         Returns:
             System prompt string
         """
-        config = await self.get_profession_config(profession)
+        config = self.get_profession_config(profession)
         return config.get("system_prompt", "You are a helpful AI assistant.")
 
-    async def get_profession_config(self, profession: str) -> Dict[str, Any]:
+    def get_profession_config(self, profession: str) -> Dict[str, Any]:
         """
         Load full profession configuration.
 
@@ -85,9 +84,8 @@ class ClientRouter:
             return {}
 
         try:
-            async with aiofiles.open(prompt_path, "r") as f:
-                content = await f.read()
-                return json.loads(content)
+            with open(prompt_path, "r") as f:
+                return json.load(f)
         except Exception as e:
             logger.error(f"Error loading profession config: {e}")
             return {}
