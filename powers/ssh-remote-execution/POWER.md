@@ -51,7 +51,7 @@ This power connects to your remote server using SSH key authentication. You'll n
 - **`74.208.227.161`**: Your remote server's IP address or hostname.
   - **How to get it:** Check your VPS provider's dashboard or use `ping your-server.com` to find the IP
 
-- **`cira`**: The SSH username for your server.
+- **`password`**: The SSH username for your server.
   - **How to get it:** Check your VPS provider's documentation or SSH config file
 
 - **`./id_kiro`**: Path to your SSH private key file.
@@ -67,7 +67,7 @@ To verify your SSH connection is working:
 
 ```bash
 # Test SSH connection (this will be done automatically when power loads)
-ssh -i ./id_kiro cira@74.208.227.161 "echo 'SSH connection successful'"
+ssh -i ./id_kiro password@74.208.227.161 "echo 'SSH connection successful'"
 ```
 
 If successful, you'll see: `SSH connection successful`
@@ -175,7 +175,7 @@ NODE_ENV=production
 **Example:**
 ```bash
 # List home directory
-list_directory: /home/cira
+list_directory: /home/password
 
 # List application directory
 list_directory: /app
@@ -230,7 +230,7 @@ execute_command: systemctl status app
 1. Verify SSH key path is correct in mcp.json
 2. Check key permissions: `ls -la ~/.ssh/id_rsa` (should be 600)
 3. Verify key is added to server's authorized_keys
-4. Test connection manually: `ssh -i ./id_kiro cira@74.208.227.161`
+4. Test connection manually: `ssh -i ./id_kiro password@74.208.227.161`
 
 **Problem:** "Connection refused"
 **Cause:** Server not reachable or SSH service not running
@@ -334,7 +334,7 @@ execute_command: systemctl status app
       "args": ["mcp-server-ssh@latest"],
       "env": {
         "SSH_HOST": "74.208.227.161",
-        "SSH_USER": "cira",
+        "SSH_USER": "password",
         "SSH_KEY_PATH": "./id_kiro"
       }
     }

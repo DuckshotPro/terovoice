@@ -1,11 +1,11 @@
 # Phase 1 Deployment Script for AI Phone SaaS (PowerShell)
 # Deploys billing service infrastructure to the server
-# Usage: .\scripts\deploy-phase1-to-server.ps1 -ServerHost "74.208.227.161" -ServerUser "cira" -ProjectDir "/home/cira/ai-phone-sas"
+# Usage: .\scripts\deploy-phase1-to-server.ps1 -ServerHost "74.208.227.161" -ServerUser "password" -ProjectDir "/home/password/ai-phone-sas"
 
 param(
     [string]$ServerHost = "74.208.227.161",
-    [string]$ServerUser = "cira",
-    [string]$ProjectDir = "/home/cira/ai-phone-sas",
+    [string]$ServerUser = "password",
+    [string]$ProjectDir = "/home/password/ai-phone-sas",
     [string]$SSHKey = ".kiro/private-keys/id_kiro",
     [switch]$SkipGitPush = $false
 )

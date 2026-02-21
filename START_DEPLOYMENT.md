@@ -83,7 +83,7 @@ curl http://localhost:3000/
 
 ### Required .env Variables
 ```bash
-DATABASE_URL=postgresql://user:cira@postgres:5432/ai_receptionist
+DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
 JWT_SECRET=your-super-secret-key-change-this
 FLASK_ENV=production
 FLASK_PORT=8000

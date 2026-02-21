@@ -418,7 +418,7 @@ The spec includes comprehensive security:
 - PostgreSQL on IONOS (74.208.227.161:5432)
 - Database: ai_receptionist
 - User: user
-- Password: cira
+- Password: password
 
 ### Deployment
 - Frontend: Vercel/Netlify or IONOS

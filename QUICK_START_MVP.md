@@ -167,7 +167,7 @@ Ready-to-launch Facebook ads for:
 - **Host:** 74.208.227.161:5432
 - **Database:** ai_receptionist
 - **User:** user
-- **Password:** cira
+- **Password:** password
 
 ---
 

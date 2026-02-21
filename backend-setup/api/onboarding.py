@@ -456,6 +456,10 @@ def update_review_step(customer_id):
     except Exception as e:
         current_app.logger.error(f"Error updating review step: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
+
+
+@onboarding_bp.route('/<customer_id>/complete', methods=['POST'])
+def complete_onboarding(customer_id):
     """Mark onboarding as complete and activate customer."""
     try:
         session = SessionLocal()

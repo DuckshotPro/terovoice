@@ -429,7 +429,7 @@ GET /api/analytics/dashboard
 - **Port:** 5432
 - **Database:** ai_receptionist
 - **User:** user
-- **Password:** cira
+- **Password:** password
 
 ---
 

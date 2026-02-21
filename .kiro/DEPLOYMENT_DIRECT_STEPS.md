@@ -2,7 +2,7 @@
 
 **Status:** Ready to Deploy
 **Date:** January 12, 2025
-**Server:** 74.208.227.161 (cira user)
+**Server:** 74.208.227.161 (password user)
 
 ---
 
@@ -12,10 +12,10 @@ Before running the full deployment, test SSH connectivity manually:
 
 ```bash
 # Test SSH connection (should respond immediately)
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "echo 'Connected'"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "echo 'Connected'"
 
 # If that works, test Python availability
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "python3 --version"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "python3 --version"
 ```
 
 ---
@@ -28,29 +28,29 @@ If the automated script times out, follow these manual steps:
 
 ```bash
 # Create project directory on server
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "mkdir -p /home/cira/ai-phone-sas/backend-setup/{services,db,tests}"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "mkdir -p /home/password/ai-phone-sas/backend-setup/{services,db,tests}"
 
 # Transfer backend services
-scp -i .kiro/private-keys/id_kiro backend-setup/services/billing_service.py cira@74.208.227.161:/home/cira/ai-phone-sas/backend-setup/services/
-scp -i .kiro/private-keys/id_kiro backend-setup/services/usage_service.py cira@74.208.227.161:/home/cira/ai-phone-sas/backend-setup/services/
-scp -i .kiro/private-keys/id_kiro backend-setup/services/__init__.py cira@74.208.227.161:/home/cira/ai-phone-sas/backend-setup/services/
+scp -i .kiro/private-keys/id_kiro backend-setup/services/billing_service.py password@74.208.227.161:/home/password/ai-phone-sas/backend-setup/services/
+scp -i .kiro/private-keys/id_kiro backend-setup/services/usage_service.py password@74.208.227.161:/home/password/ai-phone-sas/backend-setup/services/
+scp -i .kiro/private-keys/id_kiro backend-setup/services/__init__.py password@74.208.227.161:/home/password/ai-phone-sas/backend-setup/services/
 
 # Transfer database models
-scp -i .kiro/private-keys/id_kiro backend-setup/db/models.py cira@74.208.227.161:/home/cira/ai-phone-sas/backend-setup/db/
+scp -i .kiro/private-keys/id_kiro backend-setup/db/models.py password@74.208.227.161:/home/password/ai-phone-sas/backend-setup/db/
 
 # Transfer tests
-scp -i .kiro/private-keys/id_kiro backend-setup/tests/test_billing_service_properties.py cira@74.208.227.161:/home/cira/ai-phone-sas/backend-setup/tests/
-scp -i .kiro/private-keys/id_kiro backend-setup/tests/__init__.py cira@74.208.227.161:/home/cira/ai-phone-sas/backend-setup/tests/
+scp -i .kiro/private-keys/id_kiro backend-setup/tests/test_billing_service_properties.py password@74.208.227.161:/home/password/ai-phone-sas/backend-setup/tests/
+scp -i .kiro/private-keys/id_kiro backend-setup/tests/__init__.py password@74.208.227.161:/home/password/ai-phone-sas/backend-setup/tests/
 
 # Transfer requirements
-scp -i .kiro/private-keys/id_kiro backend-setup/requirements.txt cira@74.208.227.161:/home/cira/ai-phone-sas/backend-setup/
+scp -i .kiro/private-keys/id_kiro backend-setup/requirements.txt password@74.208.227.161:/home/password/ai-phone-sas/backend-setup/
 ```
 
 ### Step 2: Set Up Virtual Environment
 
 ```bash
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 << 'EOF'
-cd /home/cira/ai-phone-sas
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 << 'EOF'
+cd /home/password/ai-phone-sas
 python3 -m venv venv
 source venv/bin/activate
 pip install --upgrade pip setuptools wheel
@@ -61,8 +61,8 @@ EOF
 ### Step 3: Create Database Tables
 
 ```bash
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 << 'EOF'
-cd /home/cira/ai-phone-sas
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 << 'EOF'
+cd /home/password/ai-phone-sas
 source venv/bin/activate
 python3 << 'PYEOF'
 import sys
@@ -78,8 +78,8 @@ EOF
 ### Step 4: Run Tests
 
 ```bash
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 << 'EOF'
-cd /home/cira/ai-phone-sas
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 << 'EOF'
+cd /home/password/ai-phone-sas
 source venv/bin/activate
 python3 -m pytest backend-setup/tests/test_billing_service_properties.py -v
 EOF
@@ -88,8 +88,8 @@ EOF
 ### Step 5: Verify Deployment
 
 ```bash
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 << 'EOF'
-cd /home/cira/ai-phone-sas
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 << 'EOF'
+cd /home/password/ai-phone-sas
 source venv/bin/activate
 python3 << 'PYEOF'
 import sys
@@ -112,7 +112,7 @@ EOF
 
 **Solutions:**
 1. Check if server is reachable: `ping 74.208.227.161`
-2. Try with explicit timeout: `ssh -o ConnectTimeout=10 -i .kiro/private-keys/id_kiro cira@74.208.227.161 "echo test"`
+2. Try with explicit timeout: `ssh -o ConnectTimeout=10 -i .kiro/private-keys/id_kiro password@74.208.227.161 "echo test"`
 3. Check SSH key permissions: `ls -la .kiro/private-keys/id_kiro` (should be 600)
 4. Verify SSH key is correct: `ssh-keygen -l -f .kiro/private-keys/id_kiro`
 
@@ -129,10 +129,10 @@ EOF
 **Solution:**
 ```bash
 # Check Python installation
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "which python3"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "which python3"
 
 # If not found, install Python
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "sudo apt update && sudo apt install -y python3 python3-venv python3-pip"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "sudo apt update && sudo apt install -y python3 python3-venv python3-pip"
 ```
 
 ---
@@ -166,19 +166,19 @@ All these files are ready in the local workspace:
 
 ```bash
 # Test connectivity
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "echo 'OK'"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "echo 'OK'"
 
 # Check server status
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "uname -a"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "uname -a"
 
 # List deployed files
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "ls -la /home/cira/ai-phone-sas/backend-setup/"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "ls -la /home/password/ai-phone-sas/backend-setup/"
 
 # Run tests again
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "cd /home/cira/ai-phone-sas && source venv/bin/activate && python3 -m pytest backend-setup/tests/ -v"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "cd /home/password/ai-phone-sas && source venv/bin/activate && python3 -m pytest backend-setup/tests/ -v"
 
 # Check virtual environment
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "cd /home/cira/ai-phone-sas && source venv/bin/activate && pip list"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "cd /home/password/ai-phone-sas && source venv/bin/activate && pip list"
 ```
 
 ---

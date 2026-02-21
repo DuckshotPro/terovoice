@@ -11,7 +11,7 @@
 - PostgreSQL 15 running on port 5432
 - Database: `ai_receptionist`
 - pgvector extension installed
-- User credentials: `user` / `cira`
+- User credentials: `user` / `password`
 - All services verified and operational
 
 ### 2. ✅ Backend Infrastructure Verified
@@ -302,7 +302,7 @@ src/
 - Port: 5432
 - Database: ai_receptionist
 - User: user
-- Password: cira
+- Password: password
 
 ### Services
 - Ollama: http://localhost:11434

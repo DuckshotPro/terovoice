@@ -36,7 +36,7 @@ You are working on the AI Receptionist SaaS project. Here's the current status:
 - Use Haiku 4.5 by default, escalate to Sonnet 3.5 for complex tasks
 - Follow quality assurance guidelines (linting, security, testing)
 - Reference spec documents: .kiro/specs/frontend-integration/
-- Database: PostgreSQL on IONOS (user: user, password: cira)
+- Database: PostgreSQL on IONOS (user: user, password: password)
 - API Base URL: http://localhost:8000
 
 📁 KEY FILES:

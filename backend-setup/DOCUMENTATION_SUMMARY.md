@@ -163,7 +163,7 @@ backend-setup/
 
 **Database:**
 - Name: `ai_receptionist`
-- User: `user` (password: `cira`)
+- User: `user` (password: `password`)
 - Extensions: pgvector (for vector embeddings)
 
 **Server:**
@@ -218,13 +218,13 @@ Host: 74.208.227.161
 Port: 5432
 Database: ai_receptionist
 Username: user
-Password: cira
+Password: password
 ```
 
 **SSH Access:**
 ```
 Host: 74.208.227.161
-User: cira
+User: password
 Key: ~/.ssh/id_rsa
 ```
 

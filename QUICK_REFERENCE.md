@@ -195,7 +195,7 @@ Host:     74.208.227.161
 Port:     5432
 Database: ai_receptionist
 User:     user
-Password: cira
+Password: password
 ```
 
 ---

@@ -20,7 +20,7 @@ cp .env.example .env
 
 Edit `.env` and set:
 ```env
-DATABASE_URL=postgresql://user:cira@74.208.227.161:5432/ai_receptionist
+DATABASE_URL=postgresql://user:password@localhost:5432/ai_receptionist
 JWT_SECRET=your_random_secret_key_here
 FLASK_PORT=8000
 DEBUG=False

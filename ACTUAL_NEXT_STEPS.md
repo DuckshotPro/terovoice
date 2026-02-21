@@ -241,7 +241,7 @@ CREATE TABLE subscriptions (
 ```yaml
 services:
   terovoice-agent:
-    image: localhost/cira_terovoice-agent:latest
+    image: localhost/password_terovoice-agent:latest
     ports:
       - "8001:8000"
     environment:
@@ -253,7 +253,7 @@ services:
       - dp1-redis
 
   terovoice-sip:
-    image: localhost/cira_terovoice-sip:latest
+    image: localhost/password_terovoice-sip:latest
     ports:
       - "5060:5060/udp"
       - "5061:5061/tcp"
@@ -261,7 +261,7 @@ services:
       - LIVEKIT_URL=http://terovoice-agent:8000
 
   terovoice-voice-cloning:
-    image: localhost/cira_terovoice-voice-cloning:latest
+    image: localhost/password_terovoice-voice-cloning:latest
     ports:
       - "8002:8000"
     environment:

@@ -94,7 +94,7 @@ Week 1: Deploy          Week 2: Setup           Week 3: Launch Ads       Week 4:
 ### Database
 - **Host:** 74.208.227.161:5432
 - **Database:** ai_receptionist
-- **User:** user / Password: cira
+- **User:** user / Password: password
 
 ---
 

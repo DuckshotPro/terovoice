@@ -1,10 +1,10 @@
 # Phase 1 Deployment Script for Podman (Remote Build)
 # Transfers Dockerfile and code, builds on server
-# Usage: .\scripts\deploy-phase1-podman-remote.ps1 -ServerHost "74.208.227.161" -ServerUser "cira"
+# Usage: .\scripts\deploy-phase1-podman-remote.ps1 -ServerHost "74.208.227.161" -ServerUser "password"
 
 param(
     [string]$ServerHost = "74.208.227.161",
-    [string]$ServerUser = "cira",
+    [string]$ServerUser = "password",
     [string]$SSHKey = ".kiro/private-keys/id_kiro",
     [string]$ImageName = "billing-service",
     [string]$ImageTag = "phase1"

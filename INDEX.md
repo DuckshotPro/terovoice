@@ -255,7 +255,7 @@ backend-setup/
 - **Host:** 74.208.227.161:5432
 - **Database:** ai_receptionist
 - **User:** user
-- **Password:** cira
+- **Password:** password
 
 ### Documentation
 - `README_MVP.md` - Project overview

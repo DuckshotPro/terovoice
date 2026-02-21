@@ -84,7 +84,7 @@ docker-compose logs -f
 
 ```bash
 # Database
-DATABASE_URL=postgresql://user:cira@postgres:5432/ai_receptionist
+DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
 
 # Security
 JWT_SECRET=your-super-secret-key-change-this-in-production

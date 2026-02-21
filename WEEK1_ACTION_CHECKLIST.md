@@ -78,7 +78,7 @@ nano .env
 **Update these values in .env:**
 ```
 # Database
-DATABASE_URL=postgresql://user:cira@postgres:5432/ai_receptionist
+DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
 
 # JWT
 JWT_SECRET=your-super-secret-key-change-this

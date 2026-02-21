@@ -331,7 +331,7 @@ Message: 'Phase 2-4 Complete: Auth, Clients, Billing, Calls, Analytics - MVP Rea
 - **Port:** 5432
 - **Database:** ai_receptionist
 - **User:** user
-- **Password:** cira
+- **Password:** password
 
 ### Services
 - **Ollama:** http://localhost:11434

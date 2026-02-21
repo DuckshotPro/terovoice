@@ -25,7 +25,7 @@ services:
     # Environment variables
     environment:
       # Database connection
-      DATABASE_URL: postgresql://user:cira@postgres:5432/ai_receptionist
+      DATABASE_URL: postgresql://user:password@postgres:5432/ai_receptionist
 
       # Flask configuration
       FLASK_ENV: production
@@ -242,7 +242,7 @@ services:
     environment:
       # Database credentials
       POSTGRES_USER: user
-      POSTGRES_PASSWORD: cira
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: ai_receptionist
 
       # PostgreSQL configuration

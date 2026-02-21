@@ -100,7 +100,7 @@ podman-compose up -d
 ### Environment Variables (.env)
 ```env
 # Database
-DATABASE_URL=postgresql://user:cira@74.208.227.161:5432/ai_receptionist
+DATABASE_URL=postgresql://user:password@localhost:5432/ai_receptionist
 
 # API
 FLASK_PORT=8000
@@ -131,7 +131,7 @@ python -c "import secrets; print(secrets.token_urlsafe(32))"
 ### Database
 - [x] PostgreSQL running on 74.208.227.161:5432
 - [x] Database `ai_receptionist` exists
-- [x] User `user` with password `cira` configured
+- [x] User `user` with password `password` configured
 - [x] pgvector extension installed
 
 ### Services
@@ -384,7 +384,7 @@ After backend deployment:
 - **Port:** 5432
 - **Database:** ai_receptionist
 - **User:** user
-- **Password:** cira
+- **Password:** password
 
 ### Services
 - **Ollama:** http://localhost:11434

@@ -40,7 +40,7 @@ curl http://localhost:11434/api/tags
 Version: PostgreSQL 15
 Port: 5432
 Database: ai_receptionist
-User: user (password: cira)
+User: user (password: password)
 Extensions: pgvector
 Status: RUNNING
 ```
@@ -100,12 +100,12 @@ Host: 74.208.227.161
 Port: 5432
 Database: ai_receptionist
 Username: user
-Password: cira
+Password: password
 ```
 
 ### Connection String
 ```
-postgresql://user:cira@74.208.227.161:5432/ai_receptionist
+postgresql://user:password@localhost:5432/ai_receptionist
 ```
 
 ### Database Features
@@ -185,7 +185,7 @@ Redis: < 10ms
 0 2 * * * pg_dump -U user ai_receptionist > /backups/db_$(date +\%Y\%m\%d).sql
 
 # Weekly full backup
-0 3 * * 0 tar -czf /backups/system_$(date +\%Y\%m\%d).tar.gz /home/cira/config
+0 3 * * 0 tar -czf /backups/system_$(date +\%Y\%m\%d).tar.gz /home/password/config
 
 # Monthly offsite backup
 0 4 1 * * scp /backups/* backup_server:/remote/backups/
@@ -349,7 +349,7 @@ podman logs container_name
 
 # Backup
 pg_dump -U user ai_receptionist > backup.sql
-tar -czf system_backup.tar.gz /home/cira/config
+tar -czf system_backup.tar.gz /home/password/config
 ```
 
 ---

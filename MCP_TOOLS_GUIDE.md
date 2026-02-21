@@ -346,9 +346,9 @@ SELECT COUNT(*) FROM calls;
 ### Example 2: Deploy Backend
 ```
 Use SSH MCP:
-ssh cira@74.208.227.161 "docker-compose up -d"
-ssh cira@74.208.227.161 "docker ps"
-ssh cira@74.208.227.161 "docker logs backend-api"
+ssh password@74.208.227.161 "docker-compose up -d"
+ssh password@74.208.227.161 "docker ps"
+ssh password@74.208.227.161 "docker logs backend-api"
 ```
 
 ### Example 3: Test API Endpoint

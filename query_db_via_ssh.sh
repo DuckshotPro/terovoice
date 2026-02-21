@@ -9,7 +9,7 @@ echo ""
 # Try using psql if available, otherwise use Python
 if command -v psql &> /dev/null; then
     echo "Using psql to query database..."
-    PGPASSWORD=cira psql -h localhost -U user -d ai_receptionist << 'EOFPSQL'
+    PGPASSWORD=password psql -h localhost -U user -d ai_receptionist << 'EOFPSQL'
 -- List all tables
 \dt
 
@@ -35,7 +35,7 @@ try:
             host='localhost',
             database='ai_receptionist',
             user='user',
-            password='cira',
+            password='password',
             port=5432
         )
     except ImportError:
@@ -46,7 +46,7 @@ try:
             host='localhost',
             database='ai_receptionist',
             user='user',
-            password='cira',
+            password='password',
             port=5432
         )
 

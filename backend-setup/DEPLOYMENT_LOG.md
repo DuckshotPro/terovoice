@@ -37,7 +37,7 @@
   "command": "uvx",
   "args": ["mcp-server-pgvector@latest"],
   "env": {
-    "DATABASE_URL": "postgresql://user:cira@74.208.227.161:5432/ai_receptionist"
+    "DATABASE_URL": "postgresql://user:password@localhost:5432/ai_receptionist"
   },
   "disabled": false,
   "autoApprove": ["query_database", "search_vectors"]
@@ -53,7 +53,7 @@
 
 ### 2. Database Status
 - **Database Name:** `ai_receptionist`
-- **User:** `user` (password: `cira`)
+- **User:** `user` (password: `password`)
 - **Port:** 5432
 - **Extensions:** pgvector (for vector embeddings)
 - **Status:** ✅ Running and accessible
@@ -85,7 +85,7 @@
 psql -h 74.208.227.161 -U user -d ai_receptionist -p 5432
 
 # Environment variable
-export DATABASE_URL="postgresql://user:cira@74.208.227.161:5432/ai_receptionist"
+export DATABASE_URL="postgresql://user:password@localhost:5432/ai_receptionist"
 ```
 
 ### Python Connection
@@ -95,7 +95,7 @@ conn = psycopg2.connect(
     host='74.208.227.161',
     database='ai_receptionist',
     user='user',
-    password='cira',
+    password='password',
     port=5432
 )
 ```
@@ -140,22 +140,22 @@ ORDER BY embedding <-> '[0.1, 0.2, 0.3]' LIMIT 5;
 
 ### Check Ollama Status
 ```bash
-ssh cira@74.208.227.161 "ps aux | grep ollama"
+ssh password@74.208.227.161 "ps aux | grep ollama"
 ```
 
 ### Check PostgreSQL Status
 ```bash
-ssh cira@74.208.227.161 "ss -tlnp | grep 5432"
+ssh password@74.208.227.161 "ss -tlnp | grep 5432"
 ```
 
 ### Check Redis Status
 ```bash
-ssh cira@74.208.227.161 "ss -tlnp | grep 6379"
+ssh password@74.208.227.161 "ss -tlnp | grep 6379"
 ```
 
 ### Test Database Connection
 ```bash
-ssh cira@74.208.227.161 "python3 << 'EOF'
+ssh password@74.208.227.161 "python3 << 'EOF'
 import socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 result = sock.connect_ex(('localhost', 5432))
@@ -166,12 +166,12 @@ EOF"
 
 ### View Container Status
 ```bash
-ssh cira@74.208.227.161 "podman ps -a"
+ssh password@74.208.227.161 "podman ps -a"
 ```
 
 ### Start Ollama Container (if needed)
 ```bash
-ssh cira@74.208.227.161 "podman start ollama"
+ssh password@74.208.227.161 "podman start ollama"
 ```
 
 ---

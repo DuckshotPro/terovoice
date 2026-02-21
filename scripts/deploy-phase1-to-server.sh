@@ -3,14 +3,14 @@
 # Phase 1 Deployment Script for AI Phone SaaS (Bash)
 # Deploys billing service infrastructure to the server
 # Usage: ./scripts/deploy-phase1-to-server.sh [host] [user] [project_dir] [ssh_key]
-# Example: ./scripts/deploy-phase1-to-server.sh 74.208.227.161 cira /home/cira/ai-phone-sas .kiro/private-keys/id_kiro
+# Example: ./scripts/deploy-phase1-to-server.sh 74.208.227.161 password /home/password/ai-phone-sas .kiro/private-keys/id_kiro
 
 set -e
 
 # Configuration (with defaults)
 SERVER_HOST="${1:-74.208.227.161}"
-SERVER_USER="${2:-cira}"
-PROJECT_DIR="${3:-/home/cira/ai-phone-sas}"
+SERVER_USER="${2:-password}"
+PROJECT_DIR="${3:-/home/password/ai-phone-sas}"
 SSH_KEY="${4:-.kiro/private-keys/id_kiro}"
 SKIP_GIT_PUSH="${5:-false}"
 

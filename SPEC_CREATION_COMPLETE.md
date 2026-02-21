@@ -387,7 +387,7 @@ The spec includes comprehensive security requirements:
 - PostgreSQL on IONOS (74.208.227.161:5432)
 - Database: ai_receptionist
 - User: user
-- Password: cira
+- Password: password
 
 ---
 

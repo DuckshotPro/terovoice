@@ -286,7 +286,7 @@ podman-compose up -d
 - **Host:** 74.208.227.161:5432
 - **Database:** ai_receptionist
 - **User:** user
-- **Password:** cira
+- **Password:** password
 
 ### Tables
 - users (user accounts)

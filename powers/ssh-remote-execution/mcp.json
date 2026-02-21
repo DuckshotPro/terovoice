@@ -7,7 +7,7 @@
       ],
       "env": {
         "SSH_HOST": "74.208.227.161",
-        "SSH_USER": "cira",
+        "SSH_USER": "password",
         "SSH_KEY_PATH": "./id_kiro"
       },
       "disabled": false,

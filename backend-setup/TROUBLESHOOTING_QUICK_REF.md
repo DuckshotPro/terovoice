@@ -151,7 +151,7 @@ journalctl --priority=err -n 50
 psql -h 74.208.227.161 -U user -d ai_receptionist
 
 # Or use environment variable
-export DATABASE_URL="postgresql://user:cira@74.208.227.161:5432/ai_receptionist"
+export DATABASE_URL="postgresql://user:password@localhost:5432/ai_receptionist"
 psql $DATABASE_URL
 
 # List tables
@@ -240,16 +240,16 @@ podman system prune -a
 
 ```bash
 # SSH into server
-ssh cira@74.208.227.161
+ssh password@74.208.227.161
 
 # Copy files from server
-scp cira@74.208.227.161:/path/to/file ./local/path
+scp password@74.208.227.161:/path/to/file ./local/path
 
 # Copy files to server
-scp ./local/file cira@74.208.227.161:/remote/path
+scp ./local/file password@74.208.227.161:/remote/path
 
 # Run command remotely
-ssh cira@74.208.227.161 "command here"
+ssh password@74.208.227.161 "command here"
 ```
 
 ---

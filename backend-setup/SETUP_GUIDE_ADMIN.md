@@ -11,7 +11,7 @@
 ### Verify System Status
 ```bash
 # SSH into server
-ssh cira@74.208.227.161
+ssh password@74.208.227.161
 
 # Check all services
 ps aux | grep -E "ollama|postgres|redis"
@@ -88,12 +88,12 @@ Host: 74.208.227.161
 Port: 5432
 Database: ai_receptionist
 Username: user
-Password: cira
+Password: password
 ```
 
 ### Connection String
 ```
-postgresql://user:cira@74.208.227.161:5432/ai_receptionist
+postgresql://user:password@localhost:5432/ai_receptionist
 ```
 
 ### Available Extensions
@@ -108,7 +108,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 ### Database Tables
 To list all tables:
 ```bash
-ssh cira@74.208.227.161 "python3 << 'EOF'
+ssh password@74.208.227.161 "python3 << 'EOF'
 import socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 result = sock.connect_ex(('localhost', 5432))
@@ -128,29 +128,29 @@ EOF"
 
 **Check Status:**
 ```bash
-ssh cira@74.208.227.161 "ps aux | grep 'ollama serve'"
+ssh password@74.208.227.161 "ps aux | grep 'ollama serve'"
 ```
 
 **Restart Ollama:**
 ```bash
-ssh cira@74.208.227.161 "pkill -f 'ollama serve' && sleep 2 && /bin/ollama serve &"
+ssh password@74.208.227.161 "pkill -f 'ollama serve' && sleep 2 && /bin/ollama serve &"
 ```
 
 **View Logs:**
 ```bash
-ssh cira@74.208.227.161 "journalctl -u ollama -n 50 -f"
+ssh password@74.208.227.161 "journalctl -u ollama -n 50 -f"
 ```
 
 ### PostgreSQL Service
 
 **Check Status:**
 ```bash
-ssh cira@74.208.227.161 "ps aux | grep postgres | head -1"
+ssh password@74.208.227.161 "ps aux | grep postgres | head -1"
 ```
 
 **Restart PostgreSQL:**
 ```bash
-ssh cira@74.208.227.161 "sudo systemctl restart postgresql"
+ssh password@74.208.227.161 "sudo systemctl restart postgresql"
 ```
 
 **Note:** May require sudo password or passwordless sudo configuration.
@@ -159,12 +159,12 @@ ssh cira@74.208.227.161 "sudo systemctl restart postgresql"
 
 **Check Status:**
 ```bash
-ssh cira@74.208.227.161 "ps aux | grep redis-server"
+ssh password@74.208.227.161 "ps aux | grep redis-server"
 ```
 
 **Test Connection:**
 ```bash
-ssh cira@74.208.227.161 "redis-cli ping"
+ssh password@74.208.227.161 "redis-cli ping"
 ```
 
 ---
@@ -180,18 +180,18 @@ ssh cira@74.208.227.161 "redis-cli ping"
 **Solution:**
 ```bash
 # 1. Check if process is running
-ssh cira@74.208.227.161 "ps aux | grep ollama"
+ssh password@74.208.227.161 "ps aux | grep ollama"
 
 # 2. Check port
-ssh cira@74.208.227.161 "ss -tlnp | grep 11434"
+ssh password@74.208.227.161 "ss -tlnp | grep 11434"
 
 # 3. Restart service
-ssh cira@74.208.227.161 "pkill -f 'ollama serve'"
+ssh password@74.208.227.161 "pkill -f 'ollama serve'"
 sleep 2
-ssh cira@74.208.227.161 "/bin/ollama serve &"
+ssh password@74.208.227.161 "/bin/ollama serve &"
 
 # 4. Verify
-ssh cira@74.208.227.161 "curl http://localhost:11434/api/tags"
+ssh password@74.208.227.161 "curl http://localhost:11434/api/tags"
 ```
 
 ### Problem: PostgreSQL Connection Failed
@@ -203,13 +203,13 @@ ssh cira@74.208.227.161 "curl http://localhost:11434/api/tags"
 **Solution:**
 ```bash
 # 1. Check if PostgreSQL is running
-ssh cira@74.208.227.161 "ps aux | grep postgres"
+ssh password@74.208.227.161 "ps aux | grep postgres"
 
 # 2. Check port
-ssh cira@74.208.227.161 "ss -tlnp | grep 5432"
+ssh password@74.208.227.161 "ss -tlnp | grep 5432"
 
 # 3. Test connection
-ssh cira@74.208.227.161 "python3 << 'EOF'
+ssh password@74.208.227.161 "python3 << 'EOF'
 import socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 result = sock.connect_ex(('localhost', 5432))
@@ -218,7 +218,7 @@ sock.close()
 EOF"
 
 # 4. Restart PostgreSQL (may need sudo)
-ssh cira@74.208.227.161 "sudo systemctl restart postgresql"
+ssh password@74.208.227.161 "sudo systemctl restart postgresql"
 ```
 
 ### Problem: Port Already in Use
@@ -233,8 +233,8 @@ ssh cira@74.208.227.161 "sudo systemctl restart postgresql"
 # Keep PostgreSQL and Redis running on host
 
 # Option 2: Stop native services and use containers
-ssh cira@74.208.227.161 "sudo systemctl stop postgresql redis-server"
-ssh cira@74.208.227.161 "podman start dp1-db01 dp1-redis01"
+ssh password@74.208.227.161 "sudo systemctl stop postgresql redis-server"
+ssh password@74.208.227.161 "podman start dp1-db01 dp1-redis01"
 
 # Option 3: Change container ports
 # Edit podman-compose.yml to use different ports (e.g., 5433, 6380)
@@ -249,16 +249,16 @@ ssh cira@74.208.227.161 "podman start dp1-db01 dp1-redis01"
 **Solution:**
 ```bash
 # Check memory usage
-ssh cira@74.208.227.161 "free -h"
+ssh password@74.208.227.161 "free -h"
 
 # Check process memory
-ssh cira@74.208.227.161 "ps aux --sort=-%mem | head -10"
+ssh password@74.208.227.161 "ps aux --sort=-%mem | head -10"
 
 # If Ollama is using too much:
-ssh cira@74.208.227.161 "pkill -f 'ollama serve'"
+ssh password@74.208.227.161 "pkill -f 'ollama serve'"
 
 # Restart with memory limit (if using containers)
-ssh cira@74.208.227.161 "podman run --memory=4g ollama/ollama"
+ssh password@74.208.227.161 "podman run --memory=4g ollama/ollama"
 ```
 
 ---
@@ -267,20 +267,20 @@ ssh cira@74.208.227.161 "podman run --memory=4g ollama/ollama"
 
 ### Backup Database
 ```bash
-ssh cira@74.208.227.161 "pg_dump -U user -d ai_receptionist > /tmp/ai_receptionist_backup.sql"
-scp cira@74.208.227.161:/tmp/ai_receptionist_backup.sql ./backups/
+ssh password@74.208.227.161 "pg_dump -U user -d ai_receptionist > /tmp/ai_receptionist_backup.sql"
+scp password@74.208.227.161:/tmp/ai_receptionist_backup.sql ./backups/
 ```
 
 ### Restore Database
 ```bash
-scp ./backups/ai_receptionist_backup.sql cira@74.208.227.161:/tmp/
-ssh cira@74.208.227.161 "psql -U user -d ai_receptionist < /tmp/ai_receptionist_backup.sql"
+scp ./backups/ai_receptionist_backup.sql password@74.208.227.161:/tmp/
+ssh password@74.208.227.161 "psql -U user -d ai_receptionist < /tmp/ai_receptionist_backup.sql"
 ```
 
 ### Backup Configuration
 ```bash
-ssh cira@74.208.227.161 "tar -czf /tmp/dp1_config_backup.tar.gz /home/cira/config /home/cira/.env"
-scp cira@74.208.227.161:/tmp/dp1_config_backup.tar.gz ./backups/
+ssh password@74.208.227.161 "tar -czf /tmp/dp1_config_backup.tar.gz /home/password/config /home/password/.env"
+scp password@74.208.227.161:/tmp/dp1_config_backup.tar.gz ./backups/
 ```
 
 ---
@@ -303,7 +303,7 @@ scp cira@74.208.227.161:/tmp/dp1_config_backup.tar.gz ./backups/
 ### Health Check Script
 ```bash
 #!/bin/bash
-# Save as: /home/cira/health_check.sh
+# Save as: /home/password/health_check.sh
 
 echo "=== DP1 System Health Check ==="
 echo ""
@@ -391,7 +391,7 @@ uptime | awk -F'load average:' '{print $2}'
 
 ```bash
 # SSH into server
-ssh cira@74.208.227.161
+ssh password@74.208.227.161
 
 # Check all running services
 ps aux | grep -E "ollama|postgres|redis"
@@ -415,7 +415,7 @@ podman ps -a
 podman logs -f container_name
 
 # Test database connection
-python3 -c "import psycopg2; psycopg2.connect('postgresql://user:cira@localhost/ai_receptionist')"
+python3 -c "import psycopg2; psycopg2.connect('postgresql://user:password@localhost/ai_receptionist')"
 
 # Test Ollama
 curl http://localhost:11434/api/tags

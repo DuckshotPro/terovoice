@@ -1,0 +1,37 @@
+./DEPLOYMENT_SUMMARY.txt:DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
+./backend-setup/PODMAN_DEPLOYMENT.md:DATABASE_URL=postgresql://user:password@localhost:5432/ai_receptionist
+./backend-setup/SETUP_GUIDE_ADMIN.md:postgresql://user:password@localhost:5432/ai_receptionist
+./backend-setup/SETUP_GUIDE_ADMIN.md:python3 -c "import psycopg2; psycopg2.connect('postgresql://user:password@localhost/ai_receptionist')"
+./backend-setup/BACKEND_QUICKSTART.md:DATABASE_URL=postgresql://user:password@localhost:5432/ai_receptionist
+./backend-setup/.env.example:DATABASE_URL=postgresql://user:password@localhost:5432/ai_receptionist
+./backend-setup/db/migrations/add_onboarding_tables.py:DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost/tero_voice')
+./backend-setup/db/connection.py:    DATABASE_URL = "postgresql://user:password@localhost:5432/ai_receptionist"
+./backend-setup/SYSTEM_STATUS_REPORT.md:postgresql://user:password@localhost:5432/ai_receptionist
+./backend-setup/podman-compose.yml:      - DATABASE_URL=${DATABASE_URL:-postgresql://user:password@localhost:5432/ai_receptionist}
+./backend-setup/api/onboarding.py:DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost/tero_voice')
+./backend-setup/api/paypal_integration.py:DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost/tero_voice')
+./backend-setup/api/demo_websocket.py:DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost/tero_voice')
+./backend-setup/DEPLOYMENT_LOG.md:    "DATABASE_URL": "postgresql://user:password@localhost:5432/ai_receptionist"
+./backend-setup/DEPLOYMENT_LOG.md:export DATABASE_URL="postgresql://user:password@localhost:5432/ai_receptionist"
+./backend-setup/TROUBLESHOOTING_QUICK_REF.md:export DATABASE_URL="postgresql://user:password@localhost:5432/ai_receptionist"
+./backend-setup/services/analytics_service.py:DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost/tero_voice')
+./PAYPAL_ONBOARDING_IMPLEMENTATION_COMPLETE.md:DATABASE_URL=postgresql://user:password@localhost/tero_voice
+./FRONTEND_INTEGRATION_SUMMARY.md:DATABASE_URL=postgresql://user:pass@ionos-ip:5432/ai_receptionist
+./ACTUAL_NEXT_STEPS.md:      - DATABASE_URL=postgresql://...
+./DEPLOYMENT_READY_FINAL.md:DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
+./docker-compose.yml:      DATABASE_URL: postgresql://user:password@postgres:5432/ai_receptionist
+./START_HERE.md:DATABASE_URL=postgresql://user:pass@your-ionos-ip:5432/ai_receptionist
+./README_DEPLOYMENT.md:DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
+./SEND_TO_VPS.md:DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
+./.env.example:DATABASE_URL=postgresql://user:password@host:port/database_name
+./.env.example:ANALYTICS_DATABASE_URL=postgresql://user:password@host:port/analytics_db
+./DEPLOYMENT_READY.md:DATABASE_URL=postgresql://user:password@localhost:5432/ai_receptionist
+./START_DEPLOYMENT.md:DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
+grep: ./grep_output.txt: input file is also the output
+./README_MVP.md:DATABASE_URL=postgresql://user:pass@host:5432/ai_receptionist
+./FRONTEND_TASKS_PART3.md:DATABASE_URL=postgresql://frontend_user:your_secure_password@your-ionos-ip:5432/ai_receptionist
+./FRONTEND_TASKS_PART2.md:DATABASE_URL=postgresql://user:password@localhost:5432/ai_receptionist
+./WEEK1_ACTION_CHECKLIST.md:DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
+./DELIVERY_SUMMARY.txt:DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
+./DEPLOYMENT_GUIDE.md:DATABASE_URL=postgresql://user:password@postgres:5432/ai_receptionist
+./powers/ssh-remote-execution/POWER.md:DATABASE_URL=postgresql://user:pass@localhost/db

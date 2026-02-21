@@ -282,7 +282,7 @@ src/
 - Port: 5432
 - Database: ai_receptionist
 - User: user
-- Password: cira
+- Password: password
 
 ### Services
 - Ollama: http://localhost:11434

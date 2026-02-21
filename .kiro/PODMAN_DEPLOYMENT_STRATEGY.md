@@ -2,7 +2,7 @@
 
 **Status:** Revised for Podman Architecture
 **Date:** January 12, 2025
-**Server:** 74.208.227.161 (cira user, Podman rootless)
+**Server:** 74.208.227.161 (password user, Podman rootless)
 
 ---
 
@@ -97,11 +97,11 @@ podman images | grep billing-service
 podman save billing-service:phase1 -o billing-service-phase1.tar
 
 # Transfer to server
-scp -i .kiro/private-keys/id_kiro billing-service-phase1.tar cira@74.208.227.161:/home/cira/
+scp -i .kiro/private-keys/id_kiro billing-service-phase1.tar password@74.208.227.161:/home/password/
 
 # On server: Load image
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 << 'EOF'
-cd /home/cira
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 << 'EOF'
+cd /home/password
 podman load -i billing-service-phase1.tar
 podman images | grep billing-service
 EOF
@@ -117,19 +117,19 @@ podman tag billing-service:phase1 yourusername/billing-service:phase1
 podman push yourusername/billing-service:phase1
 
 # On server: Pull image
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "podman pull yourusername/billing-service:phase1"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "podman pull yourusername/billing-service:phase1"
 ```
 
 ### Step 4: Run Container on Server
 
 ```bash
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 << 'EOF'
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 << 'EOF'
 # Create data directory
-mkdir -p /home/cira/ai-phone-sas/data
+mkdir -p /home/password/ai-phone-sas/data
 
 # Run container with volume mounts
 podman run --rm \
-  -v /home/cira/ai-phone-sas/data:/app/data \
+  -v /home/password/ai-phone-sas/data:/app/data \
   -e PYTHONUNBUFFERED=1 \
   billing-service:phase1
 
@@ -142,7 +142,7 @@ EOF
 For long-running service:
 
 ```bash
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 << 'EOF'
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 << 'EOF'
 # Create systemd user service
 mkdir -p ~/.config/systemd/user
 
@@ -158,7 +158,7 @@ Restart=always
 RestartSec=10
 ExecStart=podman run --rm \
   --name billing-service \
-  -v /home/cira/ai-phone-sas/data:/app/data \
+  -v /home/password/ai-phone-sas/data:/app/data \
   -e PYTHONUNBUFFERED=1 \
   billing-service:phase1 \
   python3 -c "from backend_setup.services import BillingService; print('Service running')"
@@ -219,11 +219,11 @@ volumes:
 
 ```bash
 # Transfer compose file
-scp -i .kiro/private-keys/id_kiro podman-compose.yml cira@74.208.227.161:/home/cira/ai-phone-sas/
+scp -i .kiro/private-keys/id_kiro podman-compose.yml password@74.208.227.161:/home/password/ai-phone-sas/
 
 # On server: Run compose
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 << 'EOF'
-cd /home/cira/ai-phone-sas
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 << 'EOF'
+cd /home/password/ai-phone-sas
 podman-compose up --build
 
 # Or run in background
@@ -239,15 +239,15 @@ EOF
 If you just want to test without building:
 
 ```bash
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 << 'EOF'
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 << 'EOF'
 # Create working directory
-mkdir -p /home/cira/ai-phone-sas/backend-setup/{services,db,tests}
+mkdir -p /home/password/ai-phone-sas/backend-setup/{services,db,tests}
 
 # Copy files (already done via SCP)
 
 # Run Python directly in container
 podman run --rm \
-  -v /home/cira/ai-phone-sas:/app \
+  -v /home/password/ai-phone-sas:/app \
   -w /app \
   python:3.12-slim \
   bash -c "
@@ -277,9 +277,9 @@ EOF
 #!/bin/bash
 
 SERVER_HOST="74.208.227.161"
-SERVER_USER="cira"
+SERVER_USER="password"
 SSH_KEY=".kiro/private-keys/id_kiro"
-PROJECT_DIR="/home/cira/ai-phone-sas"
+PROJECT_DIR="/home/password/ai-phone-sas"
 
 echo "🐳 Building Podman image..."
 podman build -f Dockerfile.billing-phase1 -t billing-service:phase1 .
@@ -292,13 +292,13 @@ scp -i $SSH_KEY billing-service-phase1.tar $SERVER_USER@$SERVER_HOST:/home/$SERV
 
 echo "🚀 Loading image on server and running tests..."
 ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST << 'EOF'
-cd /home/cira
+cd /home/password
 podman load -i billing-service-phase1.tar
 mkdir -p ai-phone-sas/data
 
 echo "✅ Running tests in container..."
 podman run --rm \
-  -v /home/cira/ai-phone-sas/data:/app/data \
+  -v /home/password/ai-phone-sas/data:/app/data \
   billing-service:phase1
 
 echo "✅ Deployment complete!"
@@ -314,22 +314,22 @@ rm billing-service-phase1.tar
 
 ```bash
 # Check if Podman is installed on server
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "podman --version"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "podman --version"
 
 # List running containers
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "podman ps -a"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "podman ps -a"
 
 # Check image
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "podman images"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "podman images"
 
 # View container logs
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "podman logs billing-service"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "podman logs billing-service"
 
 # Stop container
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "podman stop billing-service"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "podman stop billing-service"
 
 # Remove image
-ssh -i .kiro/private-keys/id_kiro cira@74.208.227.161 "podman rmi billing-service:phase1"
+ssh -i .kiro/private-keys/id_kiro password@74.208.227.161 "podman rmi billing-service:phase1"
 ```
 
 ---

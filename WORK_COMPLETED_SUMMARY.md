@@ -18,7 +18,7 @@
 - PostgreSQL 15 running on port 5432
 - Database: `ai_receptionist`
 - pgvector extension installed
-- User credentials: `user` / `cira`
+- User credentials: `user` / `password`
 - Database is operational
 
 ### 3. ✅ Verified Redis Cache

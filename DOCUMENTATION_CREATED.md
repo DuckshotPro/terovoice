@@ -128,7 +128,7 @@
 
 ### Database
 - ✅ Name: ai_receptionist
-- ✅ User: user (password: cira)
+- ✅ User: user (password: password)
 - ✅ Extensions: pgvector
 - ✅ Status: Operational
 

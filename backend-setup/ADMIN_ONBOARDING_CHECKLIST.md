@@ -28,8 +28,8 @@
 
 ### SSH Access
 - [ ] Verify SSH key is configured: `ls ~/.ssh/id_rsa`
-- [ ] Test SSH connection: `ssh cira@74.208.227.161`
-- [ ] Verify you can run commands: `ssh cira@74.208.227.161 "whoami"`
+- [ ] Test SSH connection: `ssh password@74.208.227.161`
+- [ ] Verify you can run commands: `ssh password@74.208.227.161 "whoami"`
 - [ ] Document any access issues: _______________
 
 ### Database Access
@@ -40,9 +40,9 @@
 - [ ] Document any connection issues: _______________
 
 ### Service Verification
-- [ ] Check Ollama: `ssh cira@74.208.227.161 "ps aux | grep ollama"`
-- [ ] Check PostgreSQL: `ssh cira@74.208.227.161 "ss -tlnp | grep 5432"`
-- [ ] Check Redis: `ssh cira@74.208.227.161 "ss -tlnp | grep 6379"`
+- [ ] Check Ollama: `ssh password@74.208.227.161 "ps aux | grep ollama"`
+- [ ] Check PostgreSQL: `ssh password@74.208.227.161 "ss -tlnp | grep 5432"`
+- [ ] Check Redis: `ssh password@74.208.227.161 "ss -tlnp | grep 6379"`
 - [ ] All services running? Yes [ ] No [ ]
 
 ---
@@ -138,7 +138,7 @@ A: _______________________________________________
 - [ ] Test monitoring setup
 
 ### Create Personal Tools
-- [ ] Create alias for SSH: `alias dp1='ssh cira@74.208.227.161'`
+- [ ] Create alias for SSH: `alias dp1='ssh password@74.208.227.161'`
 - [ ] Create alias for database: `alias dp1db='psql -h 74.208.227.161 -U user -d ai_receptionist'`
 - [ ] Create health check script
 - [ ] Save useful commands
@@ -235,7 +235,7 @@ ps aux | grep -E "ollama|postgres|redis"
 ss -tlnp | grep -E "5432|6379|11434"
 
 # SSH into server
-ssh cira@74.208.227.161
+ssh password@74.208.227.161
 
 # Connect to database
 psql -h 74.208.227.161 -U user -d ai_receptionist

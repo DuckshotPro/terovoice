@@ -105,7 +105,7 @@
 
 ### Phase 3: Server Deployment (45 minutes)
 **Primary Agent Tasks:**
-1. [ ] SSH to server: `ssh cira@74.208.227.161`
+1. [ ] SSH to server: `ssh password@74.208.227.161`
 2. [ ] Navigate to project: `cd /var/www/terovoice` (or appropriate path)
 3. [ ] Pull latest code: `git pull origin main`
 4. [ ] Build containers: `docker-compose build --no-cache`
@@ -173,7 +173,7 @@
 
 ### SSH Access
 ```bash
-ssh cira@74.208.227.161
+ssh password@74.208.227.161
 ```
 
 ### Navigate to Project
