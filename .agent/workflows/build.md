@@ -11,9 +11,7 @@ Run this workflow to create a production build.
 // turbo-all
 
 1. Run the production build:
-```bash
-cd c:\Users\420du\DevEnvironment\Projects\Web\FullStack\ai_website && npm run build
-```
+npm run build
 
 2. Check for build errors
 

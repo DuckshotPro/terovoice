@@ -8,7 +8,7 @@ from backend_setup.services.auth_service import verify_jwt_token, get_user_by_id
 from backend_setup.db.connection import get_db_context
 from backend_setup.db.models import Call, Client, Subscription
 from datetime import datetime, timedelta
-from sqlalchemy import func
+from sqlalchemy import func, case
 import logging
 
 logger = logging.getLogger(__name__)
@@ -63,17 +63,32 @@ def dashboard_stats():
                     "total_clients": 0
                 }), 200
 
-            # Get call statistics
-            calls = db.query(Call).filter(Call.client_id.in_(client_ids)).all()
+            # Get call statistics with aggregation
+            stats = db.query(
+                func.count(Call.id).label('total_calls'),
+                func.sum(Call.duration_seconds).label('total_duration'),
+                func.sum(case((Call.success == True, 1), else_=0)).label('successful_calls')
+            ).filter(Call.client_id.in_(client_ids)).first()
 
-            total_calls = len(calls)
-            total_duration = sum(c.duration_seconds or 0 for c in calls)
-            successful_calls = sum(1 for c in calls if c.success)
+            total_calls = stats.total_calls or 0
+            total_duration = stats.total_duration or 0
+            successful_calls = stats.successful_calls or 0
             success_rate = (successful_calls / total_calls * 100) if total_calls > 0 else 0
 
             # Calculate average sentiment
-            sentiments = [c.sentiment for c in calls if c.sentiment]
-            avg_sentiment = max(set(sentiments), key=sentiments.count) if sentiments else "NEUTRAL"
+            most_frequent_sentiment = db.query(
+                Call.sentiment,
+                func.count(Call.sentiment).label('count')
+            ).filter(
+                Call.client_id.in_(client_ids),
+                Call.sentiment != None
+            ).group_by(
+                Call.sentiment
+            ).order_by(
+                func.count(Call.sentiment).desc()
+            ).first()
+
+            avg_sentiment = most_frequent_sentiment.sentiment if most_frequent_sentiment else "NEUTRAL"
 
             return jsonify({
                 "total_calls": total_calls,

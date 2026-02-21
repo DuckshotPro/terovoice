@@ -67,7 +67,7 @@ class AIReceptionistAgent:
 
             # Get profession-specific config
             profession = client_config.get("profession", "dentist")
-            prof_config = self.router.get_profession_config(profession)
+            prof_config = await self.router.get_profession_config(profession)
             system_prompt = prof_config.get("system_prompt", "You are a helpful AI assistant.")
 
             # Register specific intents for this profession
