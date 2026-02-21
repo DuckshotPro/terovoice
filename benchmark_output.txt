@@ -1,0 +1,6 @@
+Current working directory: /app
+--- Starting Benchmark ---
+Measuring loop blocking during profession config load...
+Total time for 100 ops: 0.0131s
+Max event loop blocking: 0.001028s
+RESULT: No significant blocking. ✅
