@@ -8,7 +8,7 @@ from backend_setup.services.auth_service import verify_jwt_token, get_user_by_id
 from backend_setup.db.connection import get_db_context
 from backend_setup.db.models import Call, Client, Subscription
 from datetime import datetime, timedelta
-from sqlalchemy import func, case
+from sqlalchemy import func
 import logging
 
 logger = logging.getLogger(__name__)
@@ -207,24 +207,18 @@ def client_stats(client_id):
             if not client:
                 return jsonify({"error": "Client not found"}), 404
 
-            # Get client's stats using aggregation
-            stats = db.query(
-                func.count(Call.id).label('total_calls'),
-                func.sum(Call.duration_seconds).label('total_duration'),
-                func.sum(case((Call.success == True, 1), else_=0)).label('successful_calls'),
-                func.avg(func.coalesce(Call.stt_latency_ms, 0)).label('avg_stt'),
-                func.avg(func.coalesce(Call.llm_latency_ms, 0)).label('avg_llm'),
-                func.avg(func.coalesce(Call.tts_latency_ms, 0)).label('avg_tts')
-            ).filter(Call.client_id == client_id).first()
+            # Get client's calls
+            calls = db.query(Call).filter(Call.client_id == client_id).all()
 
-            total_calls = stats.total_calls
-            total_duration = stats.total_duration or 0
-            successful_calls = stats.successful_calls or 0
+            total_calls = len(calls)
+            total_duration = sum(c.duration_seconds or 0 for c in calls)
+            successful_calls = sum(1 for c in calls if c.success)
             success_rate = (successful_calls / total_calls * 100) if total_calls > 0 else 0
 
-            avg_stt_latency = stats.avg_stt or 0
-            avg_llm_latency = stats.avg_llm or 0
-            avg_tts_latency = stats.avg_tts or 0
+            # Calculate average latencies
+            avg_stt_latency = sum(c.stt_latency_ms or 0 for c in calls) / total_calls if total_calls > 0 else 0
+            avg_llm_latency = sum(c.llm_latency_ms or 0 for c in calls) / total_calls if total_calls > 0 else 0
+            avg_tts_latency = sum(c.tts_latency_ms or 0 for c in calls) / total_calls if total_calls > 0 else 0
 
             return jsonify({
                 "client_id": str(client_id),

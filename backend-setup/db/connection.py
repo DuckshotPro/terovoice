@@ -14,10 +14,11 @@ from typing import Generator
 logger = logging.getLogger(__name__)
 
 # Database URL from environment
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://user:cira@74.208.227.161:5432/ai_receptionist"
-)
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    # Default to local development database if not set
+    # WARNING: Do not hardcode production credentials here!
+    DATABASE_URL = "postgresql://user:password@localhost:5432/ai_receptionist"
 
 # Create engine with connection pooling
 engine = create_engine(
