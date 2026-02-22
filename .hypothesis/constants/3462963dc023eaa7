@@ -1,4 +1,0 @@
-# file: /app/backend_setup/services/billing_service.py
-# hypothesis_version: 6.151.9
-
-[299.0, 499.0, '+00:00', 'Professional', 'Solo Pro', 'Standard', 'USD', 'Z', 'amount', 'created_at', 'currency', 'download_url', 'draft', 'due_date', 'failed', 'invoice_id', 'paid', 'paid_at', 'paypal_invoice_id', 'pending', 'period_end', 'period_start', 'plan_name', 'sent', 'status', 'subscription_id']
