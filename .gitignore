@@ -9,11 +9,25 @@ dist/
 build/
 
 # Environment variables
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+.nyc_output/
+
+# Production
+build/
+dist/
+
+# Misc
+.DS_Store
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+<<<<<<< HEAD
 
 # IDE files
 .vscode/
@@ -82,3 +96,19 @@ PHASE2_*.md
 tsconfig.node.json
 .hypothesis/
 FRONTEND_*.md
+=======
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+.idea/
+
+# Tool Output
+lint_output*.txt
+install_output*.txt
+verification_output.txt
+dev_server.log
+verification/
+>>>>>>> main
