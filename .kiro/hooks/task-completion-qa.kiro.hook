@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "On Task Completion - Update Task Status",
+  "description": "When a task is marked complete in tasks.md, verify quality and run checks before moving to next task",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "TASKS.md",
+      "tasks.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A task was just completed. Please:\n1. Verify all sub-tasks are also complete\n2. Run tests if applicable\n3. Check for any console errors\n4. Update git with a commit message"
+  }
+}
