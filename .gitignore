@@ -1,76 +1,34 @@
 # Dependencies
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.pnp
+.pnp.js
 
-# Production builds
-dist/
+# Testing
+coverage/
+.nyc_output/
+
+# Production
 build/
+dist/
 
-# Environment variables
+# Misc
+.DS_Store
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# IDE files
+# Editor
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# Logs
-logs/
-*.log
-
-# Runtime data
-pids/
-*.pid
-*.seed
-*.pid.lock
-
-# Coverage directory used by tools like istanbul
-coverage/
-
-# Temporary folders
-tmp/
-temp/
-
-# Backend specific
-backend-setup/.env
-backend-setup/__pycache__/
-backend-setup/*.pyc
-backend-setup/logs/
-
-# Database
-*.db
-*.sqlite
-
-# Incomplete files (fix these)
-package.
-tsconfig.
-tsconfig.node.
-
-# Kiro MCP Manager - Sensitive configuration files
-.kiro/settings/
-
-# Sensitive files with API keys and secrets
-PAYPAL_INTEGRATION_OPTIONS.md
-
-.venv/
-__pycache__/
-
-*.n8n
-
-n8n-workflows/
-id_kiro
-id_ed25519.txt
-id_ed25519
-*.key
-*.pem
+# Tool Output
+lint_output*.txt
+install_output*.txt
+verification_output.txt
+dev_server.log
+verification/
