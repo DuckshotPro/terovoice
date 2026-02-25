@@ -9,11 +9,11 @@ from enum import Enum
 
 try:
     from .cache import get_cache, SubscriptionCache
-    from ..db.models import Usage, Subscription, User
+    from ..db.models import Usage, Subscription, User, PlanTier as DbPlanTier
     from ..db.connection import get_db_context
 except ImportError:
     from cache import get_cache, SubscriptionCache
-    from backend_setup.db.models import Usage, Subscription, User
+    from backend_setup.db.models import Usage, Subscription, User, PlanTier as DbPlanTier
     from backend_setup.db.connection import get_db_context
 from sqlalchemy.future import select
 from sqlalchemy import func
