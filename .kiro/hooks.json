@@ -4,7 +4,7 @@
     "name": "Load Project Context on Session Start",
     "eventType": "sessionStart",
     "hookAction": "askAgent",
-    "outputPrompt": "You are working on the AI Receptionist SaaS project. Here's the current status:\n\n✅ PHASE 1 COMPLETE:\n- Backend API with 16 endpoints (auth, clients, calls, analytics)\n- PostgreSQL database on IONOS (74.208.227.161:5432)\n- JWT authentication and user isolation\n- Podman containerization\n- Complete documentation\n\n🔄 PHASE 2 IN PROGRESS:\n- React frontend with Vite + TypeScript\n- Tailwind CSS styling\n- API client with Axios (src/services/api.js)\n- Environment configuration (.env.local)\n\n📋 NEXT TASKS:\n1. Task 3: Set up Context API for state management\n2. Task 4: Create routing structure with protected routes\n3. Task 5: Configure Tailwind CSS styling\n4. Task 6: Create authentication pages\n\n🎯 KEY REMINDERS:\n- All prompts are pre-approved - proceed with implementation\n- Use Haiku 4.5 by default, escalate to Sonnet 3.5 for complex tasks\n- Follow quality assurance guidelines (linting, security, testing)\n- Reference spec documents: .kiro/specs/frontend-integration/\n- Database: PostgreSQL on IONOS (user: user, password: cira)\n- API Base URL: http://localhost:8000\n\n📁 KEY FILES:\n- .kiro/specs/frontend-integration/requirements.md - 12 requirements\n- .kiro/specs/frontend-integration/design.md - Architecture & design\n- .kiro/specs/frontend-integration/tasks.md - 67 implementation tasks\n- src/services/api.js - Complete API client with all endpoints\n- .env.local - Environment configuration\n\n🚀 READY TO CONTINUE WITH PHASE 2 FRONTEND IMPLEMENTATION"
+    "outputPrompt": "Y
   },
   {
     "id": "lint-jsx-on-save",

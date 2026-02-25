@@ -10,15 +10,8 @@ export const AnalyticsChart = ({ title, data, dataKey, color, format = 'number' 
     );
   }
 
-  let minValue = Infinity;
-  let maxValue = -Infinity;
-
-  for (let i = 0; i < data.length; i++) {
-    const value = data[i][dataKey];
-    if (value < minValue) minValue = value;
-    if (value > maxValue) maxValue = value;
-  }
-
+  const maxValue = Math.max(...data.map((d) => d[dataKey]));
+  const minValue = Math.min(...data.map((d) => d[dataKey]));
   const range = maxValue - minValue || 1;
 
   const formatDate = (dateString) => {
