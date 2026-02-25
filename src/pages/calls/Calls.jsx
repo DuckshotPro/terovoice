@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Phone, Clock, CheckCircle, AlertCircle, Search, Filter } from 'lucide-react';
 import CallDetail from '../../components/calls/CallDetail';
+import { api } from '../../services/api';
 
 export const Calls = () => {
   const [calls, setCalls] = useState([]);
@@ -18,52 +19,8 @@ export const Calls = () => {
     setIsLoading(true);
     setError(null);
     try {
-      // TODO: Replace with actual API call
-      // const response = await api.calls.list();
-      // setCalls(response.data.calls || []);
-
-      // Mock data for now
-      setCalls([
-        {
-          id: '1',
-          client_id: '1',
-          client_name: 'Dr. Smith Dental',
-          phone_number: '+1 (555) 123-4567',
-          duration: 245,
-          status: 'completed',
-          transcript:
-            'Customer: Hi, I need to schedule an appointment. Agent: Of course! What date works best for you?',
-          created_at: new Date(Date.now() - 3600000).toISOString(),
-          sentiment: 'positive',
-          booked: true,
-        },
-        {
-          id: '2',
-          client_id: '1',
-          client_name: 'Dr. Smith Dental',
-          phone_number: '+1 (555) 234-5678',
-          duration: 180,
-          status: 'completed',
-          transcript:
-            'Customer: What are your hours? Agent: We are open 9am to 5pm, Monday through Friday.',
-          created_at: new Date(Date.now() - 7200000).toISOString(),
-          sentiment: 'neutral',
-          booked: false,
-        },
-        {
-          id: '3',
-          client_id: '2',
-          client_name: "Mike's Plumbing",
-          phone_number: '+1 (555) 345-6789',
-          duration: 420,
-          status: 'completed',
-          transcript:
-            'Customer: Emergency! Water leak in basement. Agent: I can dispatch someone within 30 minutes.',
-          created_at: new Date(Date.now() - 10800000).toISOString(),
-          sentiment: 'positive',
-          booked: true,
-        },
-      ]);
+      const response = await api.calls.list();
+      setCalls(response.data.calls || []);
     } catch (err) {
       setError(err.message || 'Failed to fetch calls');
     } finally {

@@ -8,7 +8,6 @@ from sqlalchemy import create_engine
 from backend_setup.db.models import User, OnboardingState, PayPalOrder
 from backend_setup.services.email_service import EmailService
 from backend_setup.services.analytics_service import AnalyticsService
-from backend_setup.services.sms_service import SmsService
 import os
 import uuid
 from datetime import datetime
@@ -22,7 +21,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 email_service = EmailService()
 analytics_service = AnalyticsService()
-sms_service = SmsService()
 
 
 @onboarding_bp.route('/<customer_id>', methods=['GET'])
@@ -182,10 +180,8 @@ def update_phone_config(customer_id):
 
         # Send test SMS if enabled
         if data.get('smsEnabled') and data.get('smsPhoneNumber'):
-            sms_service.send_sms(
-                data.get('smsPhoneNumber'),
-                "Hello from Tero Voice! Your SMS configuration is now active."
-            )
+            # TODO: Implement SMS service
+            pass
 
         # Log analytics event
         analytics_service.log_event(
@@ -460,10 +456,6 @@ def update_review_step(customer_id):
     except Exception as e:
         current_app.logger.error(f"Error updating review step: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
-
-
-@onboarding_bp.route('/<customer_id>/complete', methods=['POST'])
-def complete_onboarding(customer_id):
     """Mark onboarding as complete and activate customer."""
     try:
         session = SessionLocal()
