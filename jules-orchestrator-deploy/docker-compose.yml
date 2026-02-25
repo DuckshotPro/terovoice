@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  jules-orchestrator:
+    build: .
+    container_name: jules-orchestrator
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      # YOU MUST SET THIS: The API Key for Jules
+      - JULES_API_KEY=${JULES_API_KEY}
+      # Optional: Connecting to your n8n instance if needed
+      - N8N_HOST=http://host.containers.internal:5678
+    volumes:
+      # Persist data if the app writes to a local db/json file
+      - ./data:/app/data
+    networks:
+      - jules-net
+
+networks:
+  jules-net:
+    driver: bridge
