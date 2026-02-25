@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   User,
@@ -22,67 +22,6 @@ import {
  * Complete customer dashboard with setup guides, FAQ, and account management
  * Accessible after PayPal subscription signup
  */
-
-// FAQ categories and questions
-const faqCategories = [
-  { id: 'all', label: 'All Topics', count: 24 },
-  { id: 'setup', label: 'Setup & Installation', count: 8 },
-  { id: 'voice', label: 'Voice Cloning', count: 6 },
-  { id: 'phone', label: 'Phone Integration', count: 5 },
-  { id: 'billing', label: 'Billing & Plans', count: 3 },
-  { id: 'troubleshooting', label: 'Troubleshooting', count: 2 }
-];
-
-const faqItems = [
-  {
-    category: 'setup',
-    question: 'How long does it take to set up my AI receptionist?',
-    answer: 'Complete setup typically takes 15-30 minutes. Voice cloning requires 24-48 hours for processing, but you can start taking calls immediately with our default voice.',
-    popular: true
-  },
-  {
-    category: 'voice',
-    question: 'How do I record my voice sample for cloning?',
-    answer: 'Use our built-in voice recorder to read the provided script (about 2-3 minutes of speech). Ensure you\'re in a quiet environment with good audio quality. Our AI will process your voice within 24-48 hours.',
-    popular: true
-  },
-  {
-    category: 'phone',
-    question: 'Can I use my existing business phone number?',
-    answer: 'Yes! We support number porting and call forwarding. You can keep your existing number and route calls through our AI system. Setup takes 5-10 minutes.',
-    popular: true
-  },
-  {
-    category: 'setup',
-    question: 'What information does the AI need about my business?',
-    answer: 'The AI needs your business hours, services offered, pricing (optional), booking calendar integration, and any specific scripts or responses you want it to use.',
-    popular: false
-  },
-  {
-    category: 'voice',
-    question: 'How accurate is the voice cloning?',
-    answer: 'Our voice cloning achieves 95%+ accuracy. Most customers report that callers cannot tell the difference between the AI and the real person.',
-    popular: false
-  },
-  {
-    category: 'phone',
-    question: 'Do I need special phone equipment?',
-    answer: 'No special equipment needed! Our system works with your existing phone setup through cloud-based call routing.',
-    popular: false
-  },
-  {
-    category: 'billing',
-    question: 'Can I change my plan anytime?',
-    answer: 'Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately, and billing is prorated.',
-    popular: false
-  },
-  {
-    category: 'troubleshooting',
-    question: 'What if the AI doesn\'t understand a caller?',
-    answer: 'The AI will politely ask for clarification or transfer the call to you. You can also train it on specific scenarios through our prompt customization.',
-    popular: false
-  }
-];
 
 const MemberPortal = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -137,13 +76,74 @@ const MemberPortal = () => {
     }
   ];
 
+  // FAQ categories and questions
+  const faqCategories = [
+    { id: 'all', label: 'All Topics', count: 24 },
+    { id: 'setup', label: 'Setup & Installation', count: 8 },
+    { id: 'voice', label: 'Voice Cloning', count: 6 },
+    { id: 'phone', label: 'Phone Integration', count: 5 },
+    { id: 'billing', label: 'Billing & Plans', count: 3 },
+    { id: 'troubleshooting', label: 'Troubleshooting', count: 2 }
+  ];
+
+  const faqItems = [
+    {
+      category: 'setup',
+      question: 'How long does it take to set up my AI receptionist?',
+      answer: 'Complete setup typically takes 15-30 minutes. Voice cloning requires 24-48 hours for processing, but you can start taking calls immediately with our default voice.',
+      popular: true
+    },
+    {
+      category: 'voice',
+      question: 'How do I record my voice sample for cloning?',
+      answer: 'Use our built-in voice recorder to read the provided script (about 2-3 minutes of speech). Ensure you\'re in a quiet environment with good audio quality. Our AI will process your voice within 24-48 hours.',
+      popular: true
+    },
+    {
+      category: 'phone',
+      question: 'Can I use my existing business phone number?',
+      answer: 'Yes! We support number porting and call forwarding. You can keep your existing number and route calls through our AI system. Setup takes 5-10 minutes.',
+      popular: true
+    },
+    {
+      category: 'setup',
+      question: 'What information does the AI need about my business?',
+      answer: 'The AI needs your business hours, services offered, pricing (optional), booking calendar integration, and any specific scripts or responses you want it to use.',
+      popular: false
+    },
+    {
+      category: 'voice',
+      question: 'How accurate is the voice cloning?',
+      answer: 'Our voice cloning achieves 95%+ accuracy. Most customers report that callers cannot tell the difference between the AI and the real person.',
+      popular: false
+    },
+    {
+      category: 'phone',
+      question: 'Do I need special phone equipment?',
+      answer: 'No special equipment needed! Our system works with your existing phone setup through cloud-based call routing.',
+      popular: false
+    },
+    {
+      category: 'billing',
+      question: 'Can I change my plan anytime?',
+      answer: 'Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately, and billing is prorated.',
+      popular: false
+    },
+    {
+      category: 'troubleshooting',
+      question: 'What if the AI doesn\'t understand a caller?',
+      answer: 'The AI will politely ask for clarification or transfer the call to you. You can also train it on specific scenarios through our prompt customization.',
+      popular: false
+    }
+  ];
+
   // Filter FAQ items based on search and category
-  const filteredFAQ = useMemo(() => faqItems.filter(item => {
+  const filteredFAQ = faqItems.filter(item => {
     const matchesSearch = item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          item.answer.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
-  }), [searchQuery, selectedCategory]);
+  });
 
   // Tab navigation
   const tabs = [
