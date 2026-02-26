@@ -41,6 +41,10 @@ coverage/
 # Temporary folders
 tmp/
 temp/
+.kiro/private-keys/
+.agent/gringems 
+.kiro/private-keys/id_ed25519
+.hypothesis/
 
 # Backend specific
 backend-setup/.env
