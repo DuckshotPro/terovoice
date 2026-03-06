@@ -190,6 +190,7 @@ export const api = {
 
   // Analytics
   analytics: {
+    getMetrics: (params = {}) => apiClient.get('/analytics/metrics', { params }),
     dashboard: () => apiClient.get('/analytics/dashboard'),
     callsPerDay: (params = {}) => apiClient.get('/analytics/calls-per-day', { params }),
     sentiment: (params = {}) => apiClient.get('/analytics/sentiment', { params }),
