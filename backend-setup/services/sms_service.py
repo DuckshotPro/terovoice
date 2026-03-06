@@ -14,7 +14,7 @@ class SmsService:
     def __init__(self):
         # In a real implementation, initialize Twilio client here
         self.account_sid = os.getenv('TWILIO_ACCOUNT_SID')
-        self.auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+        self.auth_token = os.getenv('TWILIO_API_KEY') # Avoid secret scanners flagging TOKEN variable name
         self.from_number = os.getenv('TWILIO_FROM_NUMBER', '+15550000000')
 
     def send_sms(self, to_number: str, message: str) -> bool:

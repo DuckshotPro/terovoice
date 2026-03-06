@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Phone, MessageSquare, CheckCircle } from 'lucide-react';
 
-const OnboardingStep2 = ({ onNext, onBack, data = {}, customerId }) => {
+const OnboardingStep2 = ({ onNext, onBack, initialData = {} }) => {
   const [formData, setFormData] = useState({
-    forwardingNumber: data.forwardingNumber || '',
-    smsEnabled: data.smsEnabled || false,
-    smsPhoneNumber: data.smsPhoneNumber || '',
-    ...data
+    forwardingNumber: initialData.forwardingNumber || '',
+    smsEnabled: initialData.smsEnabled || false,
+    smsPhoneNumber: initialData.smsPhoneNumber || '',
+    ...initialData
   });
-
-  useEffect(() => {
-    setFormData(prev => ({
-      ...prev,
-      ...data
-    }));
-  }, [data]);
   const [loading, setLoading] = useState(false);
   const [testSmsStatus, setTestSmsStatus] = useState(null);
 
@@ -31,7 +24,7 @@ const OnboardingStep2 = ({ onNext, onBack, data = {}, customerId }) => {
 
     setTestSmsStatus('sending');
     try {
-      const response = await fetch(`/api/onboarding/${customerId}/test-sms`, {
+      const response = await fetch(`/api/onboarding/${initialData.customerId}/test-sms`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +48,7 @@ const OnboardingStep2 = ({ onNext, onBack, data = {}, customerId }) => {
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/onboarding/${customerId}/step-2`, {
+      const response = await fetch(`/api/onboarding/${initialData.customerId}/step-2`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
