@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TrendingUp, Phone, CheckCircle, DollarSign, AlertCircle } from 'lucide-react';
 import AnalyticsChart from '../../components/analytics/AnalyticsChart';
 import MetricCard from '../../components/analytics/MetricCard';
+import { api } from '../../services/api';
 
 export const Analytics = () => {
   const [metrics, setMetrics] = useState(null);
@@ -17,40 +18,8 @@ export const Analytics = () => {
     setIsLoading(true);
     setError(null);
     try {
-      // TODO: Replace with actual API call
-      // const response = await api.analytics.getMetrics({ range: timeRange });
-      // setMetrics(response.data);
-
-      // Mock data for now
-      setMetrics({
-        total_calls: 1247,
-        completed_calls: 1189,
-        missed_calls: 58,
-        average_duration: 245,
-        success_rate: 95.3,
-        total_revenue: 12450,
-        sentiment_positive: 78,
-        sentiment_neutral: 18,
-        sentiment_negative: 4,
-        calls_by_day: [
-          { date: '2025-12-21', calls: 145 },
-          { date: '2025-12-22', calls: 168 },
-          { date: '2025-12-23', calls: 152 },
-          { date: '2025-12-24', calls: 98 },
-          { date: '2025-12-25', calls: 45 },
-          { date: '2025-12-26', calls: 189 },
-          { date: '2025-12-27', calls: 210 },
-        ],
-        revenue_by_day: [
-          { date: '2025-12-21', revenue: 1450 },
-          { date: '2025-12-22', revenue: 1680 },
-          { date: '2025-12-23', revenue: 1520 },
-          { date: '2025-12-24', revenue: 980 },
-          { date: '2025-12-25', revenue: 450 },
-          { date: '2025-12-26', revenue: 1890 },
-          { date: '2025-12-27', revenue: 2100 },
-        ],
-      });
+      const response = await api.analytics.getMetrics({ range: timeRange });
+      setMetrics(response.data);
     } catch (err) {
       setError(err.message || 'Failed to fetch analytics');
     } finally {

@@ -32,3 +32,10 @@ install_output*.txt
 verification_output.txt
 dev_server.log
 verification/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.hypothesis/
