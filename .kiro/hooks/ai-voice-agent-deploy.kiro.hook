@@ -1,0 +1,26 @@
+{
+  "name": "AI Voice Agent Deploy",
+  "description": "Automated deployment hook for AI voice agent infrastructure and client onboarding",
+  "triggers": [
+    {
+      "type": "manual",
+      "label": "Deploy Voice Agent Infrastructure"
+    },
+    {
+      "type": "file_save",
+      "pattern": "powers/*/mcp.json",
+      "label": "Power Configuration Updated"
+    }
+  ],
+  "actions": [
+    {
+      "type": "message",
+      "content": "🚀 Starting AI Voice Agent deployment process...\n\n1. Validating MCP server configurations\n2. Checking environment variables\n3. Testing service connections\n4. Deploying infrastructure components\n5. Running integration tests\n\nThis will ensure all powers are properly configured and ready for client onboarding."
+    },
+    {
+      "type": "shell",
+      "command": "python scripts/validate-deployment.py",
+      "description": "Validate deployment configuration and test all integrations"
+    }
+  ]
+}

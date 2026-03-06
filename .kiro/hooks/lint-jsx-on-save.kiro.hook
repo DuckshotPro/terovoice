@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Lint & Type Check React Components",
+  "description": "Automatically runs ESLint with auto-fix and reports any linting or type errors when a React component file is saved",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*.jsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A React component was just saved. Please run: npm run lint -- --fix and report any linting or type errors found. Fix critical issues automatically."
+  }
+}

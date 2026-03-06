@@ -1,0 +1,38 @@
+src/components/onboarding/OnboardingStep7.jsx:const OnboardingStep7 = ({ initialData = {} }) => {
+src/components/onboarding/OnboardingStep7.jsx:export default OnboardingStep7;
+src/components/onboarding/OnboardingStep2.jsx:const OnboardingStep2 = ({ onNext, onBack, initialData = {} }) => {
+src/components/onboarding/OnboardingStep2.jsx:export default OnboardingStep2;
+src/components/onboarding/OnboardingStep1.jsx:const OnboardingStep1 = ({ data, onNext, customerId }) => {
+src/components/onboarding/OnboardingStep1.jsx:export default OnboardingStep1;
+src/components/onboarding/OnboardingStep4.jsx:const OnboardingStep4 = ({ onNext, onBack, initialData = {} }) => {
+src/components/onboarding/OnboardingStep4.jsx:export default OnboardingStep4;
+src/components/onboarding/OnboardingStep6.jsx:const OnboardingStep6 = ({ onNext, onBack, initialData = {} }) => {
+src/components/onboarding/OnboardingStep6.jsx:export default OnboardingStep6;
+src/components/onboarding/OnboardingStep3.jsx:const OnboardingStep3 = ({ onNext, onBack, initialData = {} }) => {
+src/components/onboarding/OnboardingStep3.jsx:export default OnboardingStep3;
+src/components/onboarding/OnboardingStep5.jsx:const OnboardingStep5 = ({ onNext, onBack, initialData = {} }) => {
+src/components/onboarding/OnboardingStep5.jsx:export default OnboardingStep5;
+src/pages/Onboarding.jsx:import OnboardingStep1 from '../components/onboarding/OnboardingStep1';
+src/pages/Onboarding.jsx:import OnboardingStep2 from '../components/onboarding/OnboardingStep2';
+src/pages/Onboarding.jsx:import OnboardingStep3 from '../components/onboarding/OnboardingStep3';
+src/pages/Onboarding.jsx:import OnboardingStep4 from '../components/onboarding/OnboardingStep4';
+src/pages/Onboarding.jsx:import OnboardingStep5 from '../components/onboarding/OnboardingStep5';
+src/pages/Onboarding.jsx:import OnboardingStep6 from '../components/onboarding/OnboardingStep6';
+src/pages/Onboarding.jsx:import OnboardingStep7 from '../components/onboarding/OnboardingStep7';
+src/pages/Onboarding.jsx:const Onboarding = () => {
+src/pages/Onboarding.jsx:  const [onboardingData, setOnboardingData] = useState({});
+src/pages/Onboarding.jsx:    loadOnboardingState();
+src/pages/Onboarding.jsx:  const loadOnboardingState = async () => {
+src/pages/Onboarding.jsx:        setOnboardingData(data);
+src/pages/Onboarding.jsx:  const updateOnboardingState = async (stepData) => {
+src/pages/Onboarding.jsx:        setOnboardingData(prev => ({ ...prev, ...updatedData }));
+src/pages/Onboarding.jsx:          // Onboarding complete, redirect to portal
+src/pages/Onboarding.jsx:      onNext: updateOnboardingState,
+src/pages/Onboarding.jsx:        return <OnboardingStep1 {...stepProps} />;
+src/pages/Onboarding.jsx:        return <OnboardingStep2 {...stepProps} />;
+src/pages/Onboarding.jsx:        return <OnboardingStep3 {...stepProps} />;
+src/pages/Onboarding.jsx:        return <OnboardingStep4 {...stepProps} />;
+src/pages/Onboarding.jsx:        return <OnboardingStep5 {...stepProps} />;
+src/pages/Onboarding.jsx:        return <OnboardingStep6 {...stepProps} />;
+src/pages/Onboarding.jsx:        return <OnboardingStep7 {...stepProps} />;
+src/pages/Onboarding.jsx:export default Onboarding;

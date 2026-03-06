@@ -1,0 +1,55 @@
+<svg
+  viewBox="0 0 1440 900"
+  xmlns="http://www.w3.org/2000/svg"
+  preserveAspectRatio="xMidYMid slice"
+>
+  <!-- Gradient background -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff3b9d" />
+      <stop offset="45%" stop-color="#7b3cff" />
+      <stop offset="100%" stop-color="#0052ff" />
+    </linearGradient>
+
+    <radialGradient id="waveGlowLeft" cx="0%" cy="100%" r="80%">
+      <stop offset="0%" stop-color="#ff7ad1" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="transparent" />
+    </radialGradient>
+
+    <radialGradient id="waveGlowRight" cx="100%" cy="0%" r="80%">
+      <stop offset="0%" stop-color="#6bb6ff" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="transparent" />
+    </radialGradient>
+  </defs>
+
+  <!-- Base gradient -->
+  <rect width="1440" height="900" fill="url(#bgGrad)" />
+
+  <!-- Soft wave blobs -->
+  <path
+    d="M0 650 C 260 540 520 620 780 560 C 1040 500 1250 540 1440 480 L1440 900 L0 900 Z"
+    fill="url(#waveGlowLeft)"
+    opacity="0.9"
+  />
+  <path
+    d="M0 260 C 260 340 520 260 780 320 C 1040 380 1250 340 1440 400 L1440 0 L0 0 Z"
+    fill="url(#waveGlowRight)"
+    opacity="0.9"
+  />
+
+  <!-- Concentric curves left -->
+  <g stroke="#ffb4ea" stroke-width="1.5" fill="none" opacity="0.7">
+    <path d="M-200 900 C 200 650 450 600 800 580" />
+    <path d="M-200 820 C 200 600 480 560 820 540" />
+    <path d="M-200 740 C 200 550 510 520 840 500" />
+    <path d="M-200 660 C 200 500 540 480 860 460" />
+  </g>
+
+  <!-- Concentric curves right -->
+  <g stroke="#9fd0ff" stroke-width="1.5" fill="none" opacity="0.7">
+    <path d="M1640 0 C 1240 220 1000 260 700 280" />
+    <path d="M1640 80 C 1240 260 980 300 680 320" />
+    <path d="M1640 160 C 1240 300 960 340 660 360" />
+    <path d="M1640 240 C 1240 340 940 380 640 400" />
+  </g>
+</svg>

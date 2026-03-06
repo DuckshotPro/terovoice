@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Model Switching from Agent Steering",
+  "description": "Automatically escalate to Claude 3.5 Sonnet when working on complex tasks like architecture, security, or large refactoring. Use Haiku 4.5 for simple tasks to optimize cost while maintaining quality.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Analyze the complexity of this task. If it involves: architectural decisions, security-sensitive operations, large refactoring (>500 lines), production deployments, or requires expert analysis - escalate to Claude 3.5 Sonnet. Otherwise, use Claude Haiku 4.5 for cost efficiency. Provide your recommendation and reasoning."
+  }
+}

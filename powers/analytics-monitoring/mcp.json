@@ -1,0 +1,70 @@
+{
+  "mcpServers": {
+    "analytics": {
+      "command": "uvx",
+      "args": ["mcp-server-analytics@latest"],
+      "env": {
+        "ANALYTICS_DATABASE_URL": "${ANALYTICS_DATABASE_URL}",
+        "TIMESERIES_DATABASE_URL": "${TIMESERIES_DATABASE_URL}",
+        "DASHBOARD_URL": "${DASHBOARD_URL}",
+        "ALERT_EMAIL": "${ALERT_EMAIL}",
+        "SLACK_WEBHOOK_URL": "${SLACK_WEBHOOK_URL}",
+        "RETENTION_DAYS": "${RETENTION_DAYS}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "collect_metrics",
+        "query_analytics",
+        "create_dashboard",
+        "send_alert",
+        "generate_report",
+        "calculate_roi",
+        "track_revenue",
+        "monitor_performance",
+        "analyze_sentiment",
+        "export_data"
+      ]
+    },
+    "monitoring": {
+      "command": "uvx",
+      "args": ["mcp-server-monitoring@latest"],
+      "env": {
+        "PROMETHEUS_URL": "${PROMETHEUS_URL}",
+        "GRAFANA_URL": "${GRAFANA_URL}",
+        "GRAFANA_API_KEY": "${GRAFANA_API_KEY}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "create_alert_rule",
+        "query_metrics",
+        "create_dashboard",
+        "send_notification",
+        "get_system_health",
+        "monitor_uptime",
+        "track_performance",
+        "manage_alerts"
+      ]
+    },
+    "reporting": {
+      "command": "uvx",
+      "args": ["mcp-server-reporting@latest"],
+      "env": {
+        "REPORT_STORAGE_PATH": "${REPORT_STORAGE_PATH}",
+        "EMAIL_SMTP_HOST": "${EMAIL_SMTP_HOST}",
+        "EMAIL_SMTP_USER": "${EMAIL_SMTP_USER}",
+        "EMAIL_SMTP_PASS": "${EMAIL_SMTP_PASS}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "generate_report",
+        "schedule_report",
+        "send_report",
+        "create_template",
+        "export_pdf",
+        "export_csv",
+        "get_report_status",
+        "list_reports"
+      ]
+    }
+  }
+}

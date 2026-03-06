@@ -1,0 +1,4 @@
+src/components/onboarding/OnboardingStep2.jsx:const OnboardingStep2 = ({ onNext, onBack, initialData = {} }) => {
+src/components/onboarding/OnboardingStep2.jsx:export default OnboardingStep2;
+src/pages/Onboarding.jsx:import OnboardingStep2 from '../components/onboarding/OnboardingStep2';
+src/pages/Onboarding.jsx:        return <OnboardingStep2 {...stepProps} />;

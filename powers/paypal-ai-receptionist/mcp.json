@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "paypal": {
+      "command": "uvx",
+      "args": ["mcp-server-paypal@latest"],
+      "env": {
+        "PAYPAL_CLIENT_ID": "${PAYPAL_CLIENT_ID}",
+        "PAYPAL_CLIENT_SECRET": "${PAYPAL_CLIENT_SECRET}",
+        "PAYPAL_ENVIRONMENT": "${PAYPAL_ENVIRONMENT}",
+        "PAYPAL_WEBHOOK_ID": "${PAYPAL_WEBHOOK_ID}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "create_product",
+        "create_subscription_plan",
+        "create_subscription",
+        "get_subscription",
+        "cancel_subscription",
+        "suspend_subscription",
+        "activate_subscription",
+        "create_invoice",
+        "send_invoice",
+        "get_invoice",
+        "verify_webhook",
+        "get_payment",
+        "list_subscriptions",
+        "get_subscription_analytics"
+      ]
+    }
+  }
+}

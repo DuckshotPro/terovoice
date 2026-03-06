@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .tero-wave {
+    background-image: url('/tero-wave.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    will-change: transform;
+  }
+
+  .layer-back {
+    animation: teroWaveBack 14s ease-in-out infinite;
+  }
+
+  .layer-mid {
+    animation: teroWaveMid 10s ease-in-out infinite;
+  }
+
+  .layer-front {
+    animation: teroWaveFront 6s ease-in-out infinite;
+  }
+}
+
+@keyframes teroWaveBack {
+  0% {
+    transform: translateX(0) translateY(0) skewY(0deg) scale(1.03);
+  }
+
+  50% {
+    transform: translateX(-20px) translateY(8px) skewY(1deg) scale(1.04);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0) skewY(0deg) scale(1.03);
+  }
+}
+
+@keyframes teroWaveMid {
+  0% {
+    transform: translateX(0) translateY(0) skewY(0deg) scale(1.02);
+  }
+
+  50% {
+    transform: translateX(25px) translateY(-10px) skewY(-2deg) scale(1.03);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0) skewY(0deg) scale(1.02);
+  }
+}
+
+@keyframes teroWaveFront {
+  0% {
+    transform: translateX(0) translateY(0) skewY(0deg) scale(1.01);
+  }
+
+  50% {
+    transform: translateX(-35px) translateY(12px) skewY(3deg) scale(1.02);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0) skewY(0deg) scale(1.01);
+  }
+}

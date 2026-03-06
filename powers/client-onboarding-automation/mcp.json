@@ -1,0 +1,90 @@
+{
+  "mcpServers": {
+    "client-onboarding": {
+      "command": "uvx",
+      "args": ["mcp-server-client-onboarding@latest"],
+      "env": {
+        "VOICE_CLONING_API_KEY": "${VOICE_CLONING_API_KEY}",
+        "CONTAINER_REGISTRY_URL": "${CONTAINER_REGISTRY_URL}",
+        "EMAIL_SMTP_HOST": "${EMAIL_SMTP_HOST}",
+        "EMAIL_SMTP_USER": "${EMAIL_SMTP_USER}",
+        "EMAIL_SMTP_PASS": "${EMAIL_SMTP_PASS}",
+        "DOMAIN_BASE": "${DOMAIN_BASE}",
+        "SSL_CERT_EMAIL": "${SSL_CERT_EMAIL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "start_onboarding",
+        "clone_voice",
+        "provision_infrastructure",
+        "create_dashboard",
+        "send_welcome_email",
+        "validate_onboarding",
+        "get_onboarding_status",
+        "rollback_onboarding",
+        "generate_credentials",
+        "setup_monitoring"
+      ]
+    },
+    "voice-cloning": {
+      "command": "uvx",
+      "args": ["mcp-server-voice-cloning@latest"],
+      "env": {
+        "ELEVENLABS_API_KEY": "${ELEVENLABS_API_KEY}",
+        "CARTESIA_API_KEY": "${CARTESIA_API_KEY}",
+        "VOICE_CLONING_PROVIDER": "${VOICE_CLONING_PROVIDER}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "clone_voice_from_sample",
+        "list_voices",
+        "delete_voice",
+        "test_voice_quality",
+        "synthesize_test_audio",
+        "get_voice_info",
+        "update_voice_settings"
+      ]
+    },
+    "infrastructure": {
+      "command": "uvx",
+      "args": ["mcp-server-infrastructure@latest"],
+      "env": {
+        "DOCKER_HOST": "${DOCKER_HOST}",
+        "KUBERNETES_CONFIG": "${KUBERNETES_CONFIG}",
+        "LOAD_BALANCER_URL": "${LOAD_BALANCER_URL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "deploy_container",
+        "create_namespace",
+        "configure_load_balancer",
+        "setup_monitoring",
+        "create_database",
+        "configure_dns",
+        "create_ssl_certificate",
+        "health_check"
+      ]
+    },
+    "email": {
+      "command": "uvx",
+      "args": ["mcp-server-email@latest"],
+      "env": {
+        "SMTP_HOST": "${EMAIL_SMTP_HOST}",
+        "SMTP_USER": "${EMAIL_SMTP_USER}",
+        "SMTP_PASS": "${EMAIL_SMTP_PASS}",
+        "SMTP_PORT": "${EMAIL_SMTP_PORT}",
+        "FROM_EMAIL": "${FROM_EMAIL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "send_email",
+        "send_template_email",
+        "schedule_email",
+        "track_delivery",
+        "create_template",
+        "validate_email",
+        "get_delivery_status"
+      ]
+    }
+  }
+}

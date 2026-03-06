@@ -1,0 +1,2 @@
+Checkbox is checked initially: True
+<< 200 http://localhost:5173/api/onboarding/123/test-sms

@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "name": "Validate Conventional Commits",
+  "description": "Enforces conventional commit message format (feat:, fix:, docs:, etc.) on every git commit to maintain clean commit history",
+  "version": "1",
+  "when": {
+    "type": "promptSubmit"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "git log -1 --pretty=%B | grep -E \"^(feat|fix|docs|style|refactor|test|chore):\" || echo \"⚠️ Use conventional commits: feat:, fix:, docs:, etc.\""
+  },
+  "workspaceFolderName": "ai_website",
+  "shortName": "git-commit-validator"
+}

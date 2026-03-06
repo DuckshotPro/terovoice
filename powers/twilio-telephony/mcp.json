@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "twilio": {
+      "command": "uvx",
+      "args": ["mcp-server-twilio@latest"],
+      "env": {
+        "TWILIO_ACCOUNT_SID": "${TWILIO_ACCOUNT_SID}",
+        "TWILIO_AUTH_TOKEN": "${TWILIO_AUTH_TOKEN}",
+        "TWILIO_PHONE_NUMBER": "${TWILIO_PHONE_NUMBER}",
+        "TWILIO_WEBHOOK_URL": "${TWILIO_WEBHOOK_URL}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "send_sms",
+        "make_call",
+        "list_phone_numbers",
+        "purchase_phone_number",
+        "configure_webhook",
+        "get_call_logs",
+        "search_phone_numbers",
+        "create_sip_trunk",
+        "configure_sip_trunk",
+        "get_call_analytics",
+        "send_bulk_sms",
+        "validate_phone_number"
+      ]
+    }
+  }
+}
