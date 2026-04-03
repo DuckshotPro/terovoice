@@ -54,7 +54,7 @@ The previous agent (Kiro) attempted to redesign the backend inference and optimi
 
 ### Backend
 - **Framework**: Flask (Python)
-- **Database**: PostgreSQL on IONOS (74.208.227.161:5432)
+- **Database**: PostgreSQL on IONOS (configured via `DATABASE_URL` environment variable)
 - **Auth**: JWT tokens with bcrypt password hashing
 - **Containerization**: Podman
 
